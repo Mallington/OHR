@@ -19,6 +19,13 @@
               <menus>
                 <Menu mnemonicParsing="false" onAction="#test" text="File">
                   <items>
+                        <Menu mnemonicParsing="false" text="New">
+                          <items>
+                              <MenuItem mnemonicParsing="false" text="Training Data (.csv)" />
+                            <MenuItem mnemonicParsing="false" onAction="#test" text="Neural Net (.nns)" />
+                              <MenuItem mnemonicParsing="false" text="Form (.fs)" />
+                          </items>
+                        </Menu>
                     <MenuItem id="MENU_FILE_CLOSE" mnemonicParsing="false" text="Close" />
                   </items>
                 </Menu>
@@ -40,21 +47,13 @@
               <items>
                 <AnchorPane id="MAIN_TAB_VIEW" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                      <children>
-                        <TabPane layoutX="321.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <tabs>
-                              <Tab id="TAB" text="Welcome">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <Text id="TEX" layoutX="359.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                                       </children>
-                                    </AnchorPane>
-                                </content>
-                              </Tab>
-                           </tabs></TabPane>
+                        <TabPane fx:id="TAB_VIEW" layoutX="321.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                     <children>
+                        <Text fx:id="TEXT" layoutX="386.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                     </children></AnchorPane>
               </items>
             </SplitPane>
          </center>

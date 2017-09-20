@@ -5,45 +5,28 @@
  */
 package GUI;
 
-import java.awt.event.ActionEvent;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.application.Platform;
+import java.io.IOException;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 /**
- * FXML Controller class
  *
  * @author mathew
  */
-public class MainWindowController implements Initializable {
-
-    @FXML
-    private Tab TAB = new Tab();
+public class MainWindowController {
+    @FXML Text TEXT = new Text();
+    @FXML TabPane TAB_VIEW = new TabPane();
     
-   @FXML
-    private Text TEX = new Text();
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-     TEX.setText("Hello");
-
-   
-    }  
-    
-    @FXML
-    public void test() {
-        System.out.println("Settign");
-        TEX.setText("Hello");
-        
+    public void test() throws IOException{
+        System.out.println("Hello");
+        TEXT.setText("Hello");
+       
+        Tab toAdd = new Tab("Yes!!");
+         toAdd.setContent((Node) FXMLLoader.load(getClass().getResource("NeuralNetInterface.fxml")));
+        TAB_VIEW.getTabs().add(toAdd);
     }
-    
-    
-    
 }
