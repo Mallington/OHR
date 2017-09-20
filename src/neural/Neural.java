@@ -3,22 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package neural.hand.writing.recognition;
-
-import GUI.MainWindow;
+package neural;
 
 /**
  *
  * @author mathew
  */
-public class NeuralHandWritingRecognition {
+public class Neural {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        MainWindow.startGUI(args);
-        
+      
     }
-    
+
 }

@@ -15,10 +15,17 @@ import javafx.stage.Stage;
  * @author mathew
  */
 public class MainWindow extends Application {
+  
+    public static void startGUI(String[] args){
+        launch(args);
+    }
+    
     
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
+        NeuralNetInterfaceController neuralController = loader.<NeuralNetInterfaceController>getController();
         
         Scene scene = new Scene(root);
         
@@ -26,11 +33,5 @@ public class MainWindow extends Application {
         stage.show();
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
     
 }
