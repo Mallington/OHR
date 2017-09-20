@@ -61,7 +61,7 @@ public class TabController<ControllerType extends ControllerInterface>{
         
         //NEED TO FIX HERE, accidently loading SEPERATE controller instances, messing up everything!
         ControllerInterface cont = (ControllerInterface)  res.loadController();
-        
+        System.out.println("Loaded Controeller");
         cont.setTab(t);
         if(cont == null) System.out.println("No Resource");
         
