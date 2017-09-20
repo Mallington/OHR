@@ -8,9 +8,12 @@ package GUI;
 import InterfaceManagement.ControllerInterface;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.embed.swing.SwingNode;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -38,12 +41,6 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
     public SwingNode SWING_NODE = new SwingNode();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        CLOSE.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                closeTab();
-            }
-        });
         System.out.println("Listeners added");
         SWING_NODE.setContent(GRID);
         System.out.println("Added content");
@@ -64,11 +61,7 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
 
     @Override
     public void closeTab() {
-        System.out.println("Title: "+this.NAME);
-        System.out.println("Serial: "+this.toString());
-        if(this.NEURAL_TAB == null) System.out.println("Go to bed!");
-        System.out.println(NEURAL_TAB.getText());
-       this.NEURAL_TAB.getTabPane().getTabs().remove(NEURAL_TAB);
+    this.NEURAL_TAB.getTabPane().getTabs().remove(NEURAL_TAB);
     }
 
     @Override
@@ -95,10 +88,18 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
     @Override
     public void setTab(Tab t) {
        this.NEURAL_TAB = t;
+       Resource r = new Resource("NeuralTab.fxml");
+       
+        try {
+            t.setGraphic(r.getNode());
+        } catch (IOException ex) {
+            System.out.println("FAILED TO SET GRAPHICS");
+        }
     }
 
     @Override
     public void loadIntoTab(File res) {
+        setText(res.getName());
         System.out.println("Loading "+res.getPath());
     }
     
