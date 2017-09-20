@@ -30,15 +30,13 @@ public class Resource {
     }
     
     public ControllerInterface loadController() throws IOException{
-//        if(LOADER.load() == null) System.out.println("No FXML!");
+
         ControllerInterface con =  LOADER.getController();
-        if(con == null) System.out.println("Failed to load!");
+       
         return con;
     }
     public Node getNode() throws IOException{
-        //return (Node) FXMLLoader.load(getClass().getResource(RESOURCE));
-       
-        System.out.println("Trying!");
+    
         
         return LOADER.load(getClass().getResource(RESOURCE).openStream());
     }
