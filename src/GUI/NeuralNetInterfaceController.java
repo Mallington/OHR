@@ -20,6 +20,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 
 /**
@@ -29,7 +31,7 @@ import javafx.scene.control.Tab;
  */
 public class NeuralNetInterfaceController implements Initializable, ControllerInterface{
     //Swing Nodes
-    private BinaryGrid GRID = new BinaryGrid(30,30);
+    private BinaryGrid GRID = new BinaryGrid(50,50);
     private String NAME = "UNTITLED";
     private Tab NEURAL_TAB;
     
@@ -78,6 +80,12 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
     @Override
     public void selectTab() {
        
+    }
+    public void setContectMenu(){
+        ContextMenu m = new ContextMenu();
+       // MenuItem mi = new MenuItems("Close");
+       // m.getItems()
+       //this.NEURAL_TAB.
     }
 
     @Override
