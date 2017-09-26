@@ -31,6 +31,7 @@ public class TabController<ControllerType extends ControllerInterface>{
     private ControllerType CONTROLLER_INSTANCE;
     private String NAME = "";
     private TabController(ControllerType controller){
+        
         System.out.println("Created Controller Type: "+controller.getClass().toGenericString());
         CONTROLLER_INSTANCE = controller;
 }
