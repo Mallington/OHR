@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package GUI;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,23 +16,21 @@ import javafx.stage.Stage;
  * @author mathew
  */
 public class MainWindow extends Application {
-  
-    public static void startGUI(String[] args){
+
+    public static void startGUI(String[] args) {
         launch(args);
     }
-    
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         NeuralNetInterfaceController neuralController = loader.<NeuralNetInterfaceController>getController();
-        
+
         Scene scene = new Scene(root);
-        
+
         stage.setScene(scene);
         stage.show();
     }
 
-    
 }

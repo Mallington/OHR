@@ -17,27 +17,28 @@ import javafx.scene.Node;
  * @author mathew
  */
 public class Resource {
-    
+
     private FXMLLoader LOADER;
     private String RESOURCE;
-    public Resource(String res){
-        
-        System.out.println("Path to resource "+getClass().getResource(res).getPath());
+
+    public Resource(String res) {
+
+        System.out.println("Path to resource " + getClass().getResource(res).getPath());
         LOADER = new FXMLLoader();
-           // LOADER.setRoot(null);
-           // LOADER.setLocation(getClass().getResource(res));
+        // LOADER.setRoot(null);
+        // LOADER.setLocation(getClass().getResource(res));
         RESOURCE = res;
     }
-    
-    public ControllerInterface loadController() throws IOException{
 
-        ControllerInterface con =  LOADER.getController();
-       
+    public ControllerInterface loadController() throws IOException {
+
+        ControllerInterface con = LOADER.getController();
+
         return con;
     }
-    public Node getNode() throws IOException{
-    
-        
+
+    public Node getNode() throws IOException {
+
         return LOADER.load(getClass().getResource(RESOURCE).openStream());
     }
 }

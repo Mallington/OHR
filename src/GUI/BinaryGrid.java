@@ -5,7 +5,6 @@
  */
 package GUI;
 
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -38,7 +37,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-
 /**
  *
  * @author mathew
@@ -47,8 +45,7 @@ public class BinaryGrid extends JPanel {
 
     //temp
     static boolean good = true;
-    
-    
+
     boolean[][] GRID_CONTENTS;
     Rectangle[][] BOUNDS;
     int G_WIDTH;
@@ -170,7 +167,7 @@ public class BinaryGrid extends JPanel {
         d.setColor(Color.black);
         d.drawRect(0, 0, this.getWidth(), this.getHeight());
         calculateBounds();
-        
+
         for (int x = 0; x < G_WIDTH; x++) {
             for (int y = 0; y < G_HEIGHT; y++) {
                 Color fill = Color.BLACK;
@@ -188,7 +185,7 @@ public class BinaryGrid extends JPanel {
     }
 
     public void markByBound(int xC, int yC) {
-        
+
         for (int x = 0; x < G_WIDTH; x++) {
             for (int y = 0; y < G_HEIGHT; y++) {
                 Rectangle r = BOUNDS[x][y];
@@ -217,7 +214,5 @@ public class BinaryGrid extends JPanel {
     public void clear() {
         GRID_CONTENTS = new boolean[G_WIDTH][G_HEIGHT];
     }
-
-  
 
 }

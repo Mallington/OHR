@@ -23,11 +23,14 @@ import javafx.scene.text.Text;
  * @author mathew
  */
 public class MainWindowController {
+
     private Session SESSION = new Session();
-    @FXML Text TEXT = new Text();
-    @FXML TabPane TAB_VIEW = new TabPane();
-    
-    public void test() throws IOException, InterruptedException{
+    @FXML
+    Text TEXT = new Text();
+    @FXML
+    TabPane TAB_VIEW = new TabPane();
+
+    public void test() throws IOException, InterruptedException {
         /*
         System.out.println("Hello");
         TEXT.setText("Hello");
@@ -36,20 +39,13 @@ public class MainWindowController {
        
          toAdd.setContent((Node) FXMLLoader.load(getClass().getResource("NeuralNetInterface.fxml")));
         TAB_VIEW.getTabs().add(toAdd);*/
-        
-        
-      
-         
+
         int tabID = SESSION.addTab(TabController.createFromFXMLandLoadTab(TAB_VIEW, "NeuralNetInterface.fxml"));
         SESSION.loadFileInTab(new File("Test.txt"), tabID);
-        
+
         SESSION.getTabList().get(tabID).rename("Hello");
-        
-       // SESSION.removeTab(tabID);
-                
-        
-        
+
+        // SESSION.removeTab(tabID);
     }
 
-  
 }

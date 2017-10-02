@@ -29,46 +29,48 @@ import javafx.scene.control.Tab;
  *
  * @author mathew
  */
-public class NeuralNetInterfaceController implements Initializable, ControllerInterface{
+public class NeuralNetInterfaceController implements Initializable, ControllerInterface {
+
     //Swing Nodes
-    private BinaryGrid GRID = new BinaryGrid(50,50);
+    private BinaryGrid GRID = new BinaryGrid(50, 50);
     private String NAME = "UNTITLED";
     private Tab NEURAL_TAB;
-    
+
     //FXML Nodes
     @FXML
     public Button CLOSE = new Button();
-    
+
     @FXML
     public SwingNode SWING_NODE = new SwingNode();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Listeners added");
         SWING_NODE.setContent(GRID);
         System.out.println("Added content");
-    }    
-    
-    
+    }
+
     //Actions
-    public void clear(){
+    public void clear() {
         GRID.clear();
     }
-    
-    public void evaluate(){
-        
+
+    public void evaluate() {
+
     }
-     public void train(){
-         
-     }
+
+    public void train() {
+
+    }
 
     @Override
     public void closeTab() {
-    this.NEURAL_TAB.getTabPane().getTabs().remove(NEURAL_TAB);
+        this.NEURAL_TAB.getTabPane().getTabs().remove(NEURAL_TAB);
     }
 
     @Override
     public void showTab(boolean visible) {
-        
+
     }
 
     @Override
@@ -79,13 +81,14 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
 
     @Override
     public void selectTab() {
-       
+
     }
-    public void setContectMenu(){
+
+    public void setContectMenu() {
         ContextMenu m = new ContextMenu();
-       // MenuItem mi = new MenuItems("Close");
-       // m.getItems()
-       //this.NEURAL_TAB.
+        // MenuItem mi = new MenuItems("Close");
+        // m.getItems()
+        //this.NEURAL_TAB.
     }
 
     @Override
@@ -95,9 +98,9 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
 
     @Override
     public void setTab(Tab t) {
-       this.NEURAL_TAB = t;
-       Resource r = new Resource("NeuralTab.fxml");
-       
+        this.NEURAL_TAB = t;
+        Resource r = new Resource("NeuralTab.fxml");
+
         try {
             t.setGraphic(r.getNode());
         } catch (IOException ex) {
@@ -108,7 +111,7 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
     @Override
     public void loadIntoTab(File res) {
         setText(res.getName());
-        System.out.println("Loading "+res.getPath());
+        System.out.println("Loading " + res.getPath());
     }
-    
+
 }
