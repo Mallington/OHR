@@ -10,5 +10,5 @@ package Util;
  * @author mathew
  */
 public class FX {
-   
+
 }

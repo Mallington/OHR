@@ -19,22 +19,24 @@ import java.util.logging.Logger;
  * @author mathew
  */
 public class Save {
-     private File FILE;
-  
-    public Save(File loc) throws FileNotFoundException{
-       FILE = loc;
+
+    private File FILE;
+
+    public Save(File loc) throws FileNotFoundException {
+        FILE = loc;
     }
-    public boolean write(Object toWrite) throws IOException{
+
+    public boolean write(Object toWrite) throws IOException {
         try {
             Files.write(FILE.toPath(), Util.ObjectConverter.serialize(toWrite));
-          
+
             return true;
         } catch (Exception e) {
-            
+
             System.out.println("Failed to write object");
             e.printStackTrace();
             return false;
         }
-        
+
     }
 }

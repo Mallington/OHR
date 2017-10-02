@@ -13,11 +13,18 @@ import javafx.scene.control.Tab;
  * @author mathew
  */
 public interface ControllerInterface {
+
     public void closeTab();
+
     public void showTab(boolean visible);
+
     public void setText(String title);
+
     public void selectTab();
+
     public Tab getTab();
+
     public void setTab(Tab t);
+
     public void loadIntoTab(File res);
 }

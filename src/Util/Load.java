@@ -18,25 +18,26 @@ import java.util.List;
  * @author mathew
  */
 public class Load {
+
     private File FILE;
-   
-    public Load(File loc) throws FileNotFoundException{
+
+    public Load(File loc) throws FileNotFoundException {
         FILE = loc;
-        
+
     }
-    
-    public Object load() throws IOException{
-        try{
-            
+
+    public Object load() throws IOException {
+        try {
+
             byte[] array = Files.readAllBytes(FILE.toPath());
             System.out.println("Arr " + array.length);
-            
+
             return Util.ObjectConverter.deserialize(array);
-        } catch (Exception e){
-           
-             return null;
+        } catch (Exception e) {
+
+            return null;
         }
-       
+
     }
-         
+
 }

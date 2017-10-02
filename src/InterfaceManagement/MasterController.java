@@ -12,20 +12,20 @@ import javafx.scene.control.TabPane;
  * @author mathew
  */
 public class MasterController {
-    
+
     private Session MASTER_SESSION;
-    
-    
-    public MasterController(Session toBeLoaded){
+
+    public MasterController(Session toBeLoaded) {
         MASTER_SESSION = toBeLoaded;
-        
+
     }
-    public void initSession(TabPane tabViewContext){
-        
+
+    public void initSession(TabPane tabViewContext) {
+
     }
-    public void createNewSession(){
-        
+
+    public void createNewSession() {
+
     }
-    
-    
+
 }

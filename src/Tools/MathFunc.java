@@ -10,6 +10,7 @@ package Tools;
  * @author mathew
  */
 public class MathFunc {
+
     public static double sigmoidValue(double arg) {
         return (1 / (1 + Math.exp(-arg)));
     }

@@ -18,13 +18,16 @@ import java.util.List;
  *
  * @author mathew
  */
-public class Session{
+public class Session {
+
     private List<TabController> TABS;
-    public Session(){
+
+    public Session() {
         TABS = new ArrayList<TabController>();
-  
+
     }
-    public Session(Session s){
+
+    public Session(Session s) {
         this.TABS = s.TABS;
     }
 
@@ -33,30 +36,29 @@ public class Session{
      * @param t
      * @return Returns the value of the tab in the array
      */
-    public int addTab(TabController t){
+    public int addTab(TabController t) {
         TABS.add(t);
-        return TABS.size()-1;
+        return TABS.size() - 1;
     }
-    public List<TabController> getTabList(){
+
+    public List<TabController> getTabList() {
         return this.TABS;
     }
-    public void loadFileInTab(File res, int tabID){
+
+    public void loadFileInTab(File res, int tabID) {
         TABS.get(tabID).loadFileIntoTab(res);
     }
-    
-    public void removeTab(int id){
+
+    public void removeTab(int id) {
         TABS.get(id).dispose();
         TABS.remove(id);
     }
-    
-    
-    public static void main(String args[]) throws FileNotFoundException, IOException{
+
+    public static void main(String args[]) throws FileNotFoundException, IOException {
         /*
         Session s = new Session();
         TabController<NeuralNetInterfaceController> t= new TabController<NeuralNetInterfaceController>(new NeuralNetInterfaceController());
         s.TABS.add(t);*/
-        
-        
-        
+
     }
 }
