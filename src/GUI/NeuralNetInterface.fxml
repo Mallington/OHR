@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.embed.swing.SwingNode?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane id="AnchorPane" prefHeight="510.0" prefWidth="702.0" style="-fx-background-color: white;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.NeuralNetInterfaceController">
@@ -22,6 +24,7 @@
                               <Button layoutX="8.0" layoutY="14.0" mnemonicParsing="false" onAction="#train" text="Train As:" />
                               <Button layoutX="9.0" layoutY="191.0" mnemonicParsing="false" onAction="#evaluate" text="Evaluate" />
                               <Button layoutX="19.0" layoutY="103.0" mnemonicParsing="false" onAction="#clear" text="Clear" />
+                              <ChoiceBox fx:id="CHARECTAR_SELECT" layoutX="9.0" layoutY="58.0" prefHeight="27.0" prefWidth="72.0" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -30,18 +33,14 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <SwingNode fx:id="SWING_NODE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Canvas id="s" fx:id="INPUT_PAD" height="230.0" layoutX="14.0" layoutY="1.0" width="230.0" />
                            </children>
                         </AnchorPane>
                     </content>
                   </TitledPane>
                   <TitledPane animated="false" layoutX="410.0" layoutY="9.0" prefHeight="260.0" prefWidth="260.0" text="Output">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <SwingNode fx:id="SWING_NODE1" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                           </children>
-                        </AnchorPane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" />
                      </content>
                   </TitledPane>
                </children>

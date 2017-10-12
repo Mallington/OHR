@@ -6,6 +6,7 @@
 package InterfaceManagement;
 
 import GUI.NeuralNetInterfaceController;
+import GUI.OutputController;
 import GUI.Resource;
 import java.io.File;
 import java.io.IOException;
@@ -36,9 +37,14 @@ public class TabController<ControllerType extends ControllerInterface> {
         System.out.println("Created Controller Type: " + controller.getClass().toGenericString());
         CONTROLLER_INSTANCE = controller;
     }
+    
+    public ControllerInterface getController(){
+        return CONTROLLER_INSTANCE;
+        
+    }
 
-    public static TabController createFromFXMLandLoadTab(TabPane tabs, String res) throws IOException {
-        ControllerInterface con = getController(tabs, res);
+    public static TabController createFromFXMLandLoadTab(TabPane tabs, String res, OutputController out) throws IOException {
+        ControllerInterface con = getController(tabs, res, out);
 
         return new TabController(con);
     }
@@ -52,7 +58,7 @@ public class TabController<ControllerType extends ControllerInterface> {
         return controller;
     }
 
-    private static ControllerInterface getController(TabPane tabs, String FXML) throws IOException {
+    private static ControllerInterface getController(TabPane tabs, String FXML, OutputController out) throws IOException {
         Resource res = new Resource(FXML);
         Tab t = new Tab();
         Node n = res.getNode();
@@ -63,6 +69,7 @@ public class TabController<ControllerType extends ControllerInterface> {
         ControllerInterface cont = (ControllerInterface) res.loadController();
         System.out.println("Loaded Controeller");
         cont.setTab(t);
+        cont.setOutputController(out);
         if (cont == null) {
             System.out.println("No Resource");
         }

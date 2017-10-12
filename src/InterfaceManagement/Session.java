@@ -40,13 +40,18 @@ public class Session {
         TABS.add(t);
         return TABS.size() - 1;
     }
-
+    
+    
+    public int getSelectedID(){
+        for(int i =0; i< TABS.size(); i++) if(TABS.get(i).getController().getTab().isSelected()) return i;
+        return -1;
+    }
     public List<TabController> getTabList() {
         return this.TABS;
     }
 
-    public void loadFileInTab(File res, int tabID) {
-        TABS.get(tabID).loadFileIntoTab(res);
+    public void loadFileInTab(File res, int tabControllerID) {
+        TABS.get(tabControllerID).loadFileIntoTab(res);
     }
 
     public void removeTab(int id) {

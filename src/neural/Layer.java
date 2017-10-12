@@ -20,6 +20,7 @@ public class Layer implements Serializable{
     public List<Neuron> NEURONS;
     public List<Double> currentOut;
     public List<Double> EXPECTED;
+    public String CHAR_SET ="";
     public Layer(){
         NEURONS = new ArrayList<Neuron>();
     }

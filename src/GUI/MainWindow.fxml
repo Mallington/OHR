@@ -6,8 +6,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -21,16 +20,18 @@
          <top>
             <MenuBar BorderPane.alignment="CENTER">
               <menus>
-                <Menu mnemonicParsing="false" onAction="#test" text="File">
+                <Menu mnemonicParsing="false" text="File">
                   <items>
                         <Menu mnemonicParsing="false" text="New">
                           <items>
                               <MenuItem mnemonicParsing="false" text="Training Data (.csv)" />
-                            <MenuItem mnemonicParsing="false" onAction="#test" text="Neural Net (.nns)" />
+                            <MenuItem mnemonicParsing="false" onAction="#newNeuralInterface" text="Neural Net (.nns)" />
                               <MenuItem mnemonicParsing="false" text="Form (.fs)" />
                           </items>
                         </Menu>
-                    <MenuItem id="MENU_FILE_CLOSE" mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" text="Open" />
+                        <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveAs" text="SaveAs" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
@@ -60,12 +61,7 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView layoutX="248.0" layoutY="-86.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                      <columns>
-                                        <TableColumn prefWidth="342.0000365972519" text="C1" />
-                                        <TableColumn minWidth="0.0" prefWidth="333.9999694824219" text="C2" />
-                                      </columns>
-                                    </TableView>
+                                    <TextArea fx:id="OUTPUT_TEXT" layoutX="248.0" layoutY="-26.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                           </content>

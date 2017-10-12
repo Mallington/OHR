@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -23,6 +24,8 @@ public class MainWindow extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        stage.getIcons().add(new Image(MainWindow.class.getResourceAsStream("Hand.png")));
+        
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         NeuralNetInterfaceController neuralController = loader.<NeuralNetInterfaceController>getController();
@@ -31,6 +34,8 @@ public class MainWindow extends Application {
 
         stage.setScene(scene);
         stage.show();
+        
+        
     }
 
 }

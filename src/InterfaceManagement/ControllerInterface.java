@@ -5,6 +5,7 @@
  */
 package InterfaceManagement;
 
+import GUI.OutputController;
 import java.io.File;
 import javafx.scene.control.Tab;
 
@@ -27,4 +28,14 @@ public interface ControllerInterface {
     public void setTab(Tab t);
 
     public void loadIntoTab(File res);
+    
+    public void setOutputController(OutputController out);
+    
+    public void save();
+    
+    public void saveAs(File f);
+    
+    public boolean hasSaved();
+    
+    public void saveAsNew();
 }
