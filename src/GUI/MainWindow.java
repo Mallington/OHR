@@ -28,7 +28,7 @@ public class MainWindow extends Application {
         
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
-        NeuralNetInterfaceController neuralController = loader.<NeuralNetInterfaceController>getController();
+       // NeuralNetInterfaceController neuralController = loader.<NeuralNetInterfaceController>getController();
 
         Scene scene = new Scene(root);
 

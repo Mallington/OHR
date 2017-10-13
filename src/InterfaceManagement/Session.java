@@ -50,9 +50,7 @@ public class Session {
         return this.TABS;
     }
 
-    public void loadFileInTab(File res, int tabControllerID) {
-        TABS.get(tabControllerID).loadFileIntoTab(res);
-    }
+   
 
     public void removeTab(int id) {
         TABS.get(id).dispose();

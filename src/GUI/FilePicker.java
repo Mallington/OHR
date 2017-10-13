@@ -6,6 +6,8 @@
 package GUI;
 
 import java.io.File;
+import java.lang.reflect.Array;
+import java.util.List;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -27,21 +29,30 @@ public class FilePicker {
         PICKER.setInitialFileName(defaultName+fileType);
         FILE_TYPE = fileType;
     }
+    public FilePicker(String descriptor,List<String> fileTypes){
+        PICKER = new FileChooser();
+        for(String fileType : fileTypes) PICKER.getExtensionFilters().add(new ExtensionFilter(descriptor+" ("+fileType+")","*"+fileType));
+      
+    }
     
     public File getFile(Stage s, int option){
         
-        File f;
+        File f= null;
         
-        if(option == SAVE)f= PICKER.showSaveDialog(s);
+        if(option == SAVE){
+            f= PICKER.showSaveDialog(s);
+            if(!f.getName().contains(FILE_TYPE)){
+            f = new File(f.getAbsoluteFile()+FILE_TYPE);
+        }
+        }
         else if(option == OPEN ) f= PICKER.showOpenDialog(s);
         else {
             f= null;
             System.out.println("Not a valid option!");
         }
-        if(!f.getName().contains(FILE_TYPE)){
-            f = new File(f.getAbsoluteFile()+FILE_TYPE);
+        
             
-        }
+        
         return f;
         
     }

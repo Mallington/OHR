@@ -88,9 +88,7 @@ public class TabController<ControllerType extends ControllerInterface> {
 
     }
 
-    public void loadFileIntoTab(File res) {
-        CONTROLLER_INSTANCE.loadIntoTab(res);
-    }
+   
 
     public static void main(String args[]) {
 

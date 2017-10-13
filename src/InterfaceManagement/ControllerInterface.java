@@ -27,7 +27,7 @@ public interface ControllerInterface {
 
     public void setTab(Tab t);
 
-    public void loadIntoTab(File res);
+    public void load(File f);
     
     public void setOutputController(OutputController out);
     

@@ -87,6 +87,7 @@ public class Layer implements Serializable{
             n.displayContents();
             count++;
     }
+      
     }
     
     public static void main(String args[]){

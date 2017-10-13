@@ -7,9 +7,11 @@ package GUI;
 
 import GUI.Components.DrawingGrid;
 import InterfaceManagement.ControllerInterface;
+import Util.Load;
 import Util.Save;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
@@ -76,6 +78,27 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
         DGRID = new DrawingGrid(30, 30, INPUT_PAD);
 
     }
+    
+    @Override
+    public void load(File f){
+     this.ORIGINAL_DIRECTORY = f;
+        try {
+            Object in = new Load(this.ORIGINAL_DIRECTORY).load();
+            if(in.getClass().equals(this.NEURAL_LAYER.getClass())){
+                this.NEURAL_LAYER =  (Layer)in;
+                OUT.print("Loaded "+this.ORIGINAL_DIRECTORY.getName());
+                OUT.print("Charectar set: "+this.NEURAL_LAYER.CHAR_SET);
+                this.setText(this.ORIGINAL_DIRECTORY.getName());
+                this.NEW_DOCUMENT = false;
+                this.SAVED = true;
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(NeuralNetInterfaceController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(NeuralNetInterfaceController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+    }
 
     //Actions
     public void clear() {
@@ -84,7 +107,7 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
     }
 
     public void evaluate() {
-
+    //   this.NEURAL_LAYER.forwardProp(TrainingSet.)
     }
 
     public void train() {
@@ -113,6 +136,8 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
         this.NEURAL_TAB.setText(title);
         this.NAME = title;
     }
+    
+    
 
     @Override
     public void selectTab() {
@@ -152,12 +177,7 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
         }*/
     }
 
-    @Override
-    public void loadIntoTab(File res) {
-        setText(res.getName());
-        this.setText(res.getName());
-        OUT.print("Loading " + res.getPath());
-    }
+   
 
     @Override
     public void setOutputController(OutputController out) {
@@ -200,7 +220,7 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
     @Override
     public void save() {
         if (NEW_DOCUMENT) {
-            this.OUT.print("Ah, it seems you have not saved it before.");
+            this.OUT.print("Saving as new file, good and new!");
            FilePicker fp = new FilePicker(".nns","neural net struct","Unitled");
        // fp.getFile(this.getTab().getTabPane().getScene().get)
       Stage s =  (Stage)this.CLOSE.getScene().getWindow();
