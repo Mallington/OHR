@@ -15,9 +15,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -35,6 +38,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.stage.Stage;
 import neural.Layer;
+import neural.TrainingSet;
 
 /**
  * FXML Controller class
@@ -71,13 +75,20 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
 
         NEURAL_LAYER = new Layer();
         NEURAL_LAYER.CHAR_SET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        //  CHARECTAR_SELECT.set
         NEURAL_LAYER.generateRandomNeurons(26, 900);
-
-        DGRID = new DrawingGrid(30, 30, INPUT_PAD);
+        setGUI (this.NEURAL_LAYER);
 
     }
+    
+    
+    private void setGUI(Layer l){
+         ObservableList<String> list = FXCollections.observableArrayList();
+        for(char c : l.CHAR_SET.toCharArray()) list.add("Char: "+c);
+        CHARECTAR_SELECT.setItems(list);
+        CHARECTAR_SELECT.getSelectionModel().selectFirst();
+        DGRID = new DrawingGrid(30, 30, INPUT_PAD);
+    
+}
     
     @Override
     public void load(File f){
@@ -91,6 +102,7 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
                 this.setText(this.ORIGINAL_DIRECTORY.getName());
                 this.NEW_DOCUMENT = false;
                 this.SAVED = true;
+                this.setGUI(NEURAL_LAYER);
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(NeuralNetInterfaceController.class.getName()).log(Level.SEVERE, null, ex);
@@ -107,11 +119,29 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
     }
 
     public void evaluate() {
-    //   this.NEURAL_LAYER.forwardProp(TrainingSet.)
+             this.OUT.print("Evaluating");
+                List<Double> out = this.NEURAL_LAYER.forwardProp(new TrainingSet(this.DGRID.getOutput(), 0, this.NEURAL_LAYER.NEURONS.size()));
+              double biggest = out.get(0);
+              int neuronPos =0;
+               for(int i =1; i< out.size(); i++){
+                   if(out.get(i)> biggest) {
+                       biggest = out.get(i);
+                       neuronPos = i;
+                   }
+               }
+               this.OUT.print("Recognised as "+this.NEURAL_LAYER.CHAR_SET.substring(neuronPos, neuronPos+1));
+   
     }
 
     public void train() {
-
+        int selection =0;
+        for(int i =0; i < this.NEURAL_LAYER.CHAR_SET.length(); i++){
+            if(this.NEURAL_LAYER.CHAR_SET.subSequence(i, i+1) == this.CHARECTAR_SELECT.getValue()){
+                selection = i;
+            }
+        }
+        OUT.print("Selected "+this.NEURAL_LAYER.CHAR_SET.subSequence(selection, selection+1));
+      this.NEURAL_LAYER.backwardProp(new TrainingSet(this.DGRID.getOutput(), selection, this.NEURAL_LAYER.NEURONS.size()));
     }
     
     public void saveAsNew(){
