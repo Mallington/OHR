@@ -12,12 +12,15 @@ import java.io.Serializable;
  * @author mathew
  */
 public class Input implements Serializable{
-    double inp= 0;
-    double weight= 0;
+    double inp= 0.0;
+    double weight= 0.0;
     String label;
     public Input(double inp, double weight){
         this.inp = inp;
         this.weight = weight;
+    }
+    public double getWeight(){
+        return this.weight;
     }
     
      public Input(double inp){

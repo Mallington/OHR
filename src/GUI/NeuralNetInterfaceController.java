@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -36,17 +37,21 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
+import neural.Input;
 import neural.Layer;
+import neural.Neuron;
 import neural.TrainingSet;
-
+// meaning of everything
 /**
  * FXML Controller class
  *
  * @author mathew
  */
 public class NeuralNetInterfaceController implements Initializable, ControllerInterface {
-
+    
     private String NAME = "UNTITLED.nns";
     private Tab NEURAL_TAB;
     OutputController OUT;
@@ -59,8 +64,12 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
     public boolean NEW_DOCUMENT = true;
     
     private File ORIGINAL_DIRECTORY;
-
+    
+    
     //FXML Nodes
+    @FXML
+    public Text OUT_LETTER = new Text();
+    
     @FXML
     public Button CLOSE = new Button();
 
@@ -74,8 +83,11 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
     public void initialize(URL url, ResourceBundle rb) {
 
         NEURAL_LAYER = new Layer();
-        NEURAL_LAYER.CHAR_SET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+       
+        
         NEURAL_LAYER.generateRandomNeurons(26, 900);
+        NEURAL_LAYER.setCharSet("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        
         setGUI (this.NEURAL_LAYER);
 
     }
@@ -83,11 +95,11 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
     
     private void setGUI(Layer l){
          ObservableList<String> list = FXCollections.observableArrayList();
-        for(char c : l.CHAR_SET.toCharArray()) list.add("Char: "+c);
+        for(Neuron n: this.NEURAL_LAYER.NEURONS) list.add(n.NAME);
         CHARECTAR_SELECT.setItems(list);
         CHARECTAR_SELECT.getSelectionModel().selectFirst();
         DGRID = new DrawingGrid(30, 30, INPUT_PAD);
-    
+        
 }
     
     @Override
@@ -98,7 +110,7 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
             if(in.getClass().equals(this.NEURAL_LAYER.getClass())){
                 this.NEURAL_LAYER =  (Layer)in;
                 OUT.print("Loaded "+this.ORIGINAL_DIRECTORY.getName());
-                OUT.print("Charectar set: "+this.NEURAL_LAYER.CHAR_SET);
+                
                 this.setText(this.ORIGINAL_DIRECTORY.getName());
                 this.NEW_DOCUMENT = false;
                 this.SAVED = true;
@@ -117,7 +129,6 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
         DGRID.clear();
         OUT.print("Clearing");
     }
-
     public void evaluate() {
              this.OUT.print("Evaluating");
                 List<Double> out = this.NEURAL_LAYER.forwardProp(new TrainingSet(this.DGRID.getOutput(), 0, this.NEURAL_LAYER.NEURONS.size()));
@@ -129,31 +140,41 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
                        neuronPos = i;
                    }
                }
-               this.OUT.print("Recognised as "+this.NEURAL_LAYER.CHAR_SET.substring(neuronPos, neuronPos+1));
+               
+              OUT_LETTER.setText(this.NEURAL_LAYER.NEURONS.get(neuronPos).NAME);
+              this.OUT.print("Recognised as "+this.NEURAL_LAYER.NEURONS.get(neuronPos).NAME);
    
     }
 
     public void train() {
-        int selection =0;
-        for(int i =0; i < this.NEURAL_LAYER.CHAR_SET.length(); i++){
-            if(this.NEURAL_LAYER.CHAR_SET.subSequence(i, i+1) == this.CHARECTAR_SELECT.getValue()){
-                selection = i;
-            }
-        }
-        OUT.print("Selected "+this.NEURAL_LAYER.CHAR_SET.subSequence(selection, selection+1));
+        // NEURAL_LAYER.displayContents();
+       int selection =  this.getChoiceBox();
+        OUT.print("Selected "+this.NEURAL_LAYER.NEURONS.get(selection));
       this.NEURAL_LAYER.backwardProp(new TrainingSet(this.DGRID.getOutput(), selection, this.NEURAL_LAYER.NEURONS.size()));
+      this.setModified();
     }
-    
+    // Here is a message
     public void saveAsNew(){
         this.NEW_DOCUMENT = true;
         this.save();
     }
+    
+    private int getChoiceBox(){
+     return this.CHARECTAR_SELECT.getSelectionModel().getSelectedIndex();
+        
+        
+       
+    }
 
     @Override
     public void closeTab() {
-        if(!SAVED){
+      
+        if(!SAVED ){
         save();}
-        this.NEURAL_TAB.getTabPane().getTabs().remove(NEURAL_TAB);
+       
+        NEURAL_TAB.getTabPane().getTabs().remove(NEURAL_TAB);
+       
+        
     }
 
     @Override
@@ -176,6 +197,7 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
 
     public void setContextMenu() {
         ContextMenu m = new ContextMenu();
+        
         // MenuItem mi = new MenuItems("Close");
         // m.getItems()
         //this.NEURAL_TAB.
@@ -247,6 +269,14 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
             }
     }
 
+    private boolean saveMenu(){
+        String[] buttons = { "Yes", "No"};    
+int returnValue = JOptionPane.showOptionDialog(null, "Oh dear", "Would you like to save", JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[0]);
+        if(returnValue == 0) return true;
+        else return false;
+    }
+    
+    
     @Override
     public void save() {
         if (NEW_DOCUMENT) {
@@ -267,6 +297,39 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
            saveFile(this.ORIGINAL_DIRECTORY);
         }
         
+    }
+    
+    public void peek(){
+        OUT.print("Peeking");
+        List<Double> toSet = new ArrayList<Double>();
+        for(Input i: this.NEURAL_LAYER.NEURONS.get(this.getChoiceBox()).inputs) toSet.add(i.getWeight());
+         
+        double largestVal =toSet.get(0);
+        double lowestVal = toSet.get(0);
+        for(double d : toSet) if (d> largestVal) largestVal = d;
+        for(double d : toSet) if (d< lowestVal) lowestVal = d;
+        
+        for(int i =0; i< toSet.size(); i++) {
+            
+             if(toSet.get(i)>0){
+                 toSet.set(i,  (toSet.get(i)+Math.abs(lowestVal))/(largestVal-lowestVal));
+             }
+             else{
+                 toSet.set(i, (Math.abs(lowestVal)-Math.abs(toSet.get(i)))/(largestVal-lowestVal));
+             }
+            
+             
+           
+        }
+      //  for(Double d: toSet) System.out.println("New "+d);
+        
+        
+       this.DGRID.setContents(toSet);
+       
+    }
+    
+    public void endPeek(){
+       this.DGRID.clear();
     }
 
 }

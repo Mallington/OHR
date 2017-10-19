@@ -24,7 +24,9 @@ public Grid(int x, int y, obj init){
     Y_LENGTH =y;
 }
 
-
+public void setList(List<obj> list){
+    data = list;
+}
 public List<obj> getList(){
     return data;
 }

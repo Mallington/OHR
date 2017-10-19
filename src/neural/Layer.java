@@ -20,13 +20,22 @@ public class Layer implements Serializable{
     public List<Neuron> NEURONS;
     public List<Double> currentOut;
     public List<Double> EXPECTED;
-    public String CHAR_SET ="";
+   // public String CHAR_SET ="";
     public Layer(){
         NEURONS = new ArrayList<Neuron>();
     }
     public Layer(List<Neuron> neurons){
         NEURONS = neurons;
     }
+    
+    public void setCharSet(String charSet){
+        int i =0;
+        for(char c: charSet.toCharArray()) {
+            
+            this.NEURONS.get(i++).NAME = c+"";
+                    }
+    }
+    
     
     public List<Double> forwardProp(TrainingSet train){
         setInputs(train);

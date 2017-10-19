@@ -6,6 +6,7 @@
 package GUI.Components;
 
 import GUI.Storage.Grid;
+import Tools.MathFunc;
 import java.awt.Rectangle;
 import java.util.List;
 import java.util.TimerTask;
@@ -17,6 +18,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 /**
  *
@@ -44,7 +46,15 @@ public class DrawingGrid {
 
         //runGraphics();
     }
-
+    public void setContents(List<Double> contents){
+        if(contents.size() == this.getOutput().size()){
+        this.GRID.setList(contents);
+        tick();
+        }
+        else{
+            System.out.println("Array mismatch!");
+    }
+    }
     public List<Double> getOutput() {
         return GRID.getList();
     }
@@ -134,11 +144,11 @@ public class DrawingGrid {
         for (int x = 0; x < G_WIDTH; x++) {
             for (int y = 0; y < G_HEIGHT; y++) {
 
-                if (GRID.get(x, y) >= 0.5) {
-                    g.setFill(Color.BLACK);
-                } else {
-                    g.setFill(Color.WHITE);
-                }
+              
+                if(this.GRID.get(x, y)>1) System.out.println("Above 1 wut! "+this.GRID.get(x, y));
+                int col = 255-(int)((this.GRID.get(x, y)*255.0));
+                if(col>255) System.out.println("Above 255: "+col+"guilty num: "+this.GRID.get(x, y)+", x "+x+", y "+y);
+                g.setFill(Color.rgb(col, col, col));
 
                 g.fillRect(BOUNDS[x][y].getX(), BOUNDS[x][y].getY(), BOUNDS[x][y].getWidth(), BOUNDS[x][y].getHeight());
 

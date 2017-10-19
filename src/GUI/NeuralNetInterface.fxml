@@ -7,8 +7,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="510.0" prefWidth="702.0" style="-fx-background-color: white;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.NeuralNetInterfaceController">
+<AnchorPane id="AnchorPane" prefHeight="510.0" prefWidth="702.0" style="-fx-background-color: white;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.NeuralNetInterfaceController">
     <stylesheets>
        
     </stylesheets>
@@ -25,6 +27,7 @@
                               <Button layoutX="9.0" layoutY="191.0" mnemonicParsing="false" onAction="#evaluate" text="Evaluate" />
                               <Button layoutX="19.0" layoutY="103.0" mnemonicParsing="false" onAction="#clear" text="Clear" />
                               <ChoiceBox fx:id="CHARECTAR_SELECT" layoutX="9.0" layoutY="58.0" prefHeight="27.0" prefWidth="72.0" />
+                              <Button layoutX="20.0" layoutY="147.0" mnemonicParsing="false" onMouseClicked="#peek" onMouseReleased="#endPeek" text="Peek" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -33,14 +36,21 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Canvas id="s" fx:id="INPUT_PAD" height="230.0" layoutX="14.0" layoutY="1.0" width="230.0" />
+                              <Canvas fx:id="INPUT_PAD" height="230.0" layoutX="14.0" layoutY="1.0" width="230.0" />
                            </children>
                         </AnchorPane>
                     </content>
                   </TitledPane>
                   <TitledPane animated="false" layoutX="410.0" layoutY="9.0" prefHeight="260.0" prefWidth="260.0" text="Output">
                      <content>
-                        <Pane prefHeight="200.0" prefWidth="200.0" />
+                        <Pane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Text fx:id="OUT_LETTER" layoutX="81.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_">
+                                 <font>
+                                    <Font name="Georgia" size="150.0" />
+                                 </font>
+                              </Text>
+                           </children></Pane>
                      </content>
                   </TitledPane>
                </children>
