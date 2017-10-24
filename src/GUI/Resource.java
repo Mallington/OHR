@@ -11,12 +11,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.stage.Popup;
 
 /**
  *
  * @author mathew
  */
-public class Resource {
+public class Resource <ControllerType>{
 
     private FXMLLoader LOADER;
     private String RESOURCE;
@@ -30,9 +31,9 @@ public class Resource {
         RESOURCE = res;
     }
 
-    public ControllerInterface loadController() throws IOException {
+    public ControllerType loadController() throws IOException {
 
-        ControllerInterface con = LOADER.getController();
+        ControllerType con = LOADER.getController();
 
         return con;
     }
@@ -41,4 +42,15 @@ public class Resource {
 
         return LOADER.load(getClass().getResource(RESOURCE).openStream());
     }
+    
+    public static void main(String args[]) throws IOException{
+        Popup p = new Popup();
+        Resource r = new Resource("CropWindow.fxml");
+        p.getContent().add(r.getNode());
+        
+        
+    }
+    
+  
+    
 }

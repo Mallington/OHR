@@ -7,6 +7,7 @@ package GUI;
 
 import GUI.Components.DrawingGrid;
 import InterfaceManagement.ControllerInterface;
+import InterfaceManagement.SubControllerInterface;
 import Util.Load;
 import Util.Save;
 
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
@@ -38,7 +40,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.scene.text.Text;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javax.swing.JOptionPane;
 import neural.Input;
 import neural.Layer;
@@ -56,6 +60,8 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
     private Tab NEURAL_TAB;
     OutputController OUT;
     private Layer NEURAL_LAYER;
+    private Window WINDOW;
+    
 
     private DrawingGrid DGRID;
 
@@ -81,7 +87,7 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+         Platform.runLater(() -> WINDOW = this.INPUT_PAD.getScene().getWindow());
         NEURAL_LAYER = new Layer();
        
         
@@ -163,6 +169,35 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
      return this.CHARECTAR_SELECT.getSelectionModel().getSelectedIndex();
         
         
+       
+    }
+    public void loadImage() throws InterruptedException {
+        System.out.println("Loading Image");
+        
+    
+           Popup p = new Popup();
+          
+        
+        Resource<SubControllerInterface> r = new Resource<SubControllerInterface>("CropWindow.fxml");
+        
+        try{
+           
+        p.getContent().add(r.getNode()); 
+         p.setAnchorX((WINDOW.getX()+WINDOW.getWidth()/2)-p.getWidth()/2);
+            p.setAnchorY((WINDOW.getY()+50));
+        SubControllerInterface cont = r.loadController();
+        cont.disclosePopup(p);
+        } catch(Exception e){System.out.println("Fail");}
+        System.out.println("Showing Window");
+         p.show(WINDOW);
+           
+        
+ 
+       
+       
+       
+       
+      
        
     }
 
@@ -283,7 +318,7 @@ int returnValue = JOptionPane.showOptionDialog(null, "Oh dear", "Would you like 
             this.OUT.print("Saving as new file, good and new!");
            FilePicker fp = new FilePicker(".nns","neural net struct","Unitled");
        // fp.getFile(this.getTab().getTabPane().getScene().get)
-      Stage s =  (Stage)this.CLOSE.getScene().getWindow();
+      Stage s =  (Stage)WINDOW;
     
       try{
         File f = fp.getFile(s, FilePicker.SAVE); 
