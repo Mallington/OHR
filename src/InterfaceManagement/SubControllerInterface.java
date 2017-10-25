@@ -19,4 +19,5 @@ public interface SubControllerInterface {
     public void load(URL url);
     public void setBackColour(Paint p);
     public void disclosePopup(Popup popInst);
+    public Object getReturn();
 }

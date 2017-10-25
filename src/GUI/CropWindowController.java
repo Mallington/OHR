@@ -58,6 +58,9 @@ public class CropWindowController implements Initializable, SubControllerInterfa
     private Window WINDOW;
     
     private Popup POPUP = null;
+    
+    private Image RETURN = null;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Init");
@@ -77,7 +80,7 @@ public class CropWindowController implements Initializable, SubControllerInterfa
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                CROP_PANEL.setScale((double) newValue);
-                System.out.println("Scale: "+(double)newValue);
+              
             }
         });
         
@@ -119,6 +122,11 @@ public class CropWindowController implements Initializable, SubControllerInterfa
     @Override
     public void disclosePopup(Popup popInst) {
         POPUP = popInst;
+    }
+
+    @Override
+    public Object getReturn() {
+        return RETURN;
     }
 
    

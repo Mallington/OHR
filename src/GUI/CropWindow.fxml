@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="600.0" style="-fx-background-color: WHITE; -fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CropWindowController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="600.0" style="-fx-background-color: WHITESMOKE;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CropWindowController">
    <children>
       <VBox alignment="CENTER" layoutX="10.0" layoutY="14.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -23,7 +23,7 @@
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
                   <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Submit" />
                   <Label text="Scale" />
-                  <Slider fx:id="SCALE" blockIncrement="0.2" max="1.0" min="0.2" value="1.0" />
+                  <Slider fx:id="SCALE" blockIncrement="0.2" max="10.0" min="0.2" value="1.0" />
                </children>
             </HBox>
          </children>

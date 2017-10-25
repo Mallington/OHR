@@ -28,7 +28,7 @@ public class CropPanel {
 
     private Canvas CANVAS;
     private boolean GEN_FRAME = true;
-    private Paint BACK_COLOUR = Paint.valueOf("GREY");
+    private Paint BACK_COLOUR = Paint.valueOf("BLACK");
     private Image DOCUMENT;
     private double X_OFF =0;
     private double Y_OFF =0;
@@ -59,6 +59,10 @@ public class CropPanel {
         tick();
     }
     
+    public Image getImage(){
+        return this.DOCUMENT; // Need to put in cropping
+    }
+    
 
    
 
@@ -77,7 +81,7 @@ public class CropPanel {
             public void handle(Event event) {
                 ScrollEvent s = (ScrollEvent) event;
                 
-                X_OFF +=s.getDeltaX();
+              X_OFF +=s.getDeltaX();
                 Y_OFF += s.getDeltaY();
                 
                 tick();
@@ -101,12 +105,13 @@ public class CropPanel {
             GraphicsContext g = CANVAS.getGraphicsContext2D();
             
             g.setFill(this.BACK_COLOUR);
-            
+           
+          
             g.fillRect(0, 0,CANVAS.getWidth(), CANVAS.getHeight());
             g.scale(SCALE, SCALE);
             g.drawImage(DOCUMENT, this.X_OFF,this.Y_OFF);
              g.scale(1.0/SCALE, 1.0/SCALE); //reverts scale back to original
-          
+            
         }
     }
 

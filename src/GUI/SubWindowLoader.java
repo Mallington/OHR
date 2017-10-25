@@ -11,6 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -22,62 +24,66 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 
 /**
  *
  * @author mathew
  */
-public class SubWindowLoader extends Application {
-    private static SubControllerInterface CONTROLLER;
-    private static String TITLE = "Sub Window";
-    private static String FXML = null;
-    
-   
-    public static SubControllerInterface createGUI(String fxml, String title, String[] args) {
-        FXML = fxml;
-        TITLE = title;
-        launch(args);
-        return CONTROLLER;
+public class SubWindowLoader {
+
+    private Window WINDOW;
+    private SubControllerInterface CONTROLLER;
+    private Popup POPUP;
+
+    public SubWindowLoader(String FXML, Window windInst) {
+        WINDOW = windInst;
+        POPUP = new Popup();
+        
+
+        try {
+            Resource<SubControllerInterface> r = new Resource<SubControllerInterface>(FXML);
+            POPUP.getContent().add(r.getNode());
+            centerPopup();
+            CONTROLLER = r.loadController();
+            CONTROLLER.disclosePopup(POPUP);
+        } catch (Exception e) {
+            System.out.println("Fail");
+        }
+
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
-       
-        stage.initStyle(StageStyle.UTILITY);
-        stage.setTitle(TITLE);
-        if(FXML == null) System.out.println("NULL!");
-       Resource<SubControllerInterface> r = new Resource<SubControllerInterface>(this.FXML);
-       System.out.println("Test");
-      
-       
-       
-       // FXMLLoader loader = new FXMLLoader(getClass().getResource("CropWindow.fxml"));
-      // SubControllerInterface controller = loader.<SubControllerInterface>getController();
+    public SubControllerInterface getController() {
+        return this.CONTROLLER;
+    }
 
-        Scene scene = new Scene((Parent) r.getNode());
-
-        stage.setScene(scene);
-        stage.show(); 
-        CONTROLLER = r.loadController();
-        
-       
+    private void centerPopup() {
+        POPUP.setAnchorX((WINDOW.getX() + WINDOW.getWidth() / 2) - POPUP.getWidth() / 2);
+        POPUP.setAnchorY((WINDOW.getY() + WINDOW.getHeight() / 2) - POPUP.getHeight() / 2);
     }
     
-    
-    
-    public static void main(String args[]){
-    
-/*
-   
-        
-        
-        SubWindowLoader sub = new SubWindowLoader();
-        System.out.println("1");
-        new Thread(new Runnable(){public void run(){
-        createGUI("CropWindow.fxml", "Select Image", args);  }}).start();
-        System.out.println("Number 2");
-        createGUI("CropWindow.fxml", "Select Image 2", args);*/
+    public void show(){
+         WINDOW.setOpacity(0.5);
+         POPUP.setOnHiding(new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                POPUP.getOwnerWindow().setOpacity(1.0);
+            }
+        });
+        POPUP.show(WINDOW);
     }
+    
+    public Object getReturn(){
+        Object ret = null;
+       
+        while(CONTROLLER.getReturn() == null && POPUP.isShowing());
+       
+        POPUP.hide();
+        return ret;
+    }
+    
+
 }

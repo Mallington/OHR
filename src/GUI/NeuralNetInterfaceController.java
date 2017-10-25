@@ -173,25 +173,16 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
     }
     public void loadImage() throws InterruptedException {
         System.out.println("Loading Image");
+        SubWindowLoader wind = new SubWindowLoader("CropWindow.fxml", WINDOW);
+        wind.show();
+        Runnable r = new Runnable(){public void run(){
         
-    
-           Popup p = new Popup();
-          
         
-        Resource<SubControllerInterface> r = new Resource<SubControllerInterface>("CropWindow.fxml");
-        
-        try{
-           
-        p.getContent().add(r.getNode()); 
-         p.setAnchorX((WINDOW.getX()+WINDOW.getWidth()/2)-p.getWidth()/2);
-            p.setAnchorY((WINDOW.getY()+50));
-        SubControllerInterface cont = r.loadController();
-        cont.disclosePopup(p);
-        } catch(Exception e){System.out.println("Fail");}
-        System.out.println("Showing Window");
-         p.show(WINDOW);
-           
-        
+        wind.getReturn();
+         
+           }};
+        new Thread(r).start();
+       // Platform.runLater(r);
  
        
        
