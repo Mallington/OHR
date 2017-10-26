@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -80,8 +81,8 @@ public class SubWindowLoader {
         Object ret = null;
        
         while(CONTROLLER.getReturn() == null && POPUP.isShowing());
-       
-        POPUP.hide();
+        
+       Platform.runLater( ()-> POPUP.hide());
         return ret;
     }
     

@@ -69,9 +69,9 @@ public class CropWindowController implements Initializable, SubControllerInterfa
         try {
              URL imageR = getClass().getResource("UpperCase.jpg");
             Image image = ImageTools.convertBuffered(ImageIO.read(imageR));
-            CROP_PANEL = new CropPanel(image,this.CROP_CANVAS);
+            CROP_PANEL = new CropPanel(image,this.CROP_CANVAS,30,30);
         } catch (IOException ex) {
-            CROP_PANEL = new CropPanel(null,this.CROP_CANVAS);
+            CROP_PANEL = new CropPanel(null,this.CROP_CANVAS, 30,30);
         }
         
         
@@ -91,7 +91,9 @@ public class CropWindowController implements Initializable, SubControllerInterfa
     
     
     
-    
+    public void submit(){
+        RETURN = CROP_PANEL.getImage();
+    }
     
 
    

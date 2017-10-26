@@ -21,7 +21,7 @@
                <children>
                   <Button alignment="CENTER" mnemonicParsing="false" text="Load" />
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
-                  <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Submit" />
+                  <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#submit" text="Submit" />
                   <Label text="Scale" />
                   <Slider fx:id="SCALE" blockIncrement="0.2" max="10.0" min="0.2" value="1.0" />
                </children>
