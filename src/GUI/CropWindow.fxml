@@ -19,7 +19,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="90.0" prefWidth="598.0" spacing="10.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" text="Load" />
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#open" text="Open" />
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
                   <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#submit" text="Submit" />
                   <Label text="Scale" />

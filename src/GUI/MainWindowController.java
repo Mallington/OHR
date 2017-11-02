@@ -31,6 +31,10 @@ import javafx.stage.Stage;
  */
 public class MainWindowController implements Initializable{
 
+   
+    
+    
+    
     private Session SESSION = new Session();
     @FXML
     Text TEXT = new Text();

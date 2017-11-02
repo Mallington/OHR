@@ -11,7 +11,9 @@ import InterfaceManagement.ControllerInterface;
 import InterfaceManagement.SubControllerInterface;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +31,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.stage.Popup;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
 
@@ -89,10 +92,20 @@ public class CropWindowController implements Initializable, SubControllerInterfa
         
     }   
     
+    public void open() throws MalformedURLException{
+         FilePicker pick = new FilePicker("Image ", Arrays.asList(".jpg",".png"));
+         File picked = pick.getFile(null, FilePicker.OPEN);
+         this.load(picked.toURI().toURL());
+    }
+    
     
     
     public void submit(){
+      
+          
         RETURN = CROP_PANEL.getImage();
+        
+        
     }
     
 
@@ -128,6 +141,7 @@ public class CropWindowController implements Initializable, SubControllerInterfa
 
     @Override
     public Object getReturn() {
+        
         return RETURN;
     }
 

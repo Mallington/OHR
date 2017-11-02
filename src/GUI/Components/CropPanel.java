@@ -7,6 +7,7 @@ package GUI.Components;
 
 import GUI.Storage.Grid;
 import GUI.Storage.Point;
+import ImageProcessing.ImageTools;
 
 
 import javafx.beans.value.ChangeListener;
@@ -47,6 +48,8 @@ public class CropPanel {
     
     private Rectangle CROP_BOUND;
     
+    private boolean moveCrop = false;
+    
     public CropPanel(Image i, Canvas canv, int ratX, int ratY) {
         RAT_X = ratX;
         RAT_Y = ratY;
@@ -81,7 +84,14 @@ public class CropPanel {
     }
     
     public Image getImage(){
-        return this.DOCUMENT; // Need to put in cropping
+        double x = ( (this.CROP_BOUND.getX()-(this.X_OFF))) /SCALE;
+        double y =  ((this.CROP_BOUND.getY()- (this.Y_OFF)))/SCALE;
+        double width = this.CROP_BOUND.getWidth()/SCALE;
+        double height = this.CROP_BOUND.getHeight()/SCALE;
+        
+       return ImageTools.convertBuffered(ImageTools.cropImage(this.DOCUMENT, (int)x, (int)y, (int)width, (int)height));
+       // return this.DOCUMENT;
+      
     }
     
 
@@ -94,9 +104,19 @@ public class CropPanel {
             @Override
             public void handle(MouseEvent event) {
                 if(!(prev == null)){
-                    X_OFF += (event.getX() - prev.getX());
-                    Y_OFF += (event.getY() - prev.getY());
+                    
+                    if(moveCrop){
+                        CROP_BOUND.setX(CROP_BOUND.getX()+(event.getX() - prev.getX()));
+                        CROP_BOUND.setY(CROP_BOUND.getY()+(event.getY() - prev.getY()));
+                    }
+                    else{
+                        X_OFF += (event.getX() - prev.getX());
+                        Y_OFF += (event.getY() - prev.getY()); 
+                    }
+                    
+                   
                 }
+               
                 
                 prev = new Point(event.getX(),event.getY());
                
@@ -109,18 +129,23 @@ public class CropPanel {
 
             @Override
             public void handle(MouseEvent event) {
-            
+                System.out.println("Mouse released");
+               moveCrop = false;
                prev = null;
+               tick();
             }
         });
          
-         CANVAS.addEventHandler(MouseEvent.MOUSE_CLICKED,
+         CANVAS.addEventHandler(MouseEvent.MOUSE_PRESSED,
                 new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
-                Color c = DOCUMENT.getPixelReader().getColor((int)event.getX(),(int) event.getY());
-            System.out.println(c.getRed()+", "+c.getGreen()+", "+c.getBlue());
+                System.out.println("Starting");
+                boolean intersectsDoc = pointIntersects(event.getX(),event.getY(), X_OFF, Y_OFF, DOCUMENT.getWidth()*SCALE, DOCUMENT.getHeight()*SCALE);
+                boolean intersectsCrop = pointIntersects(event.getX(),event.getY(), CROP_BOUND.getX(), CROP_BOUND.getY(), CROP_BOUND.getWidth(), CROP_BOUND.getHeight());
+              if(intersectsCrop) moveCrop = true;
+              if (intersectsDoc && !intersectsCrop) moveCrop = false;
               
             }
         });
@@ -149,6 +174,12 @@ public class CropPanel {
 
        
     }
+    
+    private boolean pointIntersects(double xp, double yp, double xi, double yi, double width, double height){
+        if((xp>xi)&&(yp>yi)&&(xp<xi+width)&&(yp<yi+height)) return true;
+        
+        return false;
+    }
 
     private void tick() {
         if (GEN_FRAME) {
@@ -161,23 +192,25 @@ public class CropPanel {
             g.fillRect(0, 0,CANVAS.getWidth(), CANVAS.getHeight());
             
             drawImage(g);
+            if(this.prev != null && !this.moveCrop){
+                g.setStroke(Color.TRANSPARENT);
+                g.setFill(Color.rgb(0, 100,125, 0.5));
+                this.drawRect(g, new Rectangle(this.X_OFF, this.Y_OFF, DOCUMENT.getWidth()*SCALE, DOCUMENT.getHeight()*SCALE));
+            }
+            
             drawCropArea(g, this.CROP_BOUND);
            
             
         }
     }
     public void drawImage(GraphicsContext g){
+        
            g.scale(SCALE, SCALE);
             g.drawImage(DOCUMENT, this.X_OFF,this.Y_OFF);
              g.scale(1.0/SCALE, 1.0/SCALE); //reverts scale back to original
     }
     
-    public void drawCropArea(GraphicsContext g, Rectangle rect){
-        g.setStroke(Color.BLACK);
-        g.setFill(Color.TRANSPARENT);
-        g.setLineWidth(3.0);
-        g.setLineDashes(10);
-        
+    public void drawRect(GraphicsContext g, Rectangle rect){
         g.beginPath();
         g.lineTo(rect.getX(), rect.getY());
         g.lineTo(rect.getX()+rect.getWidth(), rect.getY());
@@ -185,6 +218,21 @@ public class CropPanel {
         g.lineTo(rect.getX(), rect.getY()+rect.getHeight());
         g.lineTo(rect.getX(), rect.getY());
         g.stroke();
+        g.fill();
+    }
+    
+    
+    
+    public void drawCropArea(GraphicsContext g, Rectangle rect){
+        g.setStroke(Color.BLACK);
+        
+        if(moveCrop)g.setFill(Color.rgb(0, 100,125, 0.5));
+        else g.setFill(Color.TRANSPARENT);
+        
+        g.setLineWidth(3.0);
+        g.setLineDashes(10);
+        
+        drawRect(g, rect);
         
         
         

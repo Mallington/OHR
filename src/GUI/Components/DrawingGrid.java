@@ -25,7 +25,7 @@ import javafx.scene.paint.Paint;
  * @author 160471
  */
 public class DrawingGrid {
-
+    
     private Canvas CANVAS;
     private boolean GEN_FRAME = true;
     private boolean LISTEN = false;
@@ -34,6 +34,12 @@ public class DrawingGrid {
     private int G_HEIGHT;
     private Rectangle[][] BOUNDS;
     private double PAINT_VALUE = 1.0;
+    
+  /**
+     * This creates a new Drawing grid, passing in the Canvas that the grid will be drawn on to.
+     * @param x The amount of addressable pixels per row
+     * @param y The amount of addressable pixels per column
+     */
 
     public DrawingGrid(int x, int y, Canvas canv) {
         CANVAS = canv;
@@ -46,6 +52,12 @@ public class DrawingGrid {
 
         //runGraphics();
     }
+    
+/**
+     * Sets the contents of the 2 dimensional grid corresponding to 1 dimensional array inputted using the Gris class;
+     * @param contents Data to be written to the grid
+     */
+    
     public void setContents(List<Double> contents){
         if(contents.size() == this.getOutput().size()){
         this.GRID.setList(contents);
@@ -55,10 +67,16 @@ public class DrawingGrid {
             System.out.println("Array mismatch!");
     }
     }
+    
+    /**
+     * Outputs the numerical contents of the grid using the Grid class
+     */
     public List<Double> getOutput() {
         return GRID.getList();
     }
-
+    /**
+     * Clears the grid and sets all the values to 0.0
+     */
     public void clear() {
         for (int x = 0; x < G_WIDTH; x++) {
             for (int y = 0; y < G_HEIGHT; y++) {
@@ -68,17 +86,12 @@ public class DrawingGrid {
         tick();
     }
 
-    private void runListener() {
-        ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor();
-        Runnable t = () -> listen();
-        timer.scheduleAtFixedRate(t, 0, 33, TimeUnit.MILLISECONDS);
-    }
-
-    private void listen() {
-        if (LISTEN) {
-            //CANVAS.getScene().get
-        }
-    }
+    
+    
+    /**
+     * Using the dimensions of the canvas, it divides the grid into a set number of pixel dimensions provided by G_WIDTH and G_HEIGHT.
+    
+     */
 
     private void calculateBounds() {
         double rectWidth = (double) CANVAS.getWidth() / (double) G_WIDTH;
@@ -149,6 +162,7 @@ public class DrawingGrid {
                 int col = 255-(int)((this.GRID.get(x, y)*255.0));
                 if(col>255) System.out.println("Above 255: "+col+"guilty num: "+this.GRID.get(x, y)+", x "+x+", y "+y);
                 g.setFill(Color.rgb(col, col, col));
+                
 
                 g.fillRect(BOUNDS[x][y].getX(), BOUNDS[x][y].getY(), BOUNDS[x][y].getWidth(), BOUNDS[x][y].getHeight());
 

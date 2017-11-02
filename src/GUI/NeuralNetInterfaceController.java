@@ -6,6 +6,7 @@
 package GUI;
 
 import GUI.Components.DrawingGrid;
+import ImageProcessing.ImageTools;
 import InterfaceManagement.ControllerInterface;
 import InterfaceManagement.SubControllerInterface;
 import Util.Load;
@@ -36,13 +37,17 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import neural.Input;
 import neural.Layer;
@@ -55,6 +60,11 @@ import neural.TrainingSet;
  * @author mathew
  */
 public class NeuralNetInterfaceController implements Initializable, ControllerInterface {
+    
+    
+    //Tim
+    @FXML
+    BorderPane BORDER = new BorderPane();
     
     private String NAME = "UNTITLED.nns";
     private Tab NEURAL_TAB;
@@ -74,6 +84,9 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
     
     //FXML Nodes
     @FXML
+    public ImageView IMAGE_VIEW = new ImageView();
+    
+    @FXML
     public Text OUT_LETTER = new Text();
     
     @FXML
@@ -87,6 +100,17 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+       
+        try {
+              URL imageR = getClass().getResource("UpperCase.jpg");
+            
+             Image image = ImageTools.convertBuffered(ImageIO.read(imageR));
+            IMAGE_VIEW.setImage(image);
+           
+        } catch (IOException ex) {
+            Logger.getLogger(NeuralNetInterfaceController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
          Platform.runLater(() -> WINDOW = this.INPUT_PAD.getScene().getWindow());
         NEURAL_LAYER = new Layer();
        
@@ -95,7 +119,15 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
         NEURAL_LAYER.setCharSet("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         
         setGUI (this.NEURAL_LAYER);
-
+        
+        
+        
+        //Tim
+        //Button b = new Button();
+      //  b.setText("Tim Sucks");
+        BORDER.getChildren().add(new Button("tim"));
+        BORDER.setTop(CLOSE);
+        //BORDER.
     }
     
     
@@ -105,6 +137,8 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
         CHARECTAR_SELECT.setItems(list);
         CHARECTAR_SELECT.getSelectionModel().selectFirst();
         DGRID = new DrawingGrid(30, 30, INPUT_PAD);
+        
+      
         
 }
     
@@ -178,7 +212,9 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
         Runnable r = new Runnable(){public void run(){
         
         
-        wind.getReturn();
+        Image ret =(Image)wind.getReturn();
+        Platform.runLater(()->IMAGE_VIEW.setImage(ret));
+            System.out.println("Set Image");
          
            }};
         new Thread(r).start();
