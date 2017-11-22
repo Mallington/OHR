@@ -73,7 +73,7 @@ public class Neuron implements Serializable{
         for(Input i: this.inputs){
                double before = i.weight;
                 i.weight += delta *this.LEARNING_RATIO*i.inp;
-                // System.out.println(before+" + "+delta *this.LEARNING_RATIO*i.inp+" = "+i.weight);
+                
         }
         this.biasWeight += delta*this.LEARNING_RATIO;
     }

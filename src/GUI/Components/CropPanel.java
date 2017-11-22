@@ -57,6 +57,7 @@ public class CropPanel {
         
         CANVAS = canv;
         DOCUMENT = i;
+        
         double height = CANVAS.getHeight() *0.8;
         double width = (height/ratY)*ratX;
         CROP_BOUND = new Rectangle((CANVAS.getWidth()/2)-(width/2),(CANVAS.getHeight()/2)-(height/2),width,height);
@@ -80,12 +81,14 @@ public class CropPanel {
    
     public void loadImage(Image img){
         this.DOCUMENT = img;
+        System.out.println("Converting to B&W");
+        ImageTools.toGreyScale(ImageTools.convertImgToBuf(DOCUMENT));
         tick();
     }
     
     public Image getImage(){
-        double x = ( (this.CROP_BOUND.getX()-(this.X_OFF))) /SCALE;
-        double y =  ((this.CROP_BOUND.getY()- (this.Y_OFF)))/SCALE;
+        double x = ( (this.CROP_BOUND.getX()-(this.X_OFF*SCALE))) /SCALE;
+        double y =  ((this.CROP_BOUND.getY()- (this.Y_OFF*SCALE)))/SCALE;
         double width = this.CROP_BOUND.getWidth()/SCALE;
         double height = this.CROP_BOUND.getHeight()/SCALE;
         
@@ -147,6 +150,7 @@ public class CropPanel {
               if(intersectsCrop) moveCrop = true;
               if (intersectsDoc && !intersectsCrop) moveCrop = false;
               
+              
             }
         });
        
@@ -195,7 +199,7 @@ public class CropPanel {
             if(this.prev != null && !this.moveCrop){
                 g.setStroke(Color.TRANSPARENT);
                 g.setFill(Color.rgb(0, 100,125, 0.5));
-                this.drawRect(g, new Rectangle(this.X_OFF, this.Y_OFF, DOCUMENT.getWidth()*SCALE, DOCUMENT.getHeight()*SCALE));
+                this.drawRect(g, new Rectangle(this.X_OFF*SCALE, this.Y_OFF*SCALE, DOCUMENT.getWidth()*SCALE, DOCUMENT.getHeight()*SCALE));
             }
             
             drawCropArea(g, this.CROP_BOUND);
@@ -224,6 +228,7 @@ public class CropPanel {
     
     
     public void drawCropArea(GraphicsContext g, Rectangle rect){
+        
         g.setStroke(Color.BLACK);
         
         if(moveCrop)g.setFill(Color.rgb(0, 100,125, 0.5));

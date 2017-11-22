@@ -213,6 +213,9 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
         
         
         Image ret =(Image)wind.getReturn();
+        
+       
+        
         Platform.runLater(()->IMAGE_VIEW.setImage(ret));
             System.out.println("Set Image");
          
