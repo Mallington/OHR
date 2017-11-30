@@ -43,7 +43,7 @@ public class Neuron implements Serializable{
         } 
     }
     
-    public void setLearningRatio(double ratio){
+    public void setLearningRatio(double ratio){  
         LEARNING_RATIO = ratio;
     }
     

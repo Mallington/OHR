@@ -8,6 +8,7 @@ package GUI.Components;
 import GUI.Storage.Grid;
 import GUI.Storage.Point;
 import ImageProcessing.ImageTools;
+import java.awt.image.BufferedImage;
 
 
 import javafx.beans.value.ChangeListener;
@@ -36,6 +37,7 @@ public class CropPanel {
     private Canvas CANVAS;
     private boolean GEN_FRAME = true;
     private Paint BACK_COLOUR = Paint.valueOf("WHITE");
+    private Image ORIGINAL;
     private Image DOCUMENT;
     private double X_OFF =0;
     private double Y_OFF =0;
@@ -56,7 +58,8 @@ public class CropPanel {
         
         
         CANVAS = canv;
-        DOCUMENT = i;
+        ORIGINAL = i;
+        DOCUMENT = ORIGINAL;
         
         double height = CANVAS.getHeight() *0.8;
         double width = (height/ratY)*ratX;
@@ -98,6 +101,13 @@ public class CropPanel {
     }
     
 
+    
+    private void renderImg(){
+        BufferedImage toRender = ImageTools.convertImgToBuf(ORIGINAL);
+       
+        toRender = ImageTools.toGreyScale(toRender);
+        DOCUMENT = ImageTools.convertBuffered(toRender);
+    }
    
 
     private void addListeners() {
