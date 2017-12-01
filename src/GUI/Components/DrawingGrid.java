@@ -26,6 +26,10 @@ import javafx.scene.paint.Paint;
  */
 public class DrawingGrid {
     
+    //Colours
+    Color PRIM_COLOR = Color.valueOf("green");
+    Color SEC_COLOR = Color.valueOf("black");
+    
     private Canvas CANVAS;
     private boolean GEN_FRAME = true;
     private boolean LISTEN = false;
@@ -43,6 +47,7 @@ public class DrawingGrid {
 
     public DrawingGrid(int x, int y, Canvas canv) {
         CANVAS = canv;
+        
         GRID = new Grid<Double>(x, y, 0.0);
         G_WIDTH = x;
         G_HEIGHT = y;
@@ -51,6 +56,11 @@ public class DrawingGrid {
         tick();
 
         //runGraphics();
+    }
+    
+    
+    public void resetColors(){
+        
     }
     
 /**
@@ -105,7 +115,7 @@ public class DrawingGrid {
             }
         }
 
-    }
+    } 
 
     private void setByBounds(int xC, int yC) {
        
@@ -143,7 +153,7 @@ public class DrawingGrid {
         if (GEN_FRAME) {
 
             GraphicsContext g = CANVAS.getGraphicsContext2D();
-            g.setFill(Color.WHITE);
+            g.setFill(SEC_COLOR);
 
             g.fillRect(0, 0, CANVAS.getWidth(), CANVAS.getHeight());
 
@@ -159,9 +169,9 @@ public class DrawingGrid {
 
               
                 if(this.GRID.get(x, y)>1) System.out.println("Above 1 wut! "+this.GRID.get(x, y));
-                int col = 255-(int)((this.GRID.get(x, y)*255.0));
-                if(col>255) System.out.println("Above 255: "+col+"guilty num: "+this.GRID.get(x, y)+", x "+x+", y "+y);
-                g.setFill(Color.rgb(col, col, col));
+                double alph = this.GRID.get(x, y);
+               
+                g.setFill(Color.color(PRIM_COLOR.getRed(),PRIM_COLOR.getGreen(), PRIM_COLOR.getBlue(),alph));
                 
 
                 g.fillRect(BOUNDS[x][y].getX(), BOUNDS[x][y].getY(), BOUNDS[x][y].getWidth(), BOUNDS[x][y].getHeight());
