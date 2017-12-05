@@ -122,12 +122,7 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
         
         
         
-        //Tim
-        //Button b = new Button();
-      //  b.setText("Tim Sucks");
-        BORDER.getChildren().add(new Button("tim"));
-        BORDER.setTop(CLOSE);
-        //BORDER.
+       
     }
     
     
@@ -214,6 +209,7 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
         
         Image ret =(Image)wind.getReturn();
         
+        DGRID.setContents(ImageTools.imageToBinaryGrid(ImageTools.convertImgToBuf(ret), 30, 30).getList());
        
         
         Platform.runLater(()->IMAGE_VIEW.setImage(ret));

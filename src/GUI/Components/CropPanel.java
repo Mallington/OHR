@@ -84,8 +84,9 @@ public class CropPanel {
    
     public void loadImage(Image img){
         this.DOCUMENT = img;
+        this.ORIGINAL = img;
         System.out.println("Converting to B&W");
-        ImageTools.toGreyScale(ImageTools.convertImgToBuf(DOCUMENT));
+       
         tick();
     }
     
@@ -102,11 +103,18 @@ public class CropPanel {
     
 
     
-    private void renderImg(){
+    public void modifyImg(int threshold, boolean binarise){
+        
+        if(binarise){
         BufferedImage toRender = ImageTools.convertImgToBuf(ORIGINAL);
        
-        toRender = ImageTools.toGreyScale(toRender);
+        toRender = ImageTools.toGreyScale(toRender, true, threshold);
         DOCUMENT = ImageTools.convertBuffered(toRender);
+        }
+        else{
+            DOCUMENT = ORIGINAL;
+        }
+        tick();
     }
    
 

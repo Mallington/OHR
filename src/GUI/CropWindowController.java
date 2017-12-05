@@ -25,6 +25,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
@@ -55,6 +56,11 @@ public class CropWindowController implements Initializable, SubControllerInterfa
     @FXML
     private Slider SCALE = new Slider();
     
+    @FXML
+    private Slider THRESHOLD = new Slider();
+    
+    @FXML
+    private  CheckBox BINARISE = new CheckBox();
     
     private CropPanel CROP_PANEL;
    
@@ -63,6 +69,8 @@ public class CropWindowController implements Initializable, SubControllerInterfa
     private Popup POPUP = null;
     
     private Image RETURN = null;
+    
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -85,12 +93,28 @@ public class CropWindowController implements Initializable, SubControllerInterfa
                CROP_PANEL.setScale((double) newValue);
               
             }
+            
+            
+        
         });
+        
+        THRESHOLD.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+              
+               CROP_PANEL.modifyImg((int)(double)newValue, BINARISE.isSelected());
+            } });
         
        
         System.out.println("Done.");
         
     }   
+    
+    
+    public void render(){
+        CROP_PANEL.modifyImg((int)THRESHOLD.getValue(), BINARISE.isSelected());
+    }
+    
     
     public void open() throws MalformedURLException{
          FilePicker pick = new FilePicker("Image ", Arrays.asList(".jpg",".png"));

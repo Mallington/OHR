@@ -27,7 +27,7 @@ import javafx.scene.paint.Paint;
 public class DrawingGrid {
     
     //Colours
-    Color PRIM_COLOR = Color.valueOf("green");
+    Color PRIM_COLOR = Color.valueOf("white");
     Color SEC_COLOR = Color.valueOf("black");
     
     private Canvas CANVAS;
