@@ -23,11 +23,14 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -36,6 +39,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -81,8 +85,13 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
     
     private File ORIGINAL_DIRECTORY;
     
+    private  Image LOADED_IMAGE = null;
+    
     
     //FXML Nodes
+    
+  
+    
     @FXML
     public ImageView IMAGE_VIEW = new ImageView();
     
@@ -119,6 +128,8 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
         NEURAL_LAYER.setCharSet("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         
         setGUI (this.NEURAL_LAYER);
+         
+       
         
         
         
@@ -207,12 +218,12 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
         Runnable r = new Runnable(){public void run(){
         
         
-        Image ret =(Image)wind.getReturn();
+       LOADED_IMAGE =(Image)wind.getReturn();
         
-        DGRID.setContents(ImageTools.imageToBinaryGrid(ImageTools.convertImgToBuf(ret), 30, 30).getList());
+        DGRID.setContents(ImageTools.imageToBinaryGrid(ImageTools.convertImgToBuf(LOADED_IMAGE), 30, 30, 127).getList());
        
         
-        Platform.runLater(()->IMAGE_VIEW.setImage(ret));
+        Platform.runLater(()->IMAGE_VIEW.setImage(LOADED_IMAGE));
             System.out.println("Set Image");
          
            }};

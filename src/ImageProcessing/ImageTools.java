@@ -65,10 +65,10 @@ public class ImageTools {
         return img;
     }
     
-    public static Grid<Double> imageToBinaryGrid(BufferedImage img, int width, int height){
+    public static Grid<Double> imageToBinaryGrid(BufferedImage img, int width, int height, int avgPoint){
         Rectangle [][] BOUNDS = new Rectangle[width][height];
         
-        Grid<Double> GRID = new Grid(width, height, 0.0);
+        Grid<Double> GRID = new Grid(width, height, 1.0);
         double rectWidth = (double) img.getWidth() / (double) width;
         double rectHeight = (double) img.getHeight() / (double) height;
 
@@ -84,16 +84,56 @@ public class ImageTools {
             for (int y = 0; y < height; y++) {
                 int avg = getPixelAvg(img, BOUNDS[x][y]);
                 
-                if(avg<127) GRID.set(x, y, 1.0);
+                if(avg<avgPoint) GRID.set(x, y, 1.0);
                 else GRID.set(x, y, 0.0);
                 
             }
         }
+        /*
+        boolean empty = true;
+        
+        for(double num: GRID.getList()) if(num != 1.0) empty = false;
+        
+        if(empty){
+            System.out.println("Smaller resolution Detected");
+             for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+               
+                
+                if(containsPixel(img,BOUNDS[x][y] ))
+               GRID.set(x, y, 0.0);
+                
+            }
+        }
+        }*/
         
         
         
         return GRID;
         
+    }
+    
+    private static boolean containsPixel(BufferedImage img, Rectangle bound){
+       
+        
+         for(int y =(int)bound.getY(); y< bound.getY()+bound.getHeight(); y++){
+             for(int x =(int)bound.getX(); x< bound.getX()+bound.getWidth(); x++){
+                 int p = img.getRGB(x, y);
+                 int r = (p>>16)&0xff;
+                 int g = (p>>8)&0xff;
+                 int b = (p>>0)&0xff;
+                 
+                 double avg = (double)(r+g+b)/3.0;
+                 if(avg>127) return true;
+                 
+             }
+            
+        }
+        
+        
+        
+        
+        return false;
     }
     
     private static int getPixelAvg(BufferedImage img, Rectangle bound){
