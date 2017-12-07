@@ -6,8 +6,11 @@
 package ImageProcessing;
 
 import GUI.Storage.Grid;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
@@ -89,23 +92,7 @@ public class ImageTools {
                 
             }
         }
-        /*
-        boolean empty = true;
         
-        for(double num: GRID.getList()) if(num != 1.0) empty = false;
-        
-        if(empty){
-            System.out.println("Smaller resolution Detected");
-             for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-               
-                
-                if(containsPixel(img,BOUNDS[x][y] ))
-               GRID.set(x, y, 0.0);
-                
-            }
-        }
-        }*/
         
         
         
@@ -118,12 +105,8 @@ public class ImageTools {
         
          for(int y =(int)bound.getY(); y< bound.getY()+bound.getHeight(); y++){
              for(int x =(int)bound.getX(); x< bound.getX()+bound.getWidth(); x++){
-                 int p = img.getRGB(x, y);
-                 int r = (p>>16)&0xff;
-                 int g = (p>>8)&0xff;
-                 int b = (p>>0)&0xff;
-                 
-                 double avg = (double)(r+g+b)/3.0;
+                
+                 double avg = getPixelAvg(img, x, y);
                  if(avg>127) return true;
                  
              }
@@ -142,12 +125,9 @@ public class ImageTools {
         
          for(int y =(int)bound.getY(); y< bound.getY()+bound.getHeight(); y++){
              for(int x =(int)bound.getX(); x< bound.getX()+bound.getWidth(); x++){
-                 int p = img.getRGB(x, y);
-                 int r = (p>>16)&0xff;
-                 int g = (p>>8)&0xff;
-                 int b = (p>>0)&0xff;
+                
                  
-                 avg+=(double)(r+g+b)/3.0;
+                 avg+=getPixelAvg(img, x, y);
                  pixelCount++;
                  
              }
@@ -159,6 +139,63 @@ public class ImageTools {
         
         return (int)avg;
     }
+    
+    private static double getPixelAvg(BufferedImage img, int x, int y){
+        int p = img.getRGB(x, y);
+                 int r = (p>>16)&0xff;
+                 int g = (p>>8)&0xff;
+                 int b = (p>>0)&0xff;
+                 
+                 return(double)(r+g+b)/3.0;
+    }
+    
+    
+    public static List<PixelFormation> findEnclosedPixels(BufferedImage img){
+        List<PixelFormation> form = new ArrayList<PixelFormation>();
+        List<Point> taken = new ArrayList<Point>();
+        
+        PixelFormation currentForm = null;
+        
+        for(int y =0; y< img.getHeight(); y++){
+            for(int x =0; x<img.getWidth(); x++){
+                
+                currentForm = new PixelFormation();
+                currentForm = explorePixel(img, x,y, taken, currentForm);
+                
+                if(!currentForm.isEmpty()) form.add(currentForm);
+            }
+        }
+        
+        return form;
+    }
+    
+    private static boolean pointTaken(int x, int y, List<Point> taken){
+        for(Point p: taken) if(p.equals(new Point(x,y))) return true;
+        
+        return false;
+    }
+    
+    private static PixelFormation explorePixel(BufferedImage img, int x, int y , List<Point> taken, PixelFormation pF){
+       // System.out.println((getPixelAvg(img,x,y)<127) +" "+!(pointTaken(x, y, taken)));
+        if(getPixelAvg(img,x,y)<127 && !(pointTaken(x, y, taken))){
+           // System.out.println("FOUND");
+           
+            
+            pF.addPoint(x, y);
+            taken.add(new Point (x,y));
+            
+            pF = explorePixel(img, x+1,y, taken,pF);
+            pF = explorePixel(img, x-1,y, taken,pF);
+            pF = explorePixel(img, x,y+1, taken,pF);
+            pF = explorePixel(img, x,y-1, taken,pF);
+        }
+        
+        return pF;
+       
+        
+    }
+    
+   
     
     
 

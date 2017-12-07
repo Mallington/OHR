@@ -8,7 +8,9 @@ package GUI.Components;
 import GUI.Storage.Grid;
 import GUI.Storage.Point;
 import ImageProcessing.ImageTools;
+import ImageProcessing.PixelFormation;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 
 import javafx.beans.value.ChangeListener;
@@ -51,6 +53,8 @@ public class CropPanel {
     private Rectangle CROP_BOUND;
     
     private boolean moveCrop = false;
+    
+    List<PixelFormation> FORMATIONS = null;
     
     public CropPanel(Image i, Canvas canv, int ratX, int ratY) {
         RAT_X = ratX;
@@ -110,6 +114,8 @@ public class CropPanel {
        
         toRender = ImageTools.toGreyScale(toRender, true, threshold);
         DOCUMENT = ImageTools.convertBuffered(toRender);
+          
+        FORMATIONS = ImageTools.findEnclosedPixels(toRender);
         }
         else{
             DOCUMENT = ORIGINAL;
@@ -222,9 +228,10 @@ public class CropPanel {
             
             drawCropArea(g, this.CROP_BOUND);
            
-            
+            if(this.FORMATIONS !=null) this.drawFormationBounds(g, FORMATIONS);
         }
     }
+    
     public void drawImage(GraphicsContext g){
         
            g.scale(SCALE, SCALE);
@@ -241,6 +248,15 @@ public class CropPanel {
         g.lineTo(rect.getX(), rect.getY());
         g.stroke();
         g.fill();
+    }
+    
+    private void drawFormationBounds(GraphicsContext g, List<PixelFormation> formation){
+        g.setFill(Paint.valueOf("Red"));
+        for(PixelFormation f : formation) {
+          
+             Rectangle r = f.getBounds();
+             this.drawRect(g, new Rectangle((this.X_OFF+r.getX())*SCALE, (this.Y_OFF+r.getY())*SCALE, r.getWidth()*SCALE, r.getHeight()*SCALE));
+        }
     }
     
     
