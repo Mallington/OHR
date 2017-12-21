@@ -228,7 +228,9 @@ public class CropPanel {
             
             drawCropArea(g, this.CROP_BOUND);
            
-            if(this.FORMATIONS !=null) this.drawFormationBounds(g, FORMATIONS);
+            if(this.FORMATIONS !=null) {
+                this.drawFormationBounds(g, FORMATIONS);
+            }
         }
     }
     
@@ -251,7 +253,7 @@ public class CropPanel {
     }
     
     private void drawFormationBounds(GraphicsContext g, List<PixelFormation> formation){
-        g.setFill(Paint.valueOf("Red"));
+        g.setStroke(Paint.valueOf("Red"));
         for(PixelFormation f : formation) {
           
              Rectangle r = f.getBounds();
@@ -259,6 +261,11 @@ public class CropPanel {
         }
     }
     
+    
+    private  void drawPixelFormations(GraphicsContext g, List<PixelFormation> pF){
+      for(PixelFormation p: pF) for(java.awt.Point po : p.getPoints()) g.getPixelWriter().setColor(po.x, po.y, Color.BLUE);
+        
+    }
     
     
     public void drawCropArea(GraphicsContext g, Rectangle rect){

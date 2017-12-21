@@ -20,6 +20,8 @@ import javafx.scene.image.Image;
  */
 public class ImageTools {
     
+    public static int recur =0;
+    
     public static BufferedImage cropImage(BufferedImage img, int x, int y, int width, int height){ // For legacy
     BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     bi.getGraphics().drawImage(img, 0, 0, width, height, x, y, x + width, y + height, null);
@@ -37,7 +39,7 @@ public class ImageTools {
    }
     
     public static Image convertBuffered(BufferedImage bi){
-        
+                 
         return SwingFXUtils.toFXImage(bi, null);
     }
     
@@ -141,12 +143,19 @@ public class ImageTools {
     }
     
     private static double getPixelAvg(BufferedImage img, int x, int y){
+        try{
         int p = img.getRGB(x, y);
-                 int r = (p>>16)&0xff;
+        
+         int r = (p>>16)&0xff;
                  int g = (p>>8)&0xff;
                  int b = (p>>0)&0xff;
                  
                  return(double)(r+g+b)/3.0;
+        } catch(Exception e){
+            System.out.println("Error: "+x+", "+y);
+            return 255.0;     
+        }
+        
     }
     
     
@@ -175,19 +184,29 @@ public class ImageTools {
         return false;
     }
     
-    private static PixelFormation explorePixel(BufferedImage img, int x, int y , List<Point> taken, PixelFormation pF){
+    private static PixelFormation explorePixel(BufferedImage img, int x, int y , List<Point> taken, PixelFormation pF){ // NEED TO FIX PIXEL BOUND PROBLEM!
+       // System.out.println(recur++);
+        
+        if(x <0 || y<0 ||y>=img.getHeight() || x>=img.getWidth()) return pF;
        // System.out.println((getPixelAvg(img,x,y)<127) +" "+!(pointTaken(x, y, taken)));
-        if(getPixelAvg(img,x,y)<127 && !(pointTaken(x, y, taken))){
+        if(getPixelAvg(img,x,y)<127  && !(pointTaken(x, y, taken))){
            // System.out.println("FOUND");
-           
+           //System.out.println("Checking: "+x+", "+y);
             
             pF.addPoint(x, y);
             taken.add(new Point (x,y));
             
-            pF = explorePixel(img, x+1,y, taken,pF);
-            pF = explorePixel(img, x-1,y, taken,pF);
-            pF = explorePixel(img, x,y+1, taken,pF);
-            pF = explorePixel(img, x,y-1, taken,pF);
+            
+          pF = explorePixel(img, x+1,y, taken,pF);
+          pF = explorePixel(img, x-1,y, taken,pF);
+          pF = explorePixel(img, x,y+1, taken,pF);
+          pF = explorePixel(img, x,y-1, taken,pF);
+            /*
+             pF = explorePixel(img, x+1,y+1, taken,pF);
+             pF = explorePixel(img, x-1,y-1, taken,pF);
+             pF = explorePixel(img, x-1,y+1, taken,pF);
+             pF = explorePixel(img, x+1,y-1, taken,pF);
+*/
         }
         
         return pF;
