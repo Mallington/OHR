@@ -107,7 +107,7 @@ public class CropPanel {
     
 
     
-    public void modifyImg(int threshold, boolean binarise){
+    public void modifyImg(int threshold, boolean binarise, boolean detectForms){
         
         if(binarise){
         BufferedImage toRender = ImageTools.convertImgToBuf(ORIGINAL);
@@ -115,7 +115,10 @@ public class CropPanel {
         toRender = ImageTools.toGreyScale(toRender, true, threshold);
         DOCUMENT = ImageTools.convertBuffered(toRender);
           
-        FORMATIONS = ImageTools.findEnclosedPixels(toRender);
+        if(detectForms) {
+            System.out.println("Finding Forms");
+            FORMATIONS = ImageTools.findEnclosedPixels(toRender);
+        }
         }
         else{
             DOCUMENT = ORIGINAL;

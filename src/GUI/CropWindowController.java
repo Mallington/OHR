@@ -62,6 +62,9 @@ public class CropWindowController implements Initializable, SubControllerInterfa
     @FXML
     private  CheckBox BINARISE = new CheckBox();
     
+     @FXML
+    private  CheckBox DETECT = new CheckBox();
+    
     private CropPanel CROP_PANEL;
    
     private Window WINDOW;
@@ -102,7 +105,7 @@ public class CropWindowController implements Initializable, SubControllerInterfa
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
               
-               CROP_PANEL.modifyImg((int)(double)newValue, BINARISE.isSelected());
+               CROP_PANEL.modifyImg((int)(double)newValue, BINARISE.isSelected(),false);
             } });
         
        
@@ -110,9 +113,9 @@ public class CropWindowController implements Initializable, SubControllerInterfa
         
     }   
     
-    
+     
     public void render(){
-        CROP_PANEL.modifyImg((int)THRESHOLD.getValue(), BINARISE.isSelected());
+        CROP_PANEL.modifyImg((int)THRESHOLD.getValue(), BINARISE.isSelected(), DETECT.isSelected());
     }
     
     

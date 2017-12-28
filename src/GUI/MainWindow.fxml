@@ -19,7 +19,7 @@
          <top>
             <MenuBar styleClass="frame" BorderPane.alignment="CENTER">
               <menus>
-                <Menu mnemonicParsing="false" styleClass="frame" text="File">
+                <Menu mnemonicParsing="false" text="File">
                   <items>
                         <Menu mnemonicParsing="false" text="New">
                           <items>
@@ -33,12 +33,12 @@
                         <MenuItem mnemonicParsing="false" onAction="#saveAs" text="SaveAs" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" styleClass="frame" text="Edit">
+                <Menu mnemonicParsing="false" text="Edit">
                   <items>
                     <MenuItem mnemonicParsing="false" text="Delete" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" styleClass="frame" text="Help">
+                <Menu mnemonicParsing="false" text="Help">
                   <items>
                     <MenuItem mnemonicParsing="false" text="About" />
                   </items>
