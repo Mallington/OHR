@@ -6,6 +6,7 @@
 package GUI;
 
 import GUI.Components.DrawingGrid;
+import InterfaceManagement.TabAttributes;
 import ImageProcessing.ImageTools;
 import InterfaceManagement.ControllerInterface;
 import InterfaceManagement.SubControllerInterface;
@@ -58,46 +59,34 @@ import neural.Layer;
 import neural.Neuron;
 import neural.TrainingSet;
 // meaning of everything
+
 /**
  * FXML Controller class
  *
  * @author mathew
  */
-public class NeuralNetInterfaceController implements Initializable, ControllerInterface {
-    
-    
+public class NeuralNetInterfaceController extends TabAttributes<Layer> implements Initializable {
+
     //Tim
     @FXML
     BorderPane BORDER = new BorderPane();
-    
+    /*
     private String NAME = "UNTITLED.nns";
-    private Tab NEURAL_TAB;
-    OutputController OUT;
-    private Layer NEURAL_LAYER;
+    private Tab TAB_INSTANCE;*/
+
     private Window WINDOW;
-    
 
     private DrawingGrid DGRID;
 
-    public boolean SAVED = false;
+    private Image LOADED_IMAGE = null;
 
-    public boolean NEW_DOCUMENT = true;
-    
-    private File ORIGINAL_DIRECTORY;
-    
-    private  Image LOADED_IMAGE = null;
-    
-    
     //FXML Nodes
-    
-  
-    
     @FXML
     public ImageView IMAGE_VIEW = new ImageView();
-    
+
     @FXML
     public Text OUT_LETTER = new Text();
-    
+
     @FXML
     public Button CLOSE = new Button();
 
@@ -109,299 +98,209 @@ public class NeuralNetInterfaceController implements Initializable, ControllerIn
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+        setFileType(".nns");
+        setFileDes("Neural Net Struct");
         try {
-              URL imageR = getClass().getResource("UpperCase.jpg");
-            
-             Image image = ImageTools.convertBuffered(ImageIO.read(imageR));
+            URL imageR = getClass().getResource("UpperCase.jpg");
+
+            Image image = ImageTools.convertBuffered(ImageIO.read(imageR));
             IMAGE_VIEW.setImage(image);
-           
+
         } catch (IOException ex) {
             Logger.getLogger(NeuralNetInterfaceController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-         Platform.runLater(() -> WINDOW = this.INPUT_PAD.getScene().getWindow());
-        NEURAL_LAYER = new Layer();
-       
-        
-        NEURAL_LAYER.generateRandomNeurons(26, 900);
-        NEURAL_LAYER.setCharSet("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-        
-        setGUI (this.NEURAL_LAYER);
-         
-       
-        
-        
-        
-       
+
+        Platform.runLater(() -> WINDOW = this.INPUT_PAD.getScene().getWindow());
+        FILE = new Layer();
+
+        FILE.generateRandomNeurons(26, 900);
+        FILE.setCharSet("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+        setGUI(this.FILE);
+
     }
-    
-    
-    private void setGUI(Layer l){
-         ObservableList<String> list = FXCollections.observableArrayList();
-        for(Neuron n: this.NEURAL_LAYER.NEURONS) list.add(n.NAME);
+
+    @Override
+    public void setGUI(Layer l) {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for (Neuron n : this.FILE.NEURONS) {
+            list.add(n.NAME);
+        }
         CHARECTAR_SELECT.setItems(list);
         CHARECTAR_SELECT.getSelectionModel().selectFirst();
         DGRID = new DrawingGrid(30, 30, INPUT_PAD);
-        
-      
-        
-}
-    
-    @Override
-    public void load(File f){
-     this.ORIGINAL_DIRECTORY = f;
-        try {
-            Object in = new Load(this.ORIGINAL_DIRECTORY).load();
-            if(in.getClass().equals(this.NEURAL_LAYER.getClass())){
-                this.NEURAL_LAYER =  (Layer)in;
-                OUT.print("Loaded "+this.ORIGINAL_DIRECTORY.getName());
-                
-                this.setText(this.ORIGINAL_DIRECTORY.getName());
-                this.NEW_DOCUMENT = false;
-                this.SAVED = true;
-                this.setGUI(NEURAL_LAYER);
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(NeuralNetInterfaceController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(NeuralNetInterfaceController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-     
+
     }
+
+   
+   
 
     //Actions
     public void clear() {
         DGRID.clear();
         OUT.print("Clearing");
     }
+
     public void evaluate() {
-             this.OUT.print("Evaluating");
-                List<Double> out = this.NEURAL_LAYER.forwardProp(new TrainingSet(this.DGRID.getOutput(), 0, this.NEURAL_LAYER.NEURONS.size()));
-              double biggest = out.get(0);
-              int neuronPos =0;
-               for(int i =1; i< out.size(); i++){
-                   if(out.get(i)> biggest) {
-                       biggest = out.get(i);
-                       neuronPos = i;
-                   }
-               }
-               
-              OUT_LETTER.setText(this.NEURAL_LAYER.NEURONS.get(neuronPos).NAME);
-              this.OUT.print("Recognised as "+this.NEURAL_LAYER.NEURONS.get(neuronPos).NAME);
-   
+        this.OUT.print("Evaluating");
+        List<Double> out = this.FILE.forwardProp(new TrainingSet(this.DGRID.getOutput(), 0, this.FILE.NEURONS.size()));
+        double biggest = out.get(0);
+        int neuronPos = 0;
+        for (int i = 1; i < out.size(); i++) {
+            if (out.get(i) > biggest) {
+                biggest = out.get(i);
+                neuronPos = i;
+            }
+        }
+
+        OUT_LETTER.setText(this.FILE.NEURONS.get(neuronPos).NAME);
+        this.OUT.print("Recognised as " + this.FILE.NEURONS.get(neuronPos).NAME);
+
     }
 
     public void train() {
-        // NEURAL_LAYER.displayContents();
-       int selection =  this.getChoiceBox();
-        OUT.print("Selected "+this.NEURAL_LAYER.NEURONS.get(selection));
-      this.NEURAL_LAYER.backwardProp(new TrainingSet(this.DGRID.getOutput(), selection, this.NEURAL_LAYER.NEURONS.size()));
-      this.setModified();
+        // FILE.displayContents();
+        int selection = this.getChoiceBox();
+        OUT.print("Selected " + this.FILE.NEURONS.get(selection));
+        this.FILE.backwardProp(new TrainingSet(this.DGRID.getOutput(), selection, this.FILE.NEURONS.size()));
+        this.setModified();
     }
-    // Here is a message
-    public void saveAsNew(){
-        this.NEW_DOCUMENT = true;
-        this.save();
+
+    private int getChoiceBox() {
+        return this.CHARECTAR_SELECT.getSelectionModel().getSelectedIndex();
+
     }
-    
-    private int getChoiceBox(){
-     return this.CHARECTAR_SELECT.getSelectionModel().getSelectedIndex();
-        
-        
-       
-    }
+
     public void loadImage() throws InterruptedException {
         System.out.println("Loading Image");
         SubWindowLoader wind = new SubWindowLoader("CropWindow.fxml", WINDOW);
         wind.show();
-        Runnable r = new Runnable(){public void run(){
-        
-        
-       LOADED_IMAGE =(Image)wind.getReturn();
-        
-        DGRID.setContents(ImageTools.imageToBinaryGrid(ImageTools.convertImgToBuf(LOADED_IMAGE), 30, 30, 127).getList());
-       
-        
-        Platform.runLater(()->IMAGE_VIEW.setImage(LOADED_IMAGE));
-            System.out.println("Set Image");
-         
-           }};
+        Runnable r = new Runnable() {
+            public void run() {
+
+                try {
+                    LOADED_IMAGE = (Image) wind.getReturn();
+                } catch (Exception e) {
+                    OUT.print("Failed to retrieve photo, what did you do?!");
+                }
+
+                if (LOADED_IMAGE != null) {
+                    DGRID.setContents(ImageTools.imageToBinaryGrid(ImageTools.convertImgToBuf(LOADED_IMAGE), 30, 30, 127).getList());
+                } else {
+                    OUT.print("Failed to retrieve photo, what did you do?!");
+                }
+
+                Platform.runLater(() -> IMAGE_VIEW.setImage(LOADED_IMAGE));
+                System.out.println("Set Image");
+
+            }
+        };
         new Thread(r).start();
-       // Platform.runLater(r);
- 
-       
-       
-       
-       
-      
-       
+        // Platform.runLater(r);
+
     }
 
+    /*
     @Override
     public void closeTab() {
       
         if(!SAVED ){
         save();}
        
-        NEURAL_TAB.getTabPane().getTabs().remove(NEURAL_TAB);
+        TAB_INSTANCE.getTabPane().getTabs().remove(TAB_INSTANCE);
        
         
-    }
+    } */
 
-    @Override
-    public void showTab(boolean visible) {
+    
 
-    }
-
+    /*
     @Override
     public void setText(String title) {
-        this.NEURAL_TAB.setText(title);
+        this.TAB_INSTANCE.setText(title);
         this.NAME = title;
-    }
-    
-    
-
-    @Override
-    public void selectTab() {
-
-    }
+    } */
 
     public void setContextMenu() {
         ContextMenu m = new ContextMenu();
-        
+
         // MenuItem mi = new MenuItems("Close");
         // m.getItems()
-        //this.NEURAL_TAB.
+        //this.TAB_INSTANCE.
     }
 
-    @Override
-    public Tab getTab() {
-        return this.NEURAL_TAB;
-    }
-
+    /*
     @Override
     public void setTab(Tab t) {
-        this.NEURAL_TAB = t;
-        this.NEURAL_TAB.setClosable(true);
-        this.NEURAL_TAB.setOnCloseRequest(new EventHandler<Event>() {
+        this.TAB_INSTANCE = t;
+        this.TAB_INSTANCE.setClosable(true);
+        this.TAB_INSTANCE.setOnCloseRequest(new EventHandler<Event>() {
             @Override
             public void handle(Event event) {
                 closeTab();
             }
         });
         
-                /*
+                
         Resource r = new Resource("NeuralTab.fxml");
 
         try {
             t.setGraphic(r.getNode());
         } catch (IOException ex) {
             System.out.println("FAILED TO SET GRAPHICS");
-        }*/
-    }
-
-   
-
-    @Override
-    public void setOutputController(OutputController out) {
-        OUT = out;
-        OUT.print("Set output");
-    }
-
+        }
+    }*/
     public void setModified() {
         SAVED = false;
     }
 
-    @Override
-    public void saveAs(File f) {
-        this.ORIGINAL_DIRECTORY = f;
-         saveFile(this.ORIGINAL_DIRECTORY);
-        this.NEW_DOCUMENT = false;
-        this.OUT.print("New directory is now "+ORIGINAL_DIRECTORY.getAbsolutePath());
-        hasSaved();
-        this.getTab().setText(this.ORIGINAL_DIRECTORY.getName());
-    }
-
-    @Override
-    public boolean hasSaved() {
-        
-        
-        return SAVED;
-    }
-    
-    private void saveFile(File f){
-         try{
-          new Save(f).write(this.NEURAL_LAYER);
-         this.SAVED = true;
-          this.OUT.print("Saved");
-            }
-            catch(Exception e){
-                this.OUT.print("Failed to save");
-            }
-    }
-
-    private boolean saveMenu(){
-        String[] buttons = { "Yes", "No"};    
-int returnValue = JOptionPane.showOptionDialog(null, "Oh dear", "Would you like to save", JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[0]);
-        if(returnValue == 0) return true;
-        else return false;
-    }
-    
-    
-    @Override
-    public void save() {
-        if (NEW_DOCUMENT) {
-            this.OUT.print("Saving as new file, good and new!");
-           FilePicker fp = new FilePicker(".nns","neural net struct","Unitled");
-       // fp.getFile(this.getTab().getTabPane().getScene().get)
-      Stage s =  (Stage)WINDOW;
-    
-      try{
-        File f = fp.getFile(s, FilePicker.SAVE); 
-       saveAs(f);
-      } catch(Exception e){
-          this.OUT.print("You backed out! Are you happy with your self?");
-      }
-       
-        
+    private boolean saveMenu() {
+        String[] buttons = {"Yes", "No"};
+        int returnValue = JOptionPane.showOptionDialog(null, "Oh dear", "Would you like to save", JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[0]);
+        if (returnValue == 0) {
+            return true;
         } else {
-           saveFile(this.ORIGINAL_DIRECTORY);
+            return false;
         }
-        
     }
-    
-    public void peek(){
+
+    public void peek() {
         OUT.print("Peeking");
         List<Double> toSet = new ArrayList<Double>();
-        for(Input i: this.NEURAL_LAYER.NEURONS.get(this.getChoiceBox()).inputs) toSet.add(i.getWeight());
-         
-        double largestVal =toSet.get(0);
-        double lowestVal = toSet.get(0);
-        for(double d : toSet) if (d> largestVal) largestVal = d;
-        for(double d : toSet) if (d< lowestVal) lowestVal = d;
-        
-        for(int i =0; i< toSet.size(); i++) {
-            
-             if(toSet.get(i)>0){
-                 toSet.set(i,  (toSet.get(i)+Math.abs(lowestVal))/(largestVal-lowestVal));
-             }
-             else{
-                 toSet.set(i, (Math.abs(lowestVal)-Math.abs(toSet.get(i)))/(largestVal-lowestVal));
-             }
-            
-             
-           
+        for (Input i : this.FILE.NEURONS.get(this.getChoiceBox()).inputs) {
+            toSet.add(i.getWeight());
         }
-      //  for(Double d: toSet) System.out.println("New "+d);
-        
-        
-       this.DGRID.setContents(toSet);
-       
+
+        double largestVal = toSet.get(0);
+        double lowestVal = toSet.get(0);
+        for (double d : toSet) {
+            if (d > largestVal) {
+                largestVal = d;
+            }
+        }
+        for (double d : toSet) {
+            if (d < lowestVal) {
+                lowestVal = d;
+            }
+        }
+
+        for (int i = 0; i < toSet.size(); i++) {
+
+            if (toSet.get(i) > 0) {
+                toSet.set(i, (toSet.get(i) + Math.abs(lowestVal)) / (largestVal - lowestVal));
+            } else {
+                toSet.set(i, (Math.abs(lowestVal) - Math.abs(toSet.get(i))) / (largestVal - lowestVal));
+            }
+
+        }
+        //  for(Double d: toSet) System.out.println("New "+d);
+
+        this.DGRID.setContents(toSet);
+
     }
-    
-    public void endPeek(){
-       this.DGRID.clear();
+
+    public void endPeek() {
+        this.DGRID.clear();
     }
 
 }

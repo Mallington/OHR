@@ -52,6 +52,10 @@ public class MainWindowController implements Initializable{
         // SESSION.getTabList().get(tabID).getController().getTab().se
         
     }
+    public void newFormInterface() throws IOException{
+         int tabID = SESSION.addTab(TabController.createFromFXMLandLoadTab(TAB_VIEW, "FormRecognition.fxml", OUTPUT));
+         SESSION.getTabList().get(tabID).getController().setText("Untitled.ffs");
+    }
     
     
     

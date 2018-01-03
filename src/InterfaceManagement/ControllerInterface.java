@@ -17,7 +17,7 @@ public interface ControllerInterface {
 
     public void closeTab();
 
-    public void showTab(boolean visible);
+    
 
     public void setText(String title);
 

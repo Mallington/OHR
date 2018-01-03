@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.canvas.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -19,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="510.0" prefWidth="702.0" styleClass="primBack" stylesheets="@Dark.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.NeuralNetInterfaceController">
+<AnchorPane id="AnchorPane" prefHeight="510.0" prefWidth="702.0" styleClass="primBack" stylesheets="@Dark.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.NeuralNetInterfaceController">
     <stylesheets>
        
     </stylesheets>
@@ -28,11 +23,11 @@
          <center>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
                <children>
-                  <TitledPane alignment="CENTER" animated="false" prefHeight="260.0" prefWidth="260.0" styleClass="frame" text="Input Pad">
+                  <TitledPane alignment="CENTER" animated="false" prefHeight="260.0" prefWidth="230.0" styleClass="frame" text="Input Pad">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="frame">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="144.0" style="-fx-background-color: white; -fx-border-color: grey;" styleClass="frame">
                            <children>
-                              <Canvas fx:id="INPUT_PAD" height="230.0" layoutX="14.0" layoutY="1.0" width="230.0" />
+                              <Canvas fx:id="INPUT_PAD" height="225.0" layoutX="2.0" layoutY="4.0" width="225.0" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -55,11 +50,11 @@
                         </AnchorPane>
                     </content>
                   </TitledPane>
-                  <TitledPane alignment="CENTER" animated="false" prefHeight="260.0" prefWidth="260.0" styleClass="frame" text="Output">
+                  <TitledPane alignment="CENTER" animated="false" prefHeight="260.0" prefWidth="230.0" styleClass="frame" text="Output">
                      <content>
                         <Pane prefHeight="200.0" prefWidth="200.0" styleClass="frame">
                            <children>
-                              <Text fx:id="OUT_LETTER" fill="WHITE" layoutX="81.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_">
+                              <Text fx:id="OUT_LETTER" layoutX="66.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="_">
                                  <font>
                                     <Font name="Georgia" size="150.0" />
                                  </font>
@@ -76,7 +71,7 @@
                <children>
                   <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: grey; -fx-background-color: white;">
                            <children>
                               <ImageView fx:id="IMAGE_VIEW" fitHeight="113.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
@@ -84,6 +79,9 @@
                      </children>
                   </HBox>
                </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </AnchorPane>
          </bottom>
       </BorderPane>
