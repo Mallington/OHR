@@ -57,7 +57,7 @@ public class MainWindowController implements Initializable{
       TAB_VIEW.setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB);
       addSelectionModel(TAB_VIEW);
         try {
-            int added = SESSION.addTab(TabController.createFromFXMLandLoadTab(TAB_VIEW, "WelcomeScreen.fxml", OUTPUT));
+            int added = SESSION.addTab(TabController.createFromFXMLandLoadTab(TAB_VIEW, "WelcomeScreen.fxml", OUTPUT, this.MENU_BAR));
         } catch (IOException ex) {
             Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -79,13 +79,13 @@ public class MainWindowController implements Initializable{
     }
     
     public void newNeuralInterface() throws IOException, InterruptedException {
-       int tabID = SESSION.addTab(TabController.createFromFXMLandLoadTab(TAB_VIEW, "NeuralNetInterface.fxml", OUTPUT));
+       int tabID = SESSION.addTab(TabController.createFromFXMLandLoadTab(TAB_VIEW, "NeuralNetInterface.fxml", OUTPUT, this.MENU_BAR));
         SESSION.getTabList().get(tabID).getController().setText("Untitled.nns");
         // SESSION.getTabList().get(tabID).getController().getTab().se
         
     }
     public void newFormInterface() throws IOException{
-         int tabID = SESSION.addTab(TabController.createFromFXMLandLoadTab(TAB_VIEW, "FormRecognition.fxml", OUTPUT));
+         int tabID = SESSION.addTab(TabController.createFromFXMLandLoadTab(TAB_VIEW, "FormRecognition.fxml", OUTPUT, this.MENU_BAR));
          SESSION.getTabList().get(tabID).getController().setText("Untitled.ffs");
     }
     
@@ -98,7 +98,7 @@ public class MainWindowController implements Initializable{
         File picked = pick.getFile((Stage)this.TAB_VIEW.getScene().getWindow(), FilePicker.OPEN);
        
         if(picked.getName().contains(".nns")) {
-            int added = SESSION.addTab(TabController.createFromFXMLandLoadTab(TAB_VIEW, "NeuralNetInterface.fxml", OUTPUT));
+            int added = SESSION.addTab(TabController.createFromFXMLandLoadTab(TAB_VIEW, "NeuralNetInterface.fxml", OUTPUT, this.MENU_BAR));
             SESSION.getTabList().get(added).getController().load(picked);
         }
         

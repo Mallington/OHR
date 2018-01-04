@@ -39,6 +39,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
@@ -96,6 +97,10 @@ public class NeuralNetInterfaceController extends TabAttributes<Layer> implement
     public void initialize(URL url, ResourceBundle rb) {
         setFileType(".nns");
         setFileDes("Neural Net Struct");
+        this.setMenuItems(genMenus());
+        
+        
+        
         try {
             URL imageR = getClass().getResource("UpperCase.jpg");
 
@@ -126,6 +131,17 @@ public class NeuralNetInterfaceController extends TabAttributes<Layer> implement
         CHARECTAR_SELECT.getSelectionModel().selectFirst();
         DGRID = new DrawingGrid(30, 30, INPUT_PAD);
 
+    }
+    
+    public ArrayList<Menu> genMenus(){
+        ArrayList<Menu> menus = new ArrayList<Menu>();
+        
+        Menu neural = new Menu("Neural");
+          MenuItem eval = new MenuItem("Evaluate");
+          neural.getItems().addAll(eval);
+         menus.add(neural);
+      
+        return menus;
     }
 
    

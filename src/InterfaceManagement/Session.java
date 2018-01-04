@@ -20,9 +20,9 @@ import javafx.scene.control.Tab;
  * @author mathew
  */
 public class Session {
-
+    
     private List<TabController> TABS;
-
+    
     public Session() {
         TABS = new ArrayList<TabController>();
 
@@ -38,13 +38,14 @@ public class Session {
      * @return Returns the value of the tab in the array
      */
     public int addTab(TabController t) {
+        t.getController().getTab().setId(TABS.size()+"");
         TABS.add(t);
         return TABS.size() - 1;
     }
     
     public ControllerInterface getControllerFromTab(Tab tab){
         ControllerInterface inter = null;
-        for(TabController tC : TABS) if((inter = tC.getController()).getTab().equals(tC)) return inter;
+        for(int i =0; i< TABS.size(); i++) if((inter =TABS.get(i).getController()).getTab().getId().equals(tab.getId())) return inter;
         return inter;
     }
     

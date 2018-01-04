@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
@@ -46,9 +47,9 @@ public class TabController<ControllerType extends ControllerInterface> {
         
     }
 
-    public static TabController createFromFXMLandLoadTab(TabPane tabs, String res, OutputController out) throws IOException {
+    public static TabController createFromFXMLandLoadTab(TabPane tabs, String res, OutputController out, MenuBar menu) throws IOException {
         ControllerInterface con = getController(tabs, res, out);
-
+        con.setMenuBar(menu);
         return new TabController(con);
     }
 
@@ -68,7 +69,6 @@ public class TabController<ControllerType extends ControllerInterface> {
 
         t.setContent(n);
 
-        //NEED TO FIX HERE, accidently loading SEPERATE controller instances, messing up everything!
         ControllerInterface cont = (ControllerInterface) res.loadController();
         System.out.println("Loaded Controeller");
         cont.setTab(t);

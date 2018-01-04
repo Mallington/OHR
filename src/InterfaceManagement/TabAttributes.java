@@ -50,13 +50,35 @@ public abstract class TabAttributes<FileType> implements ControllerInterface {
     abstract public void setGUI(FileType file);
 
     public void selectTab(){
-        System.out.println("Selecting");
-        if(MENU_BAR != null && MENUS !=null) for(Menu men : MENUS) MENU_BAR.getMenus().add(men);
+        this.OUT.print("Selecting "+this.NAME);
+        TAB_INSTANCE.setText(NAME+" ✓ ");
+        if(MENU_BAR != null && MENUS !=null) for(Menu men : MENUS){
+            System.out.println("Add Menu");
+            MENU_BAR.getMenus().add(men);
+           
+        }
+        else{
+            System.out.println("Null!");
+        }
     }
     public void deselectTab(){
-        System.out.println("Deselecting");
-        if(MENU_BAR != null && MENUS !=null) for(Menu men : MENUS) MENU_BAR.getMenus().remove(men);
+        this.OUT.print("Deselecting "+this.NAME);
+        TAB_INSTANCE.setText(NAME);
+        if(MENU_BAR != null && MENUS !=null) for(Menu men : MENUS) {
+            System.out.println("Rem Menu");
+            MENU_BAR.getMenus().remove(men);
+           
+        }
     } 
+    
+    private void reloadStage(){
+        ((Stage)(TAB_INSTANCE.getTabPane().getScene().getWindow())).hide();
+        ((Stage)(TAB_INSTANCE.getTabPane().getScene().getWindow())).hide();((Stage)(TAB_INSTANCE.getTabPane().getScene().getWindow())).show();
+
+        
+       
+        
+    }
     
     public void setMenuBar(MenuBar menuBar){
         MENU_BAR = menuBar;
