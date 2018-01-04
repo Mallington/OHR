@@ -38,6 +38,9 @@ public class TabController<ControllerType extends ControllerInterface> {
         CONTROLLER_INSTANCE = controller;
     }
     
+ 
+   
+    
     public ControllerInterface getController(){
         return CONTROLLER_INSTANCE;
         

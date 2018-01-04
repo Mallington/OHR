@@ -25,6 +25,7 @@ public class FormRecognitionController extends TabAttributes implements Initiali
     public void initialize(URL url, ResourceBundle rb) {
         this.setFileType(".fs");
         this.setFileDes("Form Structure");
+        this.setMenuItems(null); // Need to set menus
     }
 
    

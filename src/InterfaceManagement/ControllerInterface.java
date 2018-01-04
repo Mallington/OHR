@@ -7,6 +7,7 @@ package InterfaceManagement;
 
 import GUI.OutputController;
 import java.io.File;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.Tab;
 
 /**
@@ -17,11 +18,13 @@ public interface ControllerInterface {
 
     public void closeTab();
 
-    
+     public void setMenuBar(MenuBar menuBar);
 
     public void setText(String title);
 
     public void selectTab();
+    
+    public void deselectTab();
 
     public Tab getTab();
 
@@ -38,4 +41,5 @@ public interface ControllerInterface {
     public boolean hasSaved();
     
     public void saveAsNew();
+    
 }

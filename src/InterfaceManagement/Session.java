@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.Tab;
 
 /**
  *
@@ -39,6 +40,12 @@ public class Session {
     public int addTab(TabController t) {
         TABS.add(t);
         return TABS.size() - 1;
+    }
+    
+    public ControllerInterface getControllerFromTab(Tab tab){
+        ControllerInterface inter = null;
+        for(TabController tC : TABS) if((inter = tC.getController()).getTab().equals(tC)) return inter;
+        return inter;
     }
     
     

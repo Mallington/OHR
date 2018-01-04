@@ -14,7 +14,7 @@
    <children>
       <BorderPane layoutX="135.0" layoutY="45.0" prefHeight="540.0" prefWidth="471.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <MenuBar styleClass="frame" BorderPane.alignment="CENTER">
+            <MenuBar id="MENU_BAR" styleClass="frame" BorderPane.alignment="CENTER">
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>

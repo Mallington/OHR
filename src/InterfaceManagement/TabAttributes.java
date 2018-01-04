@@ -14,12 +14,16 @@ import Util.Save;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.Tab;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 import neural.Layer;
 
 /**
@@ -39,9 +43,44 @@ public abstract class TabAttributes<FileType> implements ControllerInterface {
     public boolean NEW_DOCUMENT = true;
 
     public File ORIGINAL_DIRECTORY;
+    
+    private ArrayList<Menu> MENUS = null;
+    private MenuBar MENU_BAR = null;
 
     abstract public void setGUI(FileType file);
 
+    public void selectTab(){
+        System.out.println("Selecting");
+        if(MENU_BAR != null && MENUS !=null) for(Menu men : MENUS) MENU_BAR.getMenus().add(men);
+    }
+    public void deselectTab(){
+        System.out.println("Deselecting");
+        if(MENU_BAR != null && MENUS !=null) for(Menu men : MENUS) MENU_BAR.getMenus().remove(men);
+    } 
+    
+    public void setMenuBar(MenuBar menuBar){
+        MENU_BAR = menuBar;
+    }
+    
+    public void setMenuItems(ArrayList<Menu> menus){
+        MENUS =  menus;
+    }
+    
+    public void setModified() {
+        SAVED = false;
+    }
+
+    private boolean saveMenu() {
+        String[] buttons = {"Yes", "No"};
+        int returnValue = JOptionPane.showOptionDialog(null, "Oh dear", "Would you like to save", JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[0]);
+        if (returnValue == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    
     public void save() {
         if (NEW_DOCUMENT) {
             this.OUT.print("Saving as new file, good and new!");
@@ -111,18 +150,6 @@ public abstract class TabAttributes<FileType> implements ControllerInterface {
     public void setText(String title) {
         this.TAB_INSTANCE.setText(title);
         this.NAME = title;
-    }
-
-    public void selectTab() {
-        System.out.println("Setting tab not supported");
-    }
-
-    public void showTab() {
-
-    }
-
-    public void setModified() {
-        SAVED = false;
     }
 
     public void saveAsNew() {

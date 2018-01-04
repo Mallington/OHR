@@ -16,10 +16,14 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
@@ -31,13 +35,10 @@ import javafx.stage.Stage;
  *
  * @author mathew
  */
-public class MainWindowController implements Initializable{
-
-   
-    
-    
+public class MainWindowController implements Initializable{ 
     
     private Session SESSION = new Session();
+    
     @FXML
     Text TEXT = new Text();
     @FXML
@@ -45,9 +46,35 @@ public class MainWindowController implements Initializable{
     @FXML
     TextArea OUTPUT_TEXT = new TextArea();
     @FXML
-
+    MenuBar MENU_BAR = new MenuBar();
+    
     OutputController OUTPUT;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+      OUTPUT = new OutputController(OUTPUT_TEXT);
+      TAB_VIEW.setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB);
+      addSelectionModel(TAB_VIEW);
+        try {
+            int added = SESSION.addTab(TabController.createFromFXMLandLoadTab(TAB_VIEW, "WelcomeScreen.fxml", OUTPUT));
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void addSelectionModel(TabPane pane){
+        pane.getSelectionModel().selectedItemProperty().addListener(
+    new ChangeListener<Tab>() {
+            @Override
+            public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
+                SESSION.getControllerFromTab(newValue).selectTab();
+                SESSION.getControllerFromTab(oldValue).deselectTab();
+            }
+     
+    }
+);
+    }
+    
     public void newNeuralInterface() throws IOException, InterruptedException {
        int tabID = SESSION.addTab(TabController.createFromFXMLandLoadTab(TAB_VIEW, "NeuralNetInterface.fxml", OUTPUT));
         SESSION.getTabList().get(tabID).getController().setText("Untitled.nns");
@@ -96,17 +123,4 @@ public class MainWindowController implements Initializable{
       }
        
     }
-   
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-      OUTPUT = new OutputController(OUTPUT_TEXT);
-      TAB_VIEW.setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB);
-        try {
-            int added = SESSION.addTab(TabController.createFromFXMLandLoadTab(TAB_VIEW, "WelcomeScreen.fxml", OUTPUT));
-        } catch (IOException ex) {
-            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

@@ -67,13 +67,9 @@ import neural.TrainingSet;
  */
 public class NeuralNetInterfaceController extends TabAttributes<Layer> implements Initializable {
 
-    //Tim
     @FXML
     BorderPane BORDER = new BorderPane();
-    /*
-    private String NAME = "UNTITLED.nns";
-    private Tab TAB_INSTANCE;*/
-
+    
     private Window WINDOW;
 
     private DrawingGrid DGRID;
@@ -199,71 +195,7 @@ public class NeuralNetInterfaceController extends TabAttributes<Layer> implement
         // Platform.runLater(r);
 
     }
-
-    /*
-    @Override
-    public void closeTab() {
-      
-        if(!SAVED ){
-        save();}
-       
-        TAB_INSTANCE.getTabPane().getTabs().remove(TAB_INSTANCE);
-       
-        
-    } */
-
     
-
-    /*
-    @Override
-    public void setText(String title) {
-        this.TAB_INSTANCE.setText(title);
-        this.NAME = title;
-    } */
-
-    public void setContextMenu() {
-        ContextMenu m = new ContextMenu();
-
-        // MenuItem mi = new MenuItems("Close");
-        // m.getItems()
-        //this.TAB_INSTANCE.
-    }
-
-    /*
-    @Override
-    public void setTab(Tab t) {
-        this.TAB_INSTANCE = t;
-        this.TAB_INSTANCE.setClosable(true);
-        this.TAB_INSTANCE.setOnCloseRequest(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                closeTab();
-            }
-        });
-        
-                
-        Resource r = new Resource("NeuralTab.fxml");
-
-        try {
-            t.setGraphic(r.getNode());
-        } catch (IOException ex) {
-            System.out.println("FAILED TO SET GRAPHICS");
-        }
-    }*/
-    public void setModified() {
-        SAVED = false;
-    }
-
-    private boolean saveMenu() {
-        String[] buttons = {"Yes", "No"};
-        int returnValue = JOptionPane.showOptionDialog(null, "Oh dear", "Would you like to save", JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[0]);
-        if (returnValue == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public void peek() {
         OUT.print("Peeking");
         List<Double> toSet = new ArrayList<Double>();
