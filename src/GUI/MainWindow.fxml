@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="618.0" prefWidth="700.0" stylesheets="@Dark.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainWindowController">
+<AnchorPane id="AnchorPane" prefHeight="618.0" prefWidth="700.0" stylesheets="@Dark.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainWindowController">
    <children>
       <BorderPane layoutX="135.0" layoutY="45.0" prefHeight="540.0" prefWidth="471.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -28,11 +28,6 @@
                         <MenuItem mnemonicParsing="false" onAction="#open" text="Open" />
                         <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
                         <MenuItem mnemonicParsing="false" onAction="#saveAs" text="SaveAs" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
