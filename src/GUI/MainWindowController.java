@@ -53,6 +53,7 @@ public class MainWindowController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+      
       OUTPUT = new OutputController(OUTPUT_TEXT);
       TAB_VIEW.setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB);
       addSelectionModel(TAB_VIEW);
