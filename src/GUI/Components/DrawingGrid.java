@@ -28,7 +28,7 @@ public class DrawingGrid {
     
     //Colours
     Color PRIM_COLOR = Color.valueOf("black");
-    Color SEC_COLOR = Color.valueOf("WHITESMOKE");
+    Color SEC_COLOR = Color.valueOf("WHITE");
     
     private Canvas CANVAS;
     private boolean GEN_FRAME = true;
