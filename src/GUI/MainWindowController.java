@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -67,12 +68,14 @@ public class MainWindowController implements Initializable{
     new ChangeListener<Tab>() {
             @Override
             public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-                SESSION.getControllerFromTab(newValue).selectTab();
-                SESSION.getControllerFromTab(oldValue).deselectTab();
+                
+                if(oldValue != null )Platform.runLater( ()-> SESSION.getControllerFromTab(oldValue).deselectTab());
+                if(newValue != null )Platform.runLater( ()-> SESSION.getControllerFromTab(newValue).selectTab());
             }
      
     }
 );
+        System.out.println("Added Change Listeners");
     }
     
     public void newNeuralInterface() throws IOException, InterruptedException {
