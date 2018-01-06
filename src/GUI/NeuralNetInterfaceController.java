@@ -113,10 +113,9 @@ public class NeuralNetInterfaceController extends TabAttributes<Layer> implement
 
         Platform.runLater(() -> WINDOW = this.INPUT_PAD.getScene().getWindow());
         FILE = new Layer();
-
+Layer l;
         FILE.generateRandomNeurons(26, 900);
         FILE.setCharSet("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-
         setGUI(this.FILE);
 
     }
@@ -138,7 +137,16 @@ public class NeuralNetInterfaceController extends TabAttributes<Layer> implement
         
         Menu neural = new Menu("Neural");
           MenuItem eval = new MenuItem("Evaluate");
-          neural.getItems().addAll(eval);
+          eval.setOnAction(event-> evaluate()); 
+          MenuItem cl = new MenuItem("Clear");
+          cl.setOnAction(event-> clear());
+          MenuItem peek = new MenuItem("Peek");
+          peek.setOnAction(event-> peek());
+          MenuItem lo = new MenuItem("Load Image");
+          lo.setOnAction(event-> {try {loadImage();} catch (InterruptedException ex) {}});
+          
+          
+          neural.getItems().addAll(eval,cl, peek,lo);
          menus.add(neural);
       
         return menus;
