@@ -20,4 +20,5 @@ public interface SubControllerInterface {
     public void setBackColour(Paint p);
     public void disclosePopup(Popup popInst);
     public Object getReturn();
+    public void dispose();
 }

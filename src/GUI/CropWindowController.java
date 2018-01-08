@@ -172,6 +172,11 @@ public class CropWindowController implements Initializable, SubControllerInterfa
         return RETURN;
     }
 
+    @Override
+    public void dispose() {
+        
+    }
+
    
 
    

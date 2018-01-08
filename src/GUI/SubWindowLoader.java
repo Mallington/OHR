@@ -83,7 +83,7 @@ public class SubWindowLoader {
         while((ret =CONTROLLER.getReturn()) == null&& POPUP.isShowing());
         
          
-       Platform.runLater( ()-> POPUP.hide());
+        Platform.runLater( ()-> POPUP.hide());
         if(ret == null) System.out.println("Something went wrong or window closed.");
         return ret;
     }
