@@ -93,6 +93,9 @@ public class NeuralNetInterfaceController extends TabAttributes<Layer> implement
     @FXML
     public ChoiceBox CHARECTAR_SELECT = new ChoiceBox();
 
+    private SubWindowLoader CROP_WINDOW= null;
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setFileType(".nns");
@@ -193,13 +196,14 @@ Layer l;
 
     public void loadImage() throws InterruptedException {
         System.out.println("Loading Image");
-        SubWindowLoader wind = new SubWindowLoader("CropWindow.fxml", WINDOW);
-        wind.show();
+        
+        if(CROP_WINDOW == null) CROP_WINDOW = new SubWindowLoader("CropWindow.fxml", WINDOW);
+        CROP_WINDOW.show();
         Runnable r = new Runnable() {
             public void run() {
 
                 try {
-                    LOADED_IMAGE = (Image) wind.getReturn();
+                    LOADED_IMAGE = (Image) CROP_WINDOW.getReturn();
                 } catch (Exception e) {
                     OUT.print("Failed to retrieve photo, what did you do?!");
                 }

@@ -67,6 +67,7 @@ public class SubWindowLoader {
     }
     
     public void show(){
+         CONTROLLER.flushReturn();
          WINDOW.setOpacity(0.5);
          POPUP.setOnHiding(new EventHandler() {
             @Override

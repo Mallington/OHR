@@ -17,7 +17,8 @@ public class NeuralHandWritingRecognition {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        MainWindow.startGUI(args);
+        MainWindow.startGUI(args); // this is where the big bang was created
+        
         
     }
     

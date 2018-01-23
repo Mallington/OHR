@@ -165,7 +165,12 @@ public class CropWindowController implements Initializable, SubControllerInterfa
     public void disclosePopup(Popup popInst) {
         POPUP = popInst;
     }
-
+    
+    @Override
+    public void flushReturn(){
+        RETURN =null;
+    }
+    
     @Override
     public Object getReturn() {
         

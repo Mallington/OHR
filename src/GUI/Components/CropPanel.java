@@ -55,6 +55,7 @@ public class CropPanel {
     private boolean moveCrop = false;
     
     List<PixelFormation> FORMATIONS = null;
+    PixelFormation PRIMARY_FORM = null;
     
     public CropPanel(Image i, Canvas canv, int ratX, int ratY) {
         RAT_X = ratX;
@@ -80,6 +81,26 @@ public class CropPanel {
         SCALE = scale;
         tick();
     }
+    
+    public void fitFormation(PixelFormation p){
+        Rectangle b = p.getBounds();
+        Rectangle r;
+        double xOff = 0;
+        double yOff =0;
+        
+        double x=0;
+        if(b.getWidth()> b.getHeight())  {
+            x = b.getWidth();
+            yOff = (x-b.getHeight())/2.0;
+        } 
+        else {
+            x = b.getHeight();
+            xOff = (x-b.getWidth())/2.0;
+        }
+        r= new Rectangle(b.getX()-xOff,b.getY()-yOff,x,x);
+        
+        CROP_BOUND = new Rectangle((this.X_OFF+r.getX())*SCALE, (this.Y_OFF+r.getY())*SCALE, r.getWidth()*SCALE, r.getHeight()*SCALE);
+    }   
     
     public void setBackgroundColour(Paint c){
         BACK_COLOUR = c;
@@ -126,8 +147,41 @@ public class CropPanel {
         tick();
     }
    
+    
+    private PixelFormation findFormIntercept(MouseEvent m){
+        
+        for(PixelFormation p : FORMATIONS) {
+            Rectangle b = p.getBounds();
+            if(this.pointIntersects(m.getX()/SCALE - X_OFF, m.getY()/SCALE - Y_OFF, b.getX(), b.getY(), b.getWidth(), b.getHeight())) return p;
+        }
+        return null;
+            
+        
+    }
+    
 
     private void addListeners() {
+         CANVAS.setOnMouseClicked(new EventHandler<MouseEvent>() {
+    @Override
+    public void handle(MouseEvent m) {
+        PixelFormation clickedForm = findFormIntercept(m);
+        
+        if(clickedForm != null){
+        if(m.getClickCount() == 1){
+            PRIMARY_FORM = clickedForm;
+            
+            tick();
+        }
+        if(m.getClickCount() == 2){
+            PRIMARY_FORM = clickedForm;
+            fitFormation(PRIMARY_FORM);
+            tick();
+        }
+        }
+    }
+});
+        
+        
          CANVAS.addEventHandler(MouseEvent.MOUSE_DRAGGED,
                 new EventHandler<MouseEvent>() {
 
@@ -256,12 +310,18 @@ public class CropPanel {
     }
     
     private void drawFormationBounds(GraphicsContext g, List<PixelFormation> formation){
-        g.setStroke(Paint.valueOf("Red"));
+        if(PRIMARY_FORM !=null){/*
+        g.setStroke(Paint.valueOf("Black"));
+        Rectangle r = this.PRIMARY_FORM.getBounds();
+        this.drawRect(g, new Rectangle((this.X_OFF+r.getX())*SCALE, (this.Y_OFF+r.getY())*SCALE, r.getWidth()*SCALE, r.getHeight()*SCALE)); */
+        } else{
+        g.setStroke(Paint.valueOf("Grey"));
         for(PixelFormation f : formation) {
           
              Rectangle r = f.getBounds();
              this.drawRect(g, new Rectangle((this.X_OFF+r.getX())*SCALE, (this.Y_OFF+r.getY())*SCALE, r.getWidth()*SCALE, r.getHeight()*SCALE));
-        }
+        }}
+        
     }
     
     
