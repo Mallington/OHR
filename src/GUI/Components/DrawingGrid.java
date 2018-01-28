@@ -151,7 +151,6 @@ public class DrawingGrid {
 
     private void tick() {
         if (GEN_FRAME) {
-
             GraphicsContext g = CANVAS.getGraphicsContext2D();
             g.setFill(SEC_COLOR);
 

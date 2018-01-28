@@ -43,7 +43,56 @@ public class ImageTools {
 
         return SwingFXUtils.toFXImage(bi, null);
     }
-
+    
+    
+     private static List<PixelFormation>sortByX(List<PixelFormation> toSort){
+        List<PixelFormation> xSorted = new ArrayList<PixelFormation>();
+        while(toSort.size()>0){
+            int biggest =0;
+        for(int i =1; i< toSort.size(); i++){
+            if(toSort.get(i).getBounds().getX()< toSort.get(biggest).getBounds().getX()) biggest = i;
+        }
+        xSorted.add(toSort.get(biggest));
+        toSort.remove(biggest);
+        }
+        return xSorted;
+    }
+    
+    
+    public static List<PixelFormation> sortLeftToRight(List<PixelFormation> formations){
+        formations = sortByX(formations);
+        List<PixelFormation> newOrder = new ArrayList<PixelFormation>();
+        int l =0;
+        
+        
+        while(formations.size()>0){
+            
+            l++;
+            javafx.scene.shape.Rectangle current = formations.get(0).getBounds();
+            newOrder.add(formations.get(0));
+            formations.remove(0);
+            for(int i =0; i<formations.size(); i++){
+                
+                javafx.scene.shape.Rectangle check = formations.get(i).getBounds();
+                
+                if((check.getY()>=current.getY() && check.getY()<=(current.getY()+current.getHeight()))
+                        ||((current.getY()+current.getHeight())>=check.getY()  && (current.getY()+current.getHeight())<= check.getY() + check.getHeight())
+                        ){
+                    
+                    newOrder.add(formations.get(i));
+                    current = formations.get(i).getBounds();
+                    formations.remove(i);
+                    i--;
+                   
+                }
+                
+            }
+        }
+        System.out.println(l+" lines detected");
+        
+        
+        return newOrder;
+    }
     public static BufferedImage toGreyScale(BufferedImage img, boolean binarise, int threshold) {
         int h = 0;
         for (int y = 0; y < img.getHeight(); y++) {
@@ -70,6 +119,8 @@ public class ImageTools {
 
         return img;
     }
+    
+   
 
     public static Grid<Double> imageToBinaryGrid(BufferedImage img, int width, int height, int avgPoint) {
         Rectangle[][] BOUNDS = new Rectangle[width][height];

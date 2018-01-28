@@ -18,12 +18,15 @@ import javafx.scene.shape.Rectangle;
  */
 public class PixelFormation {
     private List<Point> POINTS;
-    
+    private boolean modified = true;
+    private Rectangle lastBounds = null;
     public PixelFormation(){
         POINTS = new ArrayList<Point>();
     }
     
     public Rectangle getBounds(){ // need to implement
+        
+        if(modified){
         Point topLeft = POINTS.get(0);
         Point bottomRight = POINTS.get(0);
         
@@ -33,13 +36,11 @@ public class PixelFormation {
             
             if(p.x > bottomRight.x) bottomRight = new Point(p.x, bottomRight.y);
             if(p.y > bottomRight.y)bottomRight = new Point( bottomRight.x, p.y);
-                
-            
-            
         }
-        
-        
-        return new Rectangle(topLeft.x, topLeft.y, bottomRight.x -topLeft.x , bottomRight.y -topLeft.y);
+        lastBounds =  new Rectangle(topLeft.x, topLeft.y, bottomRight.x -topLeft.x , bottomRight.y -topLeft.y);
+        modified = false;
+        }
+       return lastBounds;
     }
     
     public List<Point> getPoints(){
@@ -47,6 +48,7 @@ public class PixelFormation {
     }
     
     public void addPoint(int x, int y){
+        modified = true;
         POINTS.add(new Point(x,y));
     }
     
