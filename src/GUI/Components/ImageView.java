@@ -7,6 +7,9 @@ package GUI.Components;
 
 import Tools.GraphicsTools;
 import GUI.Storage.Point;
+import ImageProcessing.PixelFormation;
+import static Tools.GraphicsTools.pointIntersects;
+import java.util.List;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -16,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -42,7 +46,16 @@ public abstract class ImageView extends GraphicsTools {
 
         });
     }
-    
+    public PixelFormation findFormIntercept(MouseEvent m, List<PixelFormation> formations){
+        if(formations == null) return null;
+        for(PixelFormation p : formations) {
+            Rectangle b = p.getBounds();
+            if(pointIntersects(m.getX()/SCALE - X_OFF, m.getY()/SCALE - Y_OFF, b.getX(), b.getY(), b.getWidth(), b.getHeight())) return p;
+        }
+        return null;
+            
+        
+    }
     
      public void loadImage(Image img){
         this.DOCUMENT = img;

@@ -55,11 +55,32 @@ public class ImageTools {
         xSorted.add(toSort.get(biggest));
         toSort.remove(biggest);
         }
+         System.out.println("Order: ");
+        for(PixelFormation p: xSorted) System.out.print(p.getBounds().getX()+", ");
+         System.out.println("Ordered");
         return xSorted;
+        
+    }
+     private static List<PixelFormation>sortByY(List<PixelFormation> toSort){
+        List<PixelFormation> ySorted = new ArrayList<PixelFormation>();
+        while(toSort.size()>0){
+            int biggest =0;
+        for(int i =1; i< toSort.size(); i++){
+            if(toSort.get(i).getBounds().getY()< toSort.get(biggest).getBounds().getY()) biggest = i;
+        }
+        ySorted.add(toSort.get(biggest));
+        toSort.remove(biggest);
+        }
+         System.out.println("Order: ");
+        for(PixelFormation p: ySorted) System.out.print(p.getBounds().getY()+", ");
+         System.out.println("Ordered");
+        return ySorted;
+        
     }
     
     
     public static List<PixelFormation> sortLeftToRight(List<PixelFormation> formations){
+        formations = sortByY(formations);
         formations = sortByX(formations);
         List<PixelFormation> newOrder = new ArrayList<PixelFormation>();
         int l =0;
@@ -76,8 +97,10 @@ public class ImageTools {
                 javafx.scene.shape.Rectangle check = formations.get(i).getBounds();
                 
                 if((check.getY()>=current.getY() && check.getY()<=(current.getY()+current.getHeight()))
-                        ||((current.getY()+current.getHeight())>=check.getY()  && (current.getY()+current.getHeight())<= check.getY() + check.getHeight())
-                        ){
+                        ||((current.getY()+current.getHeight())>=check.getY()  && (current.getY()+current.getHeight())<= check.getY() + check.getHeight() || ((current.getY())>check.getY()&&current.getY()<check.getY()+check.getHeight()) ||((current.getY()+current.getHeight())>check.getY()&&current.getY()+current.getHeight()<check.getY()+check.getHeight()) )
+                        )
+                
+               {
                     
                     newOrder.add(formations.get(i));
                     current = formations.get(i).getBounds();
@@ -265,5 +288,7 @@ public class ImageTools {
         return pF;
 
     }
+    
+    
 
 }

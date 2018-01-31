@@ -44,7 +44,7 @@ import neural.Layer;
  *
  * @author mathew
  */
-public class FormRecognitionController extends TabAttributes implements Initializable{
+public class FormRecognitionController extends TabAttributes<Layer> implements Initializable{
     @FXML
     ImageView FORM_VIEW = new ImageView();
 
@@ -58,15 +58,20 @@ public class FormRecognitionController extends TabAttributes implements Initiali
     Slider SCALE = new Slider();
     @FXML
     Slider THRESH_SLIDER = new Slider();
+    @FXML
+    Text PROBABILITY = new Text();
+    @FXML
+    Text PROGRESS = new Text();
+    
     FormView VIEW_CONTROLLER;
     private double DEFAULT_THRESH = 125;
-    private Layer NNS = null;
+   
     private Image FORM = null;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.setFileType(".fs");
-        this.setFileDes("Form Structure");
+        this.setFileType(".nns");
+        this.setFileDes("Neural Net Struct");
         this.setMenuItems(new ArrayList<Menu>(genMenus())); // Need to set menus
         
         
@@ -94,7 +99,7 @@ public class FormRecognitionController extends TabAttributes implements Initiali
         try {
             
             FORM = ImageTools.convertBuffered(ImageIO.read(imageR));
-            VIEW_CONTROLLER = new FormView(FORM,MAIN_VIEW);
+            VIEW_CONTROLLER = new FormView(FORM,MAIN_VIEW, this);
             this.setImageView(FORM, DEFAULT_THRESH);
             
         } catch (IOException ex) {
@@ -165,26 +170,33 @@ public class FormRecognitionController extends TabAttributes implements Initiali
         this.OUT.print("Importing Network...");
        FilePicker pick = new FilePicker("Neural Net Struct ", Arrays.asList(".nns"));
          File picked = pick.getFile(null, FilePicker.OPEN);
-          NNS = (Layer) new Load(picked).load();
+         this.ORIGINAL_DIRECTORY = picked;
+          this.NEW_DOCUMENT = false;
+          this.FILE = (Layer) new Load(picked).load();
+          this.SAVED = true;
           
     }
     
     public void run(){
         this.OUT.print("Performing Letter Recognition");
-        FormRecognition FR = new FormRecognition(this.FORM, this.NNS, (int)this.THRESH_SLIDER.getValue());
+        FormRecognition FR = new FormRecognition(this.FORM, FILE, (int)this.THRESH_SLIDER.getValue());
         RecognitionOutput out = FR.startJob();
         String append = "";
         for(String s: out.CHARS) append+=s;
         System.out.println(append);
         OUT.print("Output: "+append);
-        this.VIEW_CONTROLLER.displayJobOutput(out);
+        this.PROBABILITY.setText((out.getProbability()*100.0)+"");
+        this.VIEW_CONTROLLER.displayJobOutput(out,  (int)this.THRESH_SLIDER.getValue());
     }
     
     public void modifyParams(){
         this.OUT.print("Opening Parameters window");
     }
 
-    public void setGUI(Object file) {
+    
+
+    @Override
+    public void setGUI(Layer file) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

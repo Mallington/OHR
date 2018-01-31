@@ -55,17 +55,16 @@ public class GraphicsTools {
      
      public static void drawFormationBounds(GraphicsContext g, List<PixelFormation> formation, double X_OFF, double Y_OFF, double SCALE, List<String> LABELS){
       
-        g.setStroke(Paint.valueOf("Grey"));
+       
         int i=0;
-        g.setLineDashes(null);
-        g.setLineWidth(1);
+        
         for(PixelFormation f : formation) {
           
              Rectangle r = f.getBounds();
              drawRect(g, new Rectangle((X_OFF+r.getX())*SCALE, (Y_OFF+r.getY())*SCALE, r.getWidth()*SCALE, r.getHeight()*SCALE));
             String label = "";
             if(LABELS !=null) label = LABELS.get(i);
-             g.strokeText("("+label+") F: "+i++, (r.getX()+r.getWidth()+X_OFF)*SCALE, (r.getY()+r.getHeight()+Y_OFF)*SCALE);
+             g.strokeText("("+label+") F: "+i++, (r.getX()+X_OFF)*SCALE, (r.getY()+Y_OFF)*SCALE);
         }
         
     }

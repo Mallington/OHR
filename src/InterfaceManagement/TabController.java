@@ -23,10 +23,10 @@ import javafx.scene.control.TabPane;
  * @author mathew
  *
  *
- * /**
  *
- * @author mathew
- * @param <C>
+ *
+ * 
+ * 
  */
 public class TabController<ControllerType extends ControllerInterface> {
 

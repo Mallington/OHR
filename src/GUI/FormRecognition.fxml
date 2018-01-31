@@ -47,7 +47,31 @@
                                                 </HBox>
                                                 <HBox alignment="CENTER" prefHeight="35.0" prefWidth="300.0">
                                                    <children>
-                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Progress: 00% | Accuracy: 00%" />
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Progress:">
+                                                         <HBox.margin>
+                                                            <Insets right="5.0" />
+                                                         </HBox.margin></Text>
+                                                      <Text fx:id="PROGRESS" strokeType="OUTSIDE" strokeWidth="0.0" text="00">
+                                                         <HBox.margin>
+                                                            <Insets />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\%">
+                                                         <HBox.margin>
+                                                            <Insets right="5.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Probability:">
+                                                         <HBox.margin>
+                                                            <Insets right="5.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="PROBABILITY" strokeType="OUTSIDE" strokeWidth="0.0" text="00">
+                                                         <HBox.margin>
+                                                            <Insets />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\%" />
                                                    </children>
                                                 </HBox>
                                              </children>
@@ -111,7 +135,6 @@
                      <children>
                         <Button mnemonicParsing="false" onAction="#importNetwork" text="Import Network" />
                         <Button mnemonicParsing="false" onAction="#importScan" text="Import Scan" />
-                        <Button mnemonicParsing="false" onAction="#modifyParams" text="Modify Parameters ⚙" />
                         <Button mnemonicParsing="false" onAction="#run" text="Run ▶" />
                         <Slider fx:id="SCALE" max="300.0" min="1.0" prefHeight="16.0" prefWidth="117.0" value="100.0" />
                         <Text fx:id="SCALE_LABEL" strokeType="OUTSIDE" strokeWidth="0.0" text="100%">

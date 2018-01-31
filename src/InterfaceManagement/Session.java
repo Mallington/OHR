@@ -32,10 +32,9 @@ public class Session {
         this.TABS = s.TABS;
     }
 
-    /**
+    /*
      *
-     * @param t
-     * @return Returns the value of the tab in the array
+     * 
      */
     public int addTab(TabController t) {
         t.getController().getTab().setId(TABS.size()+"");

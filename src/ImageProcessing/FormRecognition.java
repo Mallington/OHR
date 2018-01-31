@@ -35,7 +35,17 @@ public class FormRecognition {
         List<PixelFormation> pf = ImageTools.findEnclosedPixels(bi);
         OUT.formations = ImageTools.sortLeftToRight(pf);
         
-        for(PixelFormation p : OUT.formations) OUT.CHARS.add(this.evaluateCharacter(bi, p, NEURAL));
+        for(int i =0; i< OUT.formations.size(); i++) {
+            try{
+                String out = this.evaluateCharacter(bi, OUT.formations.get(i), NEURAL);
+            OUT.CHARS.add(out);}
+            catch(Exception e){
+                System.out.println("Failed to read char");
+                OUT.formations.remove(i);
+                i--;
+            }
+        
+        }
         System.out.println("Done.");
         
         return OUT;
@@ -47,12 +57,17 @@ public class FormRecognition {
         List<Double> out = neural.forwardProp(new TrainingSet(binary.getList(), 0, neural.NEURONS.size()));
         double biggest = out.get(0);
         int neuronPos = 0;
+        double acc =biggest;
         for (int i = 1; i < out.size(); i++) {
+            acc+=out.get(i);
             if (out.get(i) > biggest) {
                 biggest = out.get(i);
                 neuronPos = i;
             }
         }
+        OUT.ACC_PROB+=(biggest/acc);
+        OUT.TOTAL_PROB++;
+        System.out.println(biggest/acc);
         return neural.NEURONS.get(neuronPos).NAME;
     }
 }

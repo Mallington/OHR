@@ -117,16 +117,7 @@ public class CropPanel extends ImageView{
     }
    
     
-    private PixelFormation findFormIntercept(MouseEvent m){
-        if(FORMATIONS == null) return null;
-        for(PixelFormation p : FORMATIONS) {
-            Rectangle b = p.getBounds();
-            if(pointIntersects(m.getX()/SCALE - X_OFF, m.getY()/SCALE - Y_OFF, b.getX(), b.getY(), b.getWidth(), b.getHeight())) return p;
-        }
-        return null;
-            
-        
-    }
+    
     
 
     
@@ -186,7 +177,7 @@ public class CropPanel extends ImageView{
 
     @Override
     void clicked(MouseEvent m) {
-          PixelFormation clickedForm = findFormIntercept(m);
+          PixelFormation clickedForm = findFormIntercept(m, FORMATIONS);
         
         if(clickedForm != null){
         if(m.getClickCount() == 1){

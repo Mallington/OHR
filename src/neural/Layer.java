@@ -40,7 +40,7 @@ public class Layer implements Serializable{
     public List<Double> forwardProp(TrainingSet train){
         setInputs(train);
         List<Double> out = getOutputs();
-        for(Double d: out) System.out.println("Y = "+d);
+        //for(Double d: out) System.out.println("Y = "+d);
         return out;
     }
     
@@ -70,7 +70,7 @@ public class Layer implements Serializable{
     }
     
     private void setInputs(TrainingSet inp){
-        System.out.println("Inputs sizes"+ inp.TRAINING_INPUTS.size());
+        //System.out.println("Inputs sizes"+ inp.TRAINING_INPUTS.size());
         for(Neuron n: NEURONS) for(int i=0; i< n.inputs.size();i++){
             n.inputs.get(i).inp = inp.TRAINING_INPUTS.get(i);
         }

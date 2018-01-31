@@ -15,4 +15,10 @@ import java.util.List;
 public class RecognitionOutput {
     public List<String> CHARS = new ArrayList<String>();
     public List<PixelFormation> formations;
+    public double ACC_PROB =0.0;
+    public double TOTAL_PROB=0;
+    
+    public double getProbability(){
+    return ACC_PROB/TOTAL_PROB;
+    }
 }
