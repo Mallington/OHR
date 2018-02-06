@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -30,6 +31,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
@@ -47,7 +49,8 @@ import neural.Layer;
 public class FormRecognitionController extends TabAttributes<Layer> implements Initializable{
     @FXML
     ImageView FORM_VIEW = new ImageView();
-
+    @FXML
+    ProgressIndicator PROGRESS_IND = new ProgressIndicator();
     @FXML
     Canvas MAIN_VIEW = new Canvas();
     @FXML
@@ -179,14 +182,27 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
     
     public void run(){
         this.OUT.print("Performing Letter Recognition");
-        FormRecognition FR = new FormRecognition(this.FORM, FILE, (int)this.THRESH_SLIDER.getValue());
+        FormRecognition FR = new FormRecognition(this.FORM, FILE, (int)this.THRESH_SLIDER.getValue()) {
+            @Override
+            public void update(RecognitionOutput out) {
+                Platform.runLater(()->{
+                 
+                PROBABILITY.setText((int)(out.getProbability()*100)+"");
+                PROGRESS.setText((int)(out.getProgress()*100)+"");
+                VIEW_CONTROLLER.displayJobOutput(out,  out.THRESHOLD);
+                PROGRESS_IND.setProgress(out.getProgress());
+                });
+            }
+
+            @Override
+            public void complete(RecognitionOutput out) {
+                OUT.print("Output: "+out.getResultantString());
+            }
+        };
         RecognitionOutput out = FR.startJob();
-        String append = "";
-        for(String s: out.CHARS) append+=s;
-        System.out.println(append);
-        OUT.print("Output: "+append);
-        this.PROBABILITY.setText((out.getProbability()*100.0)+"");
-        this.VIEW_CONTROLLER.displayJobOutput(out,  (int)this.THRESH_SLIDER.getValue());
+        //OUT.print("Output: "+out.getResultantString());
+       // this.PROBABILITY.setText((int)(out.getProbability()*100.0)+"");
+        //this.VIEW_CONTROLLER.displayJobOutput(out,  (int)this.THRESH_SLIDER.getValue());
     }
     
     public void modifyParams(){

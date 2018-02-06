@@ -47,7 +47,7 @@ public class FormView extends ImageView{
         g.setFill(Paint.valueOf("transparent"));
         g.setLineWidth(1.0);
         if(OUT !=null){
-            drawFormationBounds(g, OUT.formations, X_OFF, Y_OFF, SCALE,OUT.CHARS);
+            drawFormationBounds(g, OUT.FORMATIONS, X_OFF, Y_OFF, SCALE,OUT.CHARS);
            
         }
     }
@@ -56,7 +56,7 @@ public class FormView extends ImageView{
     void clicked(MouseEvent m) {
        if(m.getClickCount() ==2 ){
            new Thread(()->{
-               PixelFormation p = findFormIntercept(m,OUT.formations);
+               PixelFormation p = findFormIntercept(m,OUT.FORMATIONS);
                
                if(p!=null){
                BufferedImage bin = ImageTools.convertImgToBuf(this.ORIGINAL);

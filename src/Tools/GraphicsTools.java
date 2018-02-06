@@ -57,14 +57,19 @@ public class GraphicsTools {
       
        
         int i=0;
-        
+        if(formation !=null){
+            try{
         for(PixelFormation f : formation) {
           
              Rectangle r = f.getBounds();
              drawRect(g, new Rectangle((X_OFF+r.getX())*SCALE, (Y_OFF+r.getY())*SCALE, r.getWidth()*SCALE, r.getHeight()*SCALE));
             String label = "";
-            if(LABELS !=null) label = LABELS.get(i);
+            
+           try {label = LABELS.get(i);} catch(Exception e){}
+            
              g.strokeText("("+label+") F: "+i++, (r.getX()+X_OFF)*SCALE, (r.getY()+Y_OFF)*SCALE);
+        }
+            } catch(Exception e){}
         }
         
     }

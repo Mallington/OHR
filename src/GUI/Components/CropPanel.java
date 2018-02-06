@@ -107,7 +107,7 @@ public class CropPanel extends ImageView{
         if(detectForms) {
             System.out.println("Finding Forms");
             FORMATIONS = ImageTools.findEnclosedPixels(toRender);
-            FORMATIONS = ImageTools.sortLeftToRight(FORMATIONS);
+            FORMATIONS = ImageTools.sortLeftToRight(FORMATIONS).FORMATIONS;
         }
         }
         else{

@@ -79,9 +79,10 @@ public class ImageTools {
     }
     
     
-    public static List<PixelFormation> sortLeftToRight(List<PixelFormation> formations){
+    public static SortingOutput sortLeftToRight(List<PixelFormation> formations){
         formations = sortByY(formations);
         formations = sortByX(formations);
+        List<AdditionalChar> additional = new ArrayList<AdditionalChar>();
         List<PixelFormation> newOrder = new ArrayList<PixelFormation>();
         int l =0;
         
@@ -89,6 +90,7 @@ public class ImageTools {
         while(formations.size()>0){
             
             l++;
+            
             javafx.scene.shape.Rectangle current = formations.get(0).getBounds();
             newOrder.add(formations.get(0));
             formations.remove(0);
@@ -109,12 +111,14 @@ public class ImageTools {
                    
                 }
                 
+                
             }
+            //additional.add( new AdditionalChar('\n',newOrder.size()-2));
         }
         System.out.println(l+" lines detected");
         
         
-        return newOrder;
+        return new SortingOutput(additional, newOrder);
     }
     public static BufferedImage toGreyScale(BufferedImage img, boolean binarise, int threshold) {
         int h = 0;
@@ -227,19 +231,32 @@ public class ImageTools {
         }
 
     }
-
-    public static List<PixelFormation> findEnclosedPixels(BufferedImage img) {
+ public static List<PixelFormation> findEnclosedPixels(BufferedImage img){
+     return findEnclosedPixels(img, null, 0);
+ }
+    
+    public static List<PixelFormation> findEnclosedPixels(BufferedImage img, RecognitionOutput update, double totalInc) {
         List<PixelFormation> form = new ArrayList<PixelFormation>();
         List<Point> taken = new ArrayList<Point>();
-
+        double inc =0;
+        boolean incr = false;
+        if(update !=null && totalInc>0) {
+            update.FORMATIONS = new ArrayList<PixelFormation>();
+            form = update.FORMATIONS;
+            incr = true;
+            inc = totalInc/(img.getWidth()*img.getHeight());
+        }
+        System.out.println("inc: "+inc);
         PixelFormation currentForm = null;
 
         for (int y = 0; y < img.getHeight(); y++) {
             for (int x = 0; x < img.getWidth(); x++) {
-
+                if(incr) update.updateProgress(update.getProgress()+inc);
                 currentForm = new PixelFormation();
                 currentForm = explorePixel(img, x, y, taken, currentForm);
-
+                if(currentForm == null) {
+                return null;
+                };
                 if (!currentForm.isEmpty()) {
                     form.add(currentForm);
                 }
@@ -259,7 +276,7 @@ public class ImageTools {
         return false;
     }
 
-    private static PixelFormation explorePixel(BufferedImage img, int x, int y, List<Point> taken, PixelFormation pF) { // NEED TO FIX PIXEL BOUND PROBLEM!
+    private static PixelFormation explorePixel(BufferedImage img, int x, int y, List<Point> taken, PixelFormation pF)  { // NEED TO FIX PIXEL BOUND PROBLEM!
         // System.out.println(recur++);
 
         if (x < 0 || y < 0 || y >= img.getHeight() || x >= img.getWidth()) {
@@ -272,11 +289,15 @@ public class ImageTools {
 
             pF.addPoint(x, y);
             taken.add(new Point(x, y));
-
+try{
             pF = explorePixel(img, x + 1, y, taken, pF);
             pF = explorePixel(img, x - 1, y, taken, pF);
             pF = explorePixel(img, x, y + 1, taken, pF);
             pF = explorePixel(img, x, y - 1, taken, pF);
+} catch(StackOverflowError e){
+    System.out.println("Stack overflow?");
+    return null;
+}
             /*
              pF = explorePixel(img, x+1,y+1, taken,pF);
              pF = explorePixel(img, x-1,y-1, taken,pF);
