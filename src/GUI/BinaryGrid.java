@@ -42,7 +42,7 @@ import javax.swing.SwingUtilities;
  * @author mathew
  */
 public class BinaryGrid extends JPanel {
-
+//Testing github still works
     //temp
     static boolean good = true;
 
