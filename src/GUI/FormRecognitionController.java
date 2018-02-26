@@ -71,13 +71,19 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
    
     private Image FORM = null;
     
+    
+    /**
+     * As per all of the ControllerInterface types, they add all of the relevant menus asscoiated with that tab.
+     * @param url
+     * @param rb 
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.setFileType(".nns");
         this.setFileDes("Neural Net Struct");
         this.setMenuItems(new ArrayList<Menu>(genMenus())); // Need to set menus
         
-        
+        // Adds the listener for scaling the main imageview
         SCALE.valueProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object val) {
@@ -96,7 +102,8 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
             }});
         
         
-        
+        // Sets a default image
+         
          URL imageR = getClass().getResource("UpperCase.jpg");
             
         try {
@@ -110,13 +117,20 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
         }
         
     }
-    
+    /** Used for previewing the image after binary threshold process
+     * 
+     * @param img Image to show
+     * @param thresh That point at which each pixel in turned black or white
+     */
     public void setImageView(Image img, double thresh){
         BufferedImage bimg = ImageTools.toGreyScale(ImageTools.convertImgToBuf(img), true, (int)thresh);
         FORM_VIEW.setImage(ImageTools.convertBuffered(bimg));
     }
    
-
+/** Sets all of the relevant menus for this tab type
+ * 
+ * @return Returns the menus to be added
+ */
    public List<Menu> genMenus(){
         
         
@@ -146,7 +160,9 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
           runM.getItems().addAll(runJ, param);
           return Arrays.asList(imp, runM);
     }
-   
+   /** When an action listener stated in the FXML is activated, the binary threshold will be updated on screen
+    * 
+    */
    public void recalculateThreshold(){
        try{
        int val = Integer.parseInt(this.THRESH_BOX.getText());
@@ -158,7 +174,11 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
            THRESH_BOX.setText((int)THRESH_SLIDER.getValue()+"");
        } } catch(Exception e){THRESH_BOX.setText((int)THRESH_SLIDER.getValue()+"");}
    }
-
+/**Using the filepicker class, it loads a new image to be recognised
+ * 
+ * @throws MalformedURLException
+ * @throws IOException 
+ */
     public void importScan() throws MalformedURLException, IOException{
        this.OUT.print("Importing Scan...");
        FilePicker pick = new FilePicker("Image ", Arrays.asList(".jpg",".png"));
@@ -168,7 +188,9 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
           VIEW_CONTROLLER.loadImage(FORM);
         
     }
-    
+    /**
+     * Using the filepicker class it loads a neural network structure file which contains the weightings used to evaluate the characters
+     * */
     public void importNetwork() throws MalformedURLException, IOException{
         this.OUT.print("Importing Network...");
        FilePicker pick = new FilePicker("Neural Net Struct ", Arrays.asList(".nns"));
@@ -179,7 +201,16 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
           this.SAVED = true;
           
     }
-    
+    /**
+     * Executes the main function of the tab, this executes n steps:
+     * 1) Binarises the image using the thresholding parameters provided by the user
+     * 2) The checks for individual pixel masses (pixel formations that are separate from one another)
+     * 3) Converts each pixel mass and converts it to a 30x30 pixel array
+     * 4) It then runs each 30x30 pixel array through the neural network (.nns) provided
+     * 5) It then determines the character by taking the highest output out of each neuron
+     * 6) It does this for all the pixel formations building up a map of all of the charactars
+     * 7) It then executes a sorting process that recognises the individual lines a output the chars in order
+     */
     public void run(){
         this.OUT.print("Performing Letter Recognition");
         FormRecognition FR = new FormRecognition(this.FORM, FILE, (int)this.THRESH_SLIDER.getValue()) {
@@ -210,7 +241,7 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
     }
 
     
-
+    // Interface method not used in this context
     @Override
     public void setGUI(Layer file) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

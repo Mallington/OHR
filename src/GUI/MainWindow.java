@@ -17,19 +17,28 @@ import javafx.stage.Stage;
  * @author mathew
  */
 public class MainWindow extends Application {
-
+ 
+   /** Used to make launch(args) assessable to other classes
+    * 
+    * @param args Command line parameters
+    */
+    
     public static void startGUI(String[] args) {
         launch(args);
     }
 
     @Override
+    
+    /**
+     * This imports the MainWindow.fxml and adds it a scene to the JavaFX stage
+     */
     public void start(Stage stage) throws Exception {
+        
+        //For windows platforms, it sets the icon of the window
         stage.getIcons().add(new Image(MainWindow.class.getResourceAsStream("Hand.png")));
         
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
-       // NeuralNetInterfaceController neuralController = loader.<NeuralNetInterfaceController>getController();
-
+       
         Scene scene = new Scene(root);
 
         stage.setScene(scene);

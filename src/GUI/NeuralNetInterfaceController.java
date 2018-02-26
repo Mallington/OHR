@@ -62,7 +62,9 @@ import neural.TrainingSet;
 // meaning of everything
 
 /**
- * FXML Controller class
+ * This class is used to govern the Neural interface that allows the user to create and train a network based 
+ * on manually drawn inputs or converted characters processed from actual images.
+ * 
  *
  * @author mathew
  */
@@ -96,6 +98,13 @@ public class NeuralNetInterfaceController extends TabAttributes<Layer> implement
     private SubWindowLoader CROP_WINDOW= null;
     
     
+    
+    /**
+     * This adds all of the relevant menus and creates a new neural network layer which is managed by the
+     * TabAttribute class, this layer can be overridden through the MasterController instance by calling load();.
+     * @param url
+     * @param rb 
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setFileType(".nns");
@@ -122,7 +131,10 @@ Layer l;
         setGUI(this.FILE);
 
     }
-
+    /**
+     * In this implementation, the GUI character selection box will be modified and the drawing pad reset.
+     * @param l Layer to be loaded
+     */
     @Override
     public void setGUI(Layer l) {
         ObservableList<String> list = FXCollections.observableArrayList();
@@ -134,7 +146,10 @@ Layer l;
         DGRID = new DrawingGrid(30, 30, INPUT_PAD);
 
     }
-    
+    /**
+     * 
+     * @return Relevant menus for this tab
+     */
     public ArrayList<Menu> genMenus(){
         ArrayList<Menu> menus = new ArrayList<Menu>();
         
@@ -158,12 +173,17 @@ Layer l;
    
    
 
-    //Actions
+    /**
+     * This erases the drawing pad
+     */
     public void clear() {
         DGRID.clear();
         OUT.print("Clearing");
     }
-
+    /**
+     * Runs the contents of the drawing pad through the neural network and outputs the character where
+     * that particular neuron output is the highest.
+     */
     public void evaluate() {
         this.OUT.print("Evaluating");
         List<Double> out = this.FILE.forwardProp(new TrainingSet(this.DGRID.getOutput(), 0, this.FILE.NEURONS.size()));
@@ -180,7 +200,9 @@ Layer l;
         this.OUT.print("Recognised as " + this.FILE.NEURONS.get(neuronPos).NAME);
 
     }
-
+    /**
+     * This 
+     */
     public void train() {
         // FILE.displayContents();
         int selection = this.getChoiceBox();

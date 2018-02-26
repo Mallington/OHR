@@ -43,9 +43,11 @@ public class DrawingGrid {
      * This creates a new Drawing grid, passing in the Canvas that the grid will be drawn on to.
      * @param x The amount of addressable pixels per row
      * @param y The amount of addressable pixels per column
+     * @param canv This is the canvas component that the grid will be drawn on
      */
 
     public DrawingGrid(int x, int y, Canvas canv) {
+       
         CANVAS = canv;
         
         GRID = new Grid<Double>(x, y, 0.0);
@@ -64,10 +66,9 @@ public class DrawingGrid {
     }
     
 /**
-     * Sets the contents of the 2 dimensional grid corresponding to 1 dimensional array inputted using the Gris class;
+     * Sets the contents of the 2 dimensional grid corresponding to 1 dimensional array inputted using the Grid class;
      * @param contents Data to be written to the grid
      */
-    
     public void setContents(List<Double> contents){
         if(contents.size() == this.getOutput().size()){
         this.GRID.setList(contents);
@@ -116,7 +117,11 @@ public class DrawingGrid {
         }
 
     } 
-
+/**
+ * Sets the width and height of the drawing grid
+ * @param xC width
+ * @param yC height
+ */
     private void setByBounds(int xC, int yC) {
        
         for (int x = 0; x < G_WIDTH; x++) {
@@ -133,7 +138,9 @@ public class DrawingGrid {
             }
         }
     }
-
+/**
+ * This adds a mouse dragged method which uses the drag location to set the corresponding pixel black
+ */
     private void addListeners() {
         CANVAS.addEventHandler(MouseEvent.MOUSE_DRAGGED,
                 new EventHandler<MouseEvent>() {
@@ -148,7 +155,9 @@ public class DrawingGrid {
 
        
     }
-
+/**
+ * Re-renders the canvas by redrawing its graphics, this is used to update when along with the addition of new data.
+ */
     private void tick() {
         if (GEN_FRAME) {
             GraphicsContext g = CANVAS.getGraphicsContext2D();
@@ -161,6 +170,11 @@ public class DrawingGrid {
 
         }
     }
+    /**
+     * This draws the grid onto the canvas, corresponding to the grid contents when tick() is called.
+     * @see tick()
+     * @param g Graphics context of the canvas being drawn on
+     */
 
     private void drawGrid(GraphicsContext g) {
         for (int x = 0; x < G_WIDTH; x++) {

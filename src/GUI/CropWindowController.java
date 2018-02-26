@@ -43,13 +43,15 @@ import javax.imageio.ImageIO;
  */
 public class CropWindowController implements Initializable, SubControllerInterface{
 
-    /**
-     * Initializes the controller class.
-     */
+    
     
     
     
     private OutputController OUT;
+    /**
+     * Canvas used for drawing the crop panel, used by the CropPanel class
+     * @see CropPanel
+     */
     @FXML
     private Canvas CROP_CANVAS = new Canvas();
     
@@ -66,15 +68,26 @@ public class CropWindowController implements Initializable, SubControllerInterfa
     private  CheckBox DETECT = new CheckBox();
     
     private CropPanel CROP_PANEL;
-   
+    /**
+     * Contains the window instance that the FXML is being held in
+     */
     private Window WINDOW;
     
     private Popup POPUP = null;
+    /**
+     * Contains the final output image to the instigating class
+     */
+    private Image RETURN = null; 
     
-    private Image RETURN = null;
     
-    
-    
+    /**
+     * Because the controller implements the use of initializable, when the FXML file is loaded,
+     * this method is called in its corresponding controller, In this implementation the CROP_PANEL 
+     * is instantiated by passing in the CROP_CANVAS, This creates a separate controller responsible,
+     * for drawing the crop panel and governing mouse inputs. It also adds
+     * @param url
+     * @param rb 
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Init");
@@ -100,7 +113,7 @@ public class CropWindowController implements Initializable, SubControllerInterfa
             
         
         });
-        
+       
         THRESHOLD.valueProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
@@ -113,12 +126,17 @@ public class CropWindowController implements Initializable, SubControllerInterfa
         
     }   
     
-     
+     /**
+      * This adjusts the settings render parameters that the CROP_PANEL uses to draw the image
+      */
     public void render(){
         CROP_PANEL.modifyImg((int)THRESHOLD.getValue(), BINARISE.isSelected(), DETECT.isSelected());
     }
     
-    
+    /**
+     * This opens a file window allowing the user to pick and load a .jpg or .png.
+     * @throws MalformedURLException 
+     */
     public void open() throws MalformedURLException{
          FilePicker pick = new FilePicker("Image ", Arrays.asList(".jpg",".png"));
          File picked = pick.getFile(null, FilePicker.OPEN);
@@ -126,7 +144,9 @@ public class CropWindowController implements Initializable, SubControllerInterfa
     }
     
     
-    
+    /*
+    This obtains the image inside the crop area and stores it in RETURN for the parent class to use.
+    */
     public void submit(){
       
           
@@ -136,7 +156,9 @@ public class CropWindowController implements Initializable, SubControllerInterfa
     }
     
 
-   
+   /**
+    * This closes the window
+    */
    public void cancel(){
        System.out.println("Cancelling");
        if(POPUP !=null) this.POPUP.hide();
@@ -144,7 +166,7 @@ public class CropWindowController implements Initializable, SubControllerInterfa
        else System.out.println("Need to set popup inst.");
    }
    
-
+  
     @Override
     public void load(URL url) {
         try {
@@ -154,13 +176,13 @@ public class CropWindowController implements Initializable, SubControllerInterfa
             System.out.println("Could not load image");
         }
     }
-
+   
     @Override
     public void setBackColour(Paint p) {
         System.out.println("Setting colour");
        this.CROP_PANEL.setBackgroundColour(p);
     }
-
+   
     @Override
     public void disclosePopup(Popup popInst) {
         POPUP = popInst;

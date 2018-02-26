@@ -55,6 +55,12 @@ public class BinaryGrid extends JPanel {
     Point mouseLocation;
     int BRUSH_RAD = 5;
 
+    /**
+     * This class is not used in the main implementation since this implements Swing,
+     * for the JavaFX implementation refer to DrawingGrid
+     * @param width
+     * @param height 
+     */
     public BinaryGrid(int width, int height) {
         GRID_CONTENTS = new boolean[width][height];
         BOUNDS = new Rectangle[width][height];
