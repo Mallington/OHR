@@ -50,6 +50,8 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
     @FXML
     ImageView FORM_VIEW = new ImageView();
     @FXML
+    TextField OUTPUT_DIR = new TextField();
+    @FXML
     ProgressIndicator PROGRESS_IND = new ProgressIndicator();
     @FXML
     Canvas MAIN_VIEW = new Canvas();
@@ -179,6 +181,12 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
  * @throws MalformedURLException
  * @throws IOException 
  */
+   public void changeOutput(){
+       FilePicker fp = new FilePicker(".txt", "", "Unitled");
+       File picked = fp.getFile(null, FilePicker.SAVE);
+       OUTPUT_DIR.setText(picked.getAbsolutePath());
+   }
+   
     public void importScan() throws MalformedURLException, IOException{
        this.OUT.print("Importing Scan...");
        FilePicker pick = new FilePicker("Image ", Arrays.asList(".jpg",".png"));

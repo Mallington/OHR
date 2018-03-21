@@ -187,6 +187,7 @@ Layer l;
     public void evaluate() {
         this.OUT.print("Evaluating");
         List<Double> out = this.FILE.forwardProp(new TrainingSet(this.DGRID.getOutput(), 0, this.FILE.NEURONS.size()));
+        for(Neuron n : FILE.NEURONS) System.out.println(n.getOuput());
         double biggest = out.get(0);
         int neuronPos = 0;
         for (int i = 1; i < out.size(); i++) {

@@ -92,8 +92,8 @@
                                           </Text>
                                           <HBox alignment="CENTER" prefHeight="38.0" prefWidth="300.0">
                                              <children>
-                                                <TextField />
-                                                <Button mnemonicParsing="false" text="..." />
+                                                <TextField fx:id="OUTPUT_DIR" />
+                                                <Button mnemonicParsing="false" onAction="#changeOutput" text="..." />
                                              </children>
                                           </HBox>
                                           <HBox alignment="CENTER" prefHeight="173.0" prefWidth="300.0" VBox.vgrow="ALWAYS">

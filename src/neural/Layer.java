@@ -16,7 +16,9 @@ import javax.swing.JFrame;
  *
  * @author mathew
  */
+
 public class Layer implements Serializable{
+    
     public List<Neuron> NEURONS;
     public List<Double> currentOut;
     public List<Double> EXPECTED;
