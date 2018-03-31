@@ -9,6 +9,7 @@ import GUI.Storage.Grid;
 import GUI.Storage.Point;
 import ImageProcessing.ImageTools;
 import ImageProcessing.PixelFormation;
+import MassCharacterRecognition.LineSorter;
 import Tools.GraphicsTools;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -107,7 +108,8 @@ public class CropPanel extends ImageView{
         if(detectForms) {
             System.out.println("Finding Forms");
             FORMATIONS = ImageTools.findEnclosedPixels(toRender);
-            FORMATIONS = ImageTools.sortLeftToRight(FORMATIONS).FORMATIONS;
+            LineSorter ls = new LineSorter(FORMATIONS);
+            FORMATIONS = ls.sortLeftToRight().FORMATIONS;
         }
         }
         else{

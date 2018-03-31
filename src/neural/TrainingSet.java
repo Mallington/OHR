@@ -5,14 +5,37 @@
  */
 package neural;
 
+import ImageProcessing.ImageTools;
+import ImageProcessing.PixelFormation;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
  * @author mathew
  */
 public class TrainingSet {
+    
+    public static void train (Layer l, PixelFormation pf, BufferedImage img, char toTrainAs, int thresh){
+        int index =-1;
+        for(int i =0; i< l.NEURONS.size(); i++){
+            if(l.NEURONS.get(i).NAME.equals(toTrainAs+""))  index =i;
+        }
+        if(index != -1){
+        Rectangle b = pf.getBounds();
+        BufferedImage c = ImageTools.cropImage(img, (int)b.getX(), (int)b.getY(),(int) b.getWidth(), (int)b.getHeight());
+        c= ImageTools.toGreyScale(c, true, thresh);
+        List<Double> bin = ImageTools.imageToBinaryGrid(c, 30, 30, thresh).getList();
+        l.backwardProp(new TrainingSet(bin,index,l.NEURONS.size() ));
+        }
+        else{
+            System.out.println("Error: Could not find character: "+toTrainAs);
+        }
+    }
+    
     public List<Double> TRAINING_INPUTS;
     public List<Double> EXPECTED_OUTPUT;
     

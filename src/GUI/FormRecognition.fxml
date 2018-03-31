@@ -100,7 +100,7 @@
                                              <children>
                                                 <VBox alignment="CENTER" prefHeight="250.0" prefWidth="302.0" HBox.hgrow="ALWAYS">
                                                    <children>
-                                                      <ImageView fx:id="FORM_VIEW" fitHeight="123.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                                                      <ImageView fx:id="FORM_VIEW" fitHeight="99.0" fitWidth="205.0" pickOnBounds="true" preserveRatio="true" />
                                                    </children></VBox>
                                              </children>
                                           </HBox>
@@ -109,7 +109,7 @@
                                                 <Insets left="5.0" />
                                              </VBox.margin>
                                           </Text>
-                                          <HBox alignment="CENTER" prefHeight="16.0" prefWidth="300.0">
+                                          <HBox alignment="CENTER" layoutX="10.0" layoutY="257.0" prefHeight="16.0" prefWidth="300.0">
                                              <children>
                                                 <Slider fx:id="THRESH_SLIDER" max="255.0" prefHeight="16.0" prefWidth="97.0" value="125.0">
                                                    <HBox.margin>
@@ -117,6 +117,20 @@
                                                    </HBox.margin>
                                                 </Slider>
                                                 <TextField fx:id="THRESH_BOX" onAction="#recalculateThreshold" prefHeight="27.0" prefWidth="51.0" text="125">
+                                                   <HBox.margin>
+                                                      <Insets right="5.0" />
+                                                   </HBox.margin>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="16.0" prefWidth="300.0">
+                                             <children>
+                                                <Slider fx:id="THRESH_SLIDER_MAX" max="255.0" prefHeight="16.0" prefWidth="97.0" value="125.0">
+                                                   <HBox.margin>
+                                                      <Insets right="5.0" />
+                                                   </HBox.margin>
+                                                </Slider>
+                                                <TextField fx:id="THRESH_BOX_MAX" onAction="#recalculateThresholdMAX" prefHeight="27.0" prefWidth="51.0" text="125">
                                                    <HBox.margin>
                                                       <Insets right="5.0" />
                                                    </HBox.margin>
@@ -135,6 +149,8 @@
                      <children>
                         <Button mnemonicParsing="false" onAction="#importNetwork" text="Import Network" />
                         <Button mnemonicParsing="false" onAction="#importScan" text="Import Scan" />
+                        <Button mnemonicParsing="false" onAction="#importTrainingData" text="Import Training File" />
+                        <Button mnemonicParsing="false" onAction="#massTrain" text="Train" />
                         <Button mnemonicParsing="false" onAction="#run" text="Run ▶" />
                         <Slider fx:id="SCALE" max="300.0" min="1.0" prefHeight="16.0" prefWidth="117.0" value="100.0" />
                         <Text fx:id="SCALE_LABEL" strokeType="OUTSIDE" strokeWidth="0.0" text="100%">

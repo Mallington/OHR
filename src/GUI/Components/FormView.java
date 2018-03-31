@@ -73,7 +73,7 @@ public class FormView extends ImageView{
                      CON.setModified();
                  }
                
-                 else JOptionPane.showConfirmDialog(null, "Invalid Input");
+                 else JOptionPane.showMessageDialog(null, "Invalid Input");
                
                }
            

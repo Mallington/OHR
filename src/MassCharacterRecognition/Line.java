@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ImageProcessing;
+package MassCharacterRecognition;
 
 /**
  *
  * @author mathew
  */
-public class AdditionalChar {
-    public char ADDITION;
-    public int INDEX;
-    public  AdditionalChar(char addition, int index){
-        ADDITION = addition;
-        INDEX = index;
+public class Line {
+    public Line (int s, int e){
+        start = s;
+        end =e;
     }
+    int start;
+    int end;
 }

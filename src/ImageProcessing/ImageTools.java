@@ -45,82 +45,10 @@ public class ImageTools {
     }
     
     
-     private static List<PixelFormation>sortByX(List<PixelFormation> toSort){
-        List<PixelFormation> xSorted = new ArrayList<PixelFormation>();
-        while(toSort.size()>0){
-            int biggest =0;
-        for(int i =1; i< toSort.size(); i++){
-            if(toSort.get(i).getBounds().getX()< toSort.get(biggest).getBounds().getX()) biggest = i;
-        }
-        xSorted.add(toSort.get(biggest));
-        toSort.remove(biggest);
-        }
-         System.out.println("Order: ");
-        for(PixelFormation p: xSorted) System.out.print(p.getBounds().getX()+", ");
-         System.out.println("Ordered");
-        return xSorted;
-        
-    }
-     private static List<PixelFormation>sortByY(List<PixelFormation> toSort){
-        List<PixelFormation> ySorted = new ArrayList<PixelFormation>();
-        while(toSort.size()>0){
-            int biggest =0;
-        for(int i =1; i< toSort.size(); i++){
-            if(toSort.get(i).getBounds().getY()< toSort.get(biggest).getBounds().getY()) biggest = i;
-        }
-        ySorted.add(toSort.get(biggest));
-        toSort.remove(biggest);
-        }
-         System.out.println("Order: ");
-        for(PixelFormation p: ySorted) System.out.print(p.getBounds().getY()+", ");
-         System.out.println("Ordered");
-        return ySorted;
-        
-    }
-    
-    
-    public static SortingOutput sortLeftToRight(List<PixelFormation> formations){
-        formations = sortByY(formations);
-        formations = sortByX(formations);
-        List<AdditionalChar> additional = new ArrayList<AdditionalChar>();
-        List<PixelFormation> newOrder = new ArrayList<PixelFormation>();
-        int l =0;
-        
-        
-        while(formations.size()>0){
-            
-            l++;
-            
-            javafx.scene.shape.Rectangle current = formations.get(0).getBounds();
-            newOrder.add(formations.get(0));
-            formations.remove(0);
-            for(int i =0; i<formations.size(); i++){
-                
-                javafx.scene.shape.Rectangle check = formations.get(i).getBounds();
-                
-                if((check.getY()>=current.getY() && check.getY()<=(current.getY()+current.getHeight()))
-                        ||((current.getY()+current.getHeight())>=check.getY()  && (current.getY()+current.getHeight())<= check.getY() + check.getHeight() || ((current.getY())>check.getY()&&current.getY()<check.getY()+check.getHeight()) ||((current.getY()+current.getHeight())>check.getY()&&current.getY()+current.getHeight()<check.getY()+check.getHeight()) )
-                        )
-                
-               {
-                    
-                    newOrder.add(formations.get(i));
-                    current = formations.get(i).getBounds();
-                    formations.remove(i);
-                    i--;
-                   
-                }
-                
-                
-            }
-            //additional.add( new AdditionalChar('\n',newOrder.size()-2));
-        }
-        System.out.println(l+" lines detected");
-        
-        
-        return new SortingOutput(additional, newOrder);
-    }
-    public static BufferedImage toGreyScale(BufferedImage img, boolean binarise, int threshold) {
+  public static BufferedImage toGreyScale(BufferedImage img, boolean binarise, int max){
+      return toGreyScale( img, binarise, 0, max) ;
+  } 
+    public static BufferedImage toGreyScale(BufferedImage img, boolean binarise, int min, int max) {
         int h = 0;
         for (int y = 0; y < img.getHeight(); y++) {
             for (int x = 0; x < img.getWidth(); x++) {
@@ -131,10 +59,10 @@ public class ImageTools {
                 int b = (p >> 0) & 0xff;
 
                 int avg = (r + g + b) / 3;
-                if (avg > threshold) {
-                    avg = 255;
-                } else {
+                if (avg >= min && avg<= max) {
                     avg = 0;
+                } else {
+                    avg = 255;
                 }
 
                 p = (a << 24) | (avg << 16) | (avg << 8) | avg;

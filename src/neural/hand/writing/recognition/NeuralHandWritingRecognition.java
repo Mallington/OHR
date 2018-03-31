@@ -6,6 +6,7 @@
 package neural.hand.writing.recognition;
 
 import GUI.MainWindow;
+import java.io.IOException;
 
 /**
  *
@@ -16,8 +17,9 @@ public class NeuralHandWritingRecognition {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        MainWindow.startGUI(args); // this is where the big bang was created
+    public static void main(String[] args) throws IOException {
+        if(args.length>0) Commandline.runCommandLineJob(args);
+        else MainWindow.startGUI(args); // this is where the big bang was created
         
         
     }

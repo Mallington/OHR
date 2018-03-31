@@ -5,11 +5,14 @@
  */
 package ImageProcessing;
 
+import MassCharacterRecognition.FormRecognition;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ *The purpose of this class is to create a common object which the FormRecongition class returns
+ * to the instigating class, allowing the instigating class to get a 'Real-time' update on the
+ * pixel formations detected and the progress.
  * @author mathew
  */
 public class RecognitionOutput {
@@ -19,8 +22,12 @@ public class RecognitionOutput {
     
     private FormRecognition FR = null;
     double PROGRESS = 0.0;
+     // This is the most up to date list of the chars detected at the time of call
     public List<String> CHARS = new ArrayList<String>();
+   
+    //Contains additional chars such as carrage returns etc.
     public List<AdditionalChar> FORMATTING = new ArrayList<AdditionalChar>();
+    
     public List<PixelFormation> FORMATIONS;
     public double ACC_PROB =0.0;
     public double TOTAL_PROB=0;
@@ -32,11 +39,13 @@ public class RecognitionOutput {
     public double getProgress(){
         return PROGRESS;
     }
+    
     public String getResultantString(){
         String append = "";
         for(int i =0; i< CHARS.size(); i++){
             
-            append+= getAdditional(i)+CHARS.get(i);
+            append+= CHARS.get(i)+getAdditional(i);
+           
         }
         return append;
     }
