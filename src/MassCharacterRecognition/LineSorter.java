@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ *The purpose of this class is to sort a given set of pixel formations so that they are in the order
+ * that they would be read on a page, so that they are outputted in the right order when the raw text
+ * is outputted by the FormRecogntion class
  * @author mathew
  */
 public class LineSorter {
@@ -22,7 +24,11 @@ public class LineSorter {
     public LineSorter(List<PixelFormation> formationsToSort){
         formations = formationsToSort;
     }
-    
+    /**
+     * Sorts from minimum x value to highest x value
+     * @param toSort
+     * @return sorted list
+     */
          private  List<PixelFormation>sortByX(List<PixelFormation> toSort){
         List<PixelFormation> xSorted = new ArrayList<PixelFormation>();
         while(toSort.size()>0){
@@ -36,6 +42,11 @@ public class LineSorter {
         return xSorted;
         
     }
+          /**
+     * Sorts from minimum y value to highest y value
+     * @param toSort
+     * @return sorted list
+     */
      private  List<PixelFormation>sortByY(List<PixelFormation> toSort){
         List<PixelFormation> ySorted = new ArrayList<PixelFormation>();
         while(toSort.size()>0){
@@ -49,7 +60,14 @@ public class LineSorter {
         return ySorted;
         
     }
-     
+     /**
+      * The purpose of this methods is to take the detected lines and put all of the character formations from the list
+      * in order while recording the start and end of each line by storing '\n' as an additional character to be inserted
+      * at a particular index.
+      * @param pf
+      * @param lines
+      * @return 
+      */
      public static SortingOutput sortLines(List<PixelFormation> pf , List<Line> lines){
          List<PixelFormation> newOrderPF = new ArrayList<PixelFormation>();
          List<AdditionalChar> additional = new ArrayList<AdditionalChar>();
@@ -74,7 +92,15 @@ public class LineSorter {
          return new SortingOutput(additional, newOrderPF);
         
      }
-    
+    /**
+     * This methods first sorts the chars by the y-axis, then the x-axis so that the characters are accessed horizontally
+     * and then the most vertical pixel formations are accessed first, so once the top left formations is identified the 
+     * program runs through each formation where there bounds intersect within the same Y-axis range, proving the formations
+     * are on the same line, When the program gets to the end of the line it records the start and end index in the Line class
+     * so that it can be used later for sorting.
+     * 
+     * @return 
+     */
     public  SortingOutput sortLeftToRight(){
         formations = sortByY(formations);
         formations = sortByX(formations);

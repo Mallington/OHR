@@ -38,12 +38,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 /**
- *
+ * Deprecteated, used in testing before I switched from swing to javafx
  * @author mathew
  */
 public class BinaryGrid extends JPanel {
-//Testing github still works
-    //temp
+
     static boolean good = true;
 
     boolean[][] GRID_CONTENTS;

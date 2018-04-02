@@ -148,7 +148,7 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
      * Used for previewing the image after binary threshold process
      *
      * @param img Image to show
-     * @param thresh That point at which each pixel in turned black or white
+     * @param min That point at which each pixel in turned black or white
      */
     public void setImageView(Image img, double min, double max) {
         BufferedImage bimg = ImageTools.toGreyScale(ImageTools.convertImgToBuf(img), true, (int) min, (int)max);
@@ -225,9 +225,8 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
         Menu runM = new Menu("Run");
         MenuItem runJ = new MenuItem("Run");
         runJ.setOnAction(event -> run());
-        MenuItem param = new MenuItem("Modify Parameters");
-        param.setOnAction(event -> modifyParams());
-        runM.getItems().addAll(runJ, param);
+       
+        runM.getItems().addAll(runJ);
         return Arrays.asList(imp, runM);
     }
 
@@ -270,15 +269,18 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
     /**
      * Using the filepicker class, it loads a new image to be recognised
      *
-     * @throws MalformedURLException
-     * @throws IOException
      */
     public void changeOutput() {
         FilePicker fp = new FilePicker(".txt", "", "Unitled");
         File picked = fp.getFile(null, FilePicker.SAVE);
         OUTPUT_DIR.setText(picked.getAbsolutePath());
     }
-
+/**
+ * Prompts the user with a finder/ explorer window and the user chooses either a png or jpg
+ * that is loaded into the GUI
+ * @throws MalformedURLException
+ * @throws IOException 
+ */
     public void importScan() throws MalformedURLException, IOException {
         this.OUT.print("Importing Scan...");
         FilePicker pick = new FilePicker("Image ", Arrays.asList(".jpg", ".png"));
@@ -369,7 +371,10 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
         // this.PROBABILITY.setText((int)(out.getProbability()*100.0)+"");
         //this.VIEW_CONTROLLER.displayJobOutput(out,  (int)this.THRESH_SLIDER.getValue());
     }
-
+/**
+ * This is used to output the results of a scan into a text file for post processing
+ * @param s 
+ */
     private void writeToOut(String s) {
         try {
             FileTools.write(this.OUTPUT_DIR.getText(), s);
@@ -379,11 +384,13 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
         }
     }
 
-    public void modifyParams() {
-        this.OUT.print("Opening Parameters window");
-    }
 
-    // Interface method not used in this context
+    
+
+    /**
+     * This method is not used in this particular context
+     * @param file 
+     */
     @Override
     public void setGUI(Layer file) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
