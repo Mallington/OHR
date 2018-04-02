@@ -39,6 +39,7 @@ public abstract class TabAttributes<FileType> implements ControllerInterface {
     public OutputController OUT;
     private String FILE_TYPE = ".NONE";
     private String FILE_DES = "NON FILE";
+    boolean FILE_EXT_SET = false;
 
     public boolean NEW_DOCUMENT = true;
 
@@ -147,6 +148,7 @@ public abstract class TabAttributes<FileType> implements ControllerInterface {
 
     public void setFileType(String type) {
         FILE_TYPE = type;
+        FILE_EXT_SET = true;
     }
 
     public void setFileDes(String des) {
@@ -205,7 +207,7 @@ public abstract class TabAttributes<FileType> implements ControllerInterface {
 
     public void closeTab() {
 
-        if (!SAVED) {
+        if (!SAVED && FILE_EXT_SET) {
             save();
         }
 

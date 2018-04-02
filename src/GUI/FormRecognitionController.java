@@ -156,12 +156,17 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
     }
 
     public void importTrainingData() throws IOException {
+        try{
         this.OUT.print("Importing Training Data...");
         FilePicker pick = new FilePicker("Text ", Arrays.asList(".txt", ".*"));
         File picked = pick.getFile(null, FilePicker.OPEN);
         System.out.println(picked.getAbsoluteFile());
         this.trainingData = FileTools.read(picked.getAbsolutePath());
         OUT.print("Training data imported: " + this.trainingData);
+        }
+        catch(Exception e){
+            OUT.print("File Import Failed");
+        }
 
     }
 
@@ -282,6 +287,7 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
  * @throws IOException 
  */
     public void importScan() throws MalformedURLException, IOException {
+        try{
         this.OUT.print("Importing Scan...");
         FilePicker pick = new FilePicker("Image ", Arrays.asList(".jpg", ".png"));
         File picked = pick.getFile(null, FilePicker.OPEN);
@@ -289,7 +295,10 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
         setImageView(FORM, DEFAULT_THRESH, 255);
         VIEW_CONTROLLER.loadImage(FORM);
         this.CHARS = null;
-
+ }
+        catch(Exception e){
+            OUT.print("File Import Failed");
+        }
     }
 
     /**

@@ -65,6 +65,7 @@ public class MainWindowController implements Initializable{
       addSelectionModel(TAB_VIEW);
         try {
             int added = SESSION.addTab(TabController.createFromFXMLandLoadTab(TAB_VIEW, "WelcomeScreen.fxml", OUTPUT, this.MENU_BAR));
+            SESSION.getTabList().get(added).getController().setText("Welcome");
         } catch (IOException ex) {
             Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -106,7 +107,7 @@ public class MainWindowController implements Initializable{
      */
     public void newFormInterface() throws IOException{
          int tabID = SESSION.addTab(TabController.createFromFXMLandLoadTab(TAB_VIEW, "FormRecognition.fxml", OUTPUT, this.MENU_BAR));
-         SESSION.getTabList().get(tabID).getController().setText("Untitled.fs");
+         SESSION.getTabList().get(tabID).getController().setText("Form Scan");
     }
     
     
@@ -117,7 +118,7 @@ public class MainWindowController implements Initializable{
     public void open(){
         
         try{
-        FilePicker pick = new FilePicker("File ", Arrays.asList(".nns",".fs",".csv"));
+        FilePicker pick = new FilePicker("File ", Arrays.asList(".nns"));
         File picked = pick.getFile((Stage)this.TAB_VIEW.getScene().getWindow(), FilePicker.OPEN);
        
         if(picked.getName().contains(".nns")) {
@@ -129,6 +130,10 @@ public class MainWindowController implements Initializable{
         catch(Exception e){
             OUTPUT.print("That failed, are you sure that you have opened a window?");
         }
+    }
+    public void about() throws IOException{
+        int added = SESSION.addTab(TabController.createFromFXMLandLoadTab(TAB_VIEW, "WelcomeScreen.fxml", OUTPUT, this.MENU_BAR));
+            SESSION.getTabList().get(added).getController().setText("About & Help");
     }
     /**
      * Identifies the current tab which is open and uses the abstract method save() to save
