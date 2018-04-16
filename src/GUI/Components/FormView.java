@@ -34,6 +34,9 @@ public class FormView extends ImageView{
         super(i, canv);
         CON = con;
     }
+    public void setThreshold(int thresh){
+       THRESHOLD = thresh;
+    }
     
     public void displayJobOutput(RecognitionOutput out, int binaryThresh){
         OUT = out;

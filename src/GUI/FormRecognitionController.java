@@ -126,6 +126,7 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
           
                 THRESH_BOX_MAX.setText((int) (double) val + "");
                 setImageView(FORM, THRESH_SLIDER.getValue(),(double) val);
+               VIEW_CONTROLLER.setThreshold((int)(double)val);
             }
         });
 
@@ -172,12 +173,13 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
 
     public void massTrain() {
         OUT.print("Training data with: " + this.trainingData);
+        OUT.print("Threshold: "+(int) this.THRESH_SLIDER_MAX.getValue());
         if (this.trainingData != null && CHARS != null && this.FILE != null) {
             if (trainingData.length() == CHARS.FORMATIONS.size()) {
                 int PF = 0;
                 for (char c : trainingData.toCharArray()) {
                     OUT.print("Training " + c + " as formation number " + PF);
-                    TrainingSet.train(this.FILE, CHARS.FORMATIONS.get(PF), ImageTools.convertImgToBuf(FORM), c, (int) this.THRESH_SLIDER.getValue());
+                    TrainingSet.train(this.FILE, CHARS.FORMATIONS.get(PF), ImageTools.convertImgToBuf(FORM), c, (int) this.THRESH_SLIDER_MAX.getValue());
                     PF++;
                 }
 

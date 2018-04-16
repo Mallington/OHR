@@ -38,7 +38,7 @@ public class Commandline {
                 break;
             case "help":
                 System.out.println("Commands:\n"+
-                        "processform <Scanned image directory (.png,.jpg)> <Neural Network Directory (.nns)> <Canny Threshold (Integer)>");
+                        "processform <Scanned image directory (.png,.jpg)> <Neural Network Directory (.nns)> <Canny Threshold (Integer)> <Output text File>");
                 break;
                 
             default:

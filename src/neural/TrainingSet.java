@@ -28,7 +28,7 @@ public class TrainingSet {
         Rectangle b = pf.getBounds();
         BufferedImage c = ImageTools.cropImage(img, (int)b.getX(), (int)b.getY(),(int) b.getWidth(), (int)b.getHeight());
         c= ImageTools.toGreyScale(c, true, thresh);
-        List<Double> bin = ImageTools.imageToBinaryGrid(c, 30, 30, thresh).getList();
+        List<Double> bin = ImageTools.imageToBinaryGrid(c, 30, 30, 127).getList();
         l.backwardProp(new TrainingSet(bin,index,l.NEURONS.size() ));
         }
         else{

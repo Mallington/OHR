@@ -54,6 +54,9 @@ public abstract class FormRecognition {
         //  });
 
     }
+    
+   
+    
     /**
      * Abstract method to be executed upon an error with the recognition parameters
      */
@@ -139,7 +142,7 @@ public abstract class FormRecognition {
         return OUT;
     }
 /**
- * This methods crops the image according to the pixel bound, converts it to a 30x30 binary imagea and inputs it into the neural netork
+ * This methods crops the image according to the pixel bound, converts it to a 30x30 binary image and inputs it into the neural netork
  * @param img image to be cropped
  * @param p Pixel bound used for cropping
  * @param neural Neural network weightings used for evaluating each character
