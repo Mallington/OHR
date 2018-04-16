@@ -15,39 +15,76 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
 /**
- *
+ * This class contains some essential image tools used for the manipulation and extraction of data.
  * @author mathew
  */
 public class ImageTools {
 
     public static int recur = 0;
-
+    /**
+     * Used for cropping an image
+     * @param img Image to be cropped
+     * @param x Start x Coor
+     * @param y Start y Coor
+     * @param width The width of the cropping region
+     * @param height The height of the cropping region
+     * @return 
+     */
     public static BufferedImage cropImage(BufferedImage img, int x, int y, int width, int height) { // For legacy
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         bi.getGraphics().drawImage(img, 0, 0, width, height, x, y, x + width, y + height, null);
         return bi;
     }
-
+    /**
+     * Used for cropping an Image directly from the JavaFX packages
+     * @param img
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @return 
+     */
     public static BufferedImage cropImage(Image img, int x, int y, int width, int height) { //For Javafx Use
 
         return cropImage(SwingFXUtils.fromFXImage(img, null), x, y, width, height);
     }
-
+    /**
+     * Converts the Image to Buffered Image so that it can be used with the various other tools in this class
+     * @param img
+     * @return 
+     */
     public static BufferedImage convertImgToBuf(Image img) {
 
         return SwingFXUtils.fromFXImage(img, null);
 
     }
-
+    /**
+     * For converting back
+     * @param bi
+     * @return 
+     */
     public static Image convertBuffered(BufferedImage bi) {
-
         return SwingFXUtils.toFXImage(bi, null);
     }
     
-    
+    /**
+     * Gives the option to binarise an image without the minimum threshold applied
+     * @param img
+     * @param binarise
+     * @param max
+     * @return 
+     */
   public static BufferedImage toGreyScale(BufferedImage img, boolean binarise, int max){
       return toGreyScale( img, binarise, 0, max) ;
   } 
+  /**
+   *
+   * @param img
+   * @param binarise Specifies whether it should be converted to 1-bit colour
+   * @param min The minimum the average of the pixels rgb: (R+G+B)/3 can be to be turned black
+   * @param max The maximum average
+   * @return 
+   */
     public static BufferedImage toGreyScale(BufferedImage img, boolean binarise, int min, int max) {
         int h = 0;
         for (int y = 0; y < img.getHeight(); y++) {
@@ -76,7 +113,16 @@ public class ImageTools {
     }
     
    
-
+    /**
+     * This function converts an image to a binary pixel grid based on the width and height proportions, creating a grid
+     * over a whole image and taking the average from each section in the grid converting it to a lower resolution, this
+     * method is used to convert an image so that it can be inputted into a neural network.
+     * @param img
+     * @param width Pixel width
+     * @param height Pixel height
+     * @param avgPoint The value of the average of all of the pixels in a region to be turned into a black pixel
+     * @return 
+     */
     public static Grid<Double> imageToBinaryGrid(BufferedImage img, int width, int height, int avgPoint) {
         Rectangle[][] BOUNDS = new Rectangle[width][height];
 
@@ -108,7 +154,12 @@ public class ImageTools {
         return GRID;
 
     }
-
+    /**
+     * Could be used as an alternative method to getPixelAvg(..) in imageToBinaryGrid(..)
+     * @param img
+     * @param bound
+     * @return 
+     */
     private static boolean containsPixel(BufferedImage img, Rectangle bound) {
 
         for (int y = (int) bound.getY(); y < bound.getY() + bound.getHeight(); y++) {
@@ -125,7 +176,12 @@ public class ImageTools {
 
         return false;
     }
-
+    /**
+     * Calculates the average if all RGB components in all of the pixels contained within the bound
+     * @param img
+     * @param bound
+     * @return 
+     */
     private static int getPixelAvg(BufferedImage img, Rectangle bound) {
         double avg = 0;
         int pixelCount = 0;
@@ -143,7 +199,13 @@ public class ImageTools {
 
         return (int) avg;
     }
-
+/**
+ * Gets the average of an individual pixel where avg = (R+G+B)/3
+ * @param img
+ * @param x
+ * @param y
+ * @return 
+ */
     private static double getPixelAvg(BufferedImage img, int x, int y) {
         try {
             int p = img.getRGB(x, y);
@@ -159,6 +221,11 @@ public class ImageTools {
         }
 
     }
+    /**
+     * A simpler adaptation of findEnclosedPixels(), used when a real-time Recognition Output is not needed
+     * @param img
+     * @return 
+     */
  public static List<PixelFormation> findEnclosedPixels(BufferedImage img){
      return findEnclosedPixels(img, null, 0);
  }
