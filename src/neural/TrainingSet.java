@@ -19,9 +19,10 @@ import javafx.scene.shape.Rectangle;
  */
 public class TrainingSet {
     
-    public static void train (Layer l, PixelFormation pf, BufferedImage img, char toTrainAs, int thresh){
+    public static void train (Layer l, PixelFormation pf, BufferedImage img, char toTrainAs, int thresh, double learningRatio){
         int index =-1;
         for(int i =0; i< l.NEURONS.size(); i++){
+            l.NEURONS.get(i).setLearningRatio(learningRatio);
             if(l.NEURONS.get(i).NAME.equals(toTrainAs+""))  index =i;
         }
         if(index != -1){

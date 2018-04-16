@@ -174,18 +174,30 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
     public void massTrain() {
         OUT.print("Training data with: " + this.trainingData);
         OUT.print("Threshold: "+(int) this.THRESH_SLIDER_MAX.getValue());
+       
         if (this.trainingData != null && CHARS != null && this.FILE != null) {
+              new Thread(() -> {
+            double learningRatio = this.FILE.NEURONS.get(0).LEARNING_RATIO;
+            while(true){
+                try{learningRatio = Double.parseDouble(JOptionPane.showInputDialog(null, "Learning Ratio: ", ""+learningRatio, JOptionPane.QUESTION_MESSAGE));
+                break;}
+                catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Please enter a double", "Invalid Parameter", JOptionPane.WARNING_MESSAGE);}
+            }
+                    
+                    
             if (trainingData.length() == CHARS.FORMATIONS.size()) {
                 int PF = 0;
                 for (char c : trainingData.toCharArray()) {
                     OUT.print("Training " + c + " as formation number " + PF);
-                    TrainingSet.train(this.FILE, CHARS.FORMATIONS.get(PF), ImageTools.convertImgToBuf(FORM), c, (int) this.THRESH_SLIDER_MAX.getValue());
+                    TrainingSet.train(this.FILE, CHARS.FORMATIONS.get(PF), ImageTools.convertImgToBuf(FORM), c, (int) this.THRESH_SLIDER_MAX.getValue(),learningRatio);
                     PF++;
                 }
 
             } else {
                 OUT.print("Length mismatch, training data: " + trainingData.length() + ", " + CHARS.FORMATIONS.size() + "\nYou see the problem?");
             }
+            }).start();
         } else {
 
             new Thread(() -> {
