@@ -13,23 +13,39 @@ import java.util.List;
 import javax.swing.JFrame;
 
 /**
- *
+ *This class contains all of the neurons that are each independently responsible for a particular
+ * detection/ classification, this used as the containing class, so that this entire object can be
+ * serialised and written to a file
  * @author mathew
  */
 
 public class Layer implements Serializable{
-    
+    /**
+     * List of all of the neurons in this layer
+     */
     public List<Neuron> NEURONS;
+    /**
+     * This contains the calculate outputs of all of the neurons
+     */
     public List<Double> currentOut;
+    /**
+     * When training, this is used to contain the expected outputs
+     */
     public List<Double> EXPECTED;
    // public String CHAR_SET ="";
+    /**
+     * This create a new layer
+     */
     public Layer(){
         NEURONS = new ArrayList<Neuron>();
     }
     public Layer(List<Neuron> neurons){
         NEURONS = neurons;
     }
-    
+    /**
+     * This sets the labels of all of the neurons
+     * @param charSet 
+     */
     public void setCharSet(String charSet){
         int i =0;
         for(char c: charSet.toCharArray()) {
@@ -38,14 +54,22 @@ public class Layer implements Serializable{
                     }
     }
     
-    
+    /**
+     * This generates a list of all of the outputs of the neurons
+     * @param train
+     * @return 
+     */
     public List<Double> forwardProp(TrainingSet train){
         setInputs(train);
         List<Double> out = getOutputs();
         //for(Double d: out) System.out.println("Y = "+d);
         return out;
     }
-    
+    /**
+     * This adjusts the weightings of each neuron in the network, so that the produced
+     * output in each will be closer to a desired value
+     * @param train 
+     */
     public void backwardProp(TrainingSet train){
         currentOut = forwardProp(train);
         System.out.println("Output array size "+currentOut.size());
@@ -64,7 +88,10 @@ public class Layer implements Serializable{
             //currentOutput = currentOutput - train
     }
     
-    
+    /**
+     * This gets the outputs of all of the neurons
+     * @return 
+     */
     private List<Double> getOutputs(){
         List<Double> out = new ArrayList<Double>();
         for(Neuron n: NEURONS) out.add(n.getOuput());
@@ -88,6 +115,10 @@ public class Layer implements Serializable{
             NEURONS.add(new Neuron("Ran"+i, inputsPerNeuron));
         }
     }
+    /**
+     * Adds a neuron to the network
+     * @param n  Neuron to add
+     */
     public void add(Neuron n){
         NEURONS.add(n);
     }

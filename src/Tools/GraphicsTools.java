@@ -13,10 +13,15 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 /**
- *
+ * These static methods are used for a variety of Graphical drawing based functions
  * @author mathew
  */
 public class GraphicsTools {
+    /**
+     * Draws a rectangle onto the canvas
+     * @param g
+     * @param rect 
+     */
     public static void drawRect(GraphicsContext g, Rectangle rect){
         g.beginPath();
         g.lineTo(rect.getX(), rect.getY());
@@ -27,12 +32,27 @@ public class GraphicsTools {
         g.stroke();
         g.fill();
     }
-    
+    /**
+     * Checks to see if a certain point intersects a bounding rectangle
+     * @param xp
+     * @param yp
+     * @param xi
+     * @param yi
+     * @param width
+     * @param height
+     * @return 
+     */
      public static boolean pointIntersects(double xp, double yp, double xi, double yi, double width, double height){
         if((xp>xi)&&(yp>yi)&&(xp<xi+width)&&(yp<yi+height)) return true;
         
         return false;
     }
+     /**
+      * Used in the CropPanel class, it used is used to a fit a pre-proportioned rectangle to a certain bound, centering
+      * the bound within the proportioned rectangle
+      * @param p
+      * @return 
+      */
      public Rectangle squareFitFormation(PixelFormation p){
           Rectangle b = p.getBounds();
         Rectangle r;
@@ -52,7 +72,15 @@ public class GraphicsTools {
      }
      
    
-     
+     /**
+      * Draws a rectangle around a pre-defined pixel formation
+      * @param g
+      * @param formation
+      * @param X_OFF
+      * @param Y_OFF
+      * @param SCALE
+      * @param LABELS 
+      */
      public static void drawFormationBounds(GraphicsContext g, List<PixelFormation> formation, double X_OFF, double Y_OFF, double SCALE, List<String> LABELS){
       
        
@@ -73,7 +101,11 @@ public class GraphicsTools {
         }
         
     }
-     
+     /**
+      * Used for debugging,to make sure the recursive pixel mass detection algorithm found all of the pixels
+      * @param g
+      * @param pF 
+      */
      public static void drawPixelFormations(GraphicsContext g, List<PixelFormation> pF){
       for(PixelFormation p: pF) for(java.awt.Point po : p.getPoints()) g.getPixelWriter().setColor(po.x, po.y, Color.BLUE);
         

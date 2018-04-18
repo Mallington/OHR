@@ -15,10 +15,12 @@ import java.io.IOException;
 public class NeuralHandWritingRecognition {
 
     /**
+     * This is the first method that is run, it either processes the command line params (if any)
+     * or initiates a new GUI session
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        if(args.length>0) Commandline.runCommandLineJob(args);
+        if(args.length>0) Commandline.runCommandLineJob(args); 
         else MainWindow.startGUI(args); // this is where the big bang was created
         
         

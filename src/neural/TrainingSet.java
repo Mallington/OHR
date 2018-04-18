@@ -14,11 +14,21 @@ import java.util.List;
 import javafx.scene.shape.Rectangle;
 
 /**
- *
+ * This class is used to store training inputs and expected outputs for adjusting
+ * the neuron weightings to a desired value
  * @author mathew
  */
 public class TrainingSet {
-    
+    /**
+     * Used for training a layer against a particular pixel formation contained in an image
+     * @param l The layer to perform back propagation on
+     * @param pf Pixel Formation class contains the bounds of the character to be cropped out 
+     * of the image
+     * @param img The image containing the character to be used for training
+     * @param toTrainAs The character to be trained as: this will refer to a particular neuron
+     * in the layer
+     * @param thresh  This is the threshold (0-255) at which a pixel is turned back or white
+     */
     public static void train (Layer l, PixelFormation pf, BufferedImage img, char toTrainAs, int thresh){
         int index =-1;
         for(int i =0; i< l.NEURONS.size(); i++){
@@ -35,10 +45,23 @@ public class TrainingSet {
             System.out.println("Error: Could not find character: "+toTrainAs);
         }
     }
-    
+    /**
+     * Training input
+     */
     public List<Double> TRAINING_INPUTS;
+    /**
+     * Expected output
+     */
     public List<Double> EXPECTED_OUTPUT;
-    
+    /**
+     * This creates a new training set based on the particular neuron that its aiming to have
+     * a high output
+     * @param toTrain Inputs to be trained against
+     * @param index The index at which the neuron is expected to have a high output or
+     * recongition state
+     * @param size This signifies the size of the layer (amount of neurons )being trained
+     * 
+     */
     public TrainingSet(List<Double> toTrain ,int index, int size){
         
         EXPECTED_OUTPUT = new ArrayList<Double>();

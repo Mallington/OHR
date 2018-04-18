@@ -24,11 +24,17 @@ import neural.Layer;
 import neural.Neural;
 
 /**
- *
+ * The purpose of this class is to facilitate the use of command line parameters to execute jobs, this means
+ * that the program can be utilised by other systems by simply inputting parameters to process and then reading
+ * the output via Shell Commands
  * @author mathew
  */
 public class Commandline {
     private static int prog = 10;
+    /**
+     *  This is the first point of entry if any commandline parameters are detected by the NeuralHandWritingRecongition class
+     * @param args Parameters to be processed
+     */
     public static void runCommandLineJob(String[] args){
         switch(args[0].toLowerCase()){
             case "processform":
@@ -47,7 +53,13 @@ public class Commandline {
                 break;
         }
     }
-    
+    /**
+     * If the commands "processform" is executed, this command is called.
+     * @param imageDir
+     * @param neuralDir
+     * @param threshold
+     * @param outputDir 
+     */
    public static void processForm (String imageDir, String neuralDir, int threshold, String outputDir){
         try {
             System.out.println("Image: "+imageDir);
