@@ -29,9 +29,10 @@ public class TrainingSet {
      * in the layer
      * @param thresh  This is the threshold (0-255) at which a pixel is turned back or white
      */
-    public static void train (Layer l, PixelFormation pf, BufferedImage img, char toTrainAs, int thresh){
+    public static void train (Layer l, PixelFormation pf, BufferedImage img, char toTrainAs, int thresh, double learningRatio){
         int index =-1;
         for(int i =0; i< l.NEURONS.size(); i++){
+            l.NEURONS.get(i).setLearningRatio(learningRatio);
             if(l.NEURONS.get(i).NAME.equals(toTrainAs+""))  index =i;
         }
         if(index != -1){
