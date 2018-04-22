@@ -16,9 +16,11 @@ import java.util.logging.Logger;
 
 /**
  * This class is used for writing objects straight to a specified directory
+ *
  * @author mathew
  */
 public class Save {
+
     /**
      * File to be saved to
      */
@@ -26,20 +28,21 @@ public class Save {
 
     /**
      * Initialises with the directory to be written to
+     *
      * @param loc
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException
      */
     public Save(File loc) throws FileNotFoundException {
         FILE = loc;
     }
-    
+
     /**
      * Writes an object to the pre-defined directory
+     *
      * @param toWrite Object to write
      * @return true - Successfully Written, false - failed to write
      * @throws IOException Throws exception when file could not be written
      */
-
     public boolean write(Object toWrite) throws IOException {
         try {
             Files.write(FILE.toPath(), Util.ObjectConverter.serialize(toWrite));

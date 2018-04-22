@@ -8,35 +8,39 @@ package neural;
 import java.io.Serializable;
 
 /**
- * This class contains the current state of a particular input to a neuron, also contains the
- * weighting of this particular input which dictates significance of the input being in a 
- * certain state, where the weighting is a high number, it is of high significance to that 
- * particular neuron.
+ * This class contains the current state of a particular input to a neuron, also
+ * contains the weighting of this particular input which dictates significance
+ * of the input being in a certain state, where the weighting is a high number,
+ * it is of high significance to that particular neuron.
+ *
  * @author mathew
  */
-public class Input implements Serializable{
+public class Input implements Serializable {
+
     /**
      * Current input state
      */
-    double inp= 0.0;
+    double inp = 0.0;
     /**
      * Dictates significance of this particular input
      */
-    double weight= 0.0;
+    double weight = 0.0;
     String label;
-    public Input(double inp, double weight){
+
+    public Input(double inp, double weight) {
         this.inp = inp;
         this.weight = weight;
     }
-    public double getWeight(){
+
+    public double getWeight() {
         return this.weight;
     }
-    
-     public Input(double inp){
+
+    public Input(double inp) {
         this.inp = inp;
     }
-    
-    public void setLabel(String l){
+
+    public void setLabel(String l) {
         label = l;
     }
 }

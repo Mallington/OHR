@@ -31,7 +31,9 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 /**
- *This is used for loading popup menus such as the crop menu in the neural network tab
+ * This is used for loading popup menus such as the crop menu in the neural
+ * network tab
+ *
  * @author mathew
  */
 public class SubWindowLoader {
@@ -39,16 +41,17 @@ public class SubWindowLoader {
     private Window WINDOW;
     private SubControllerInterface CONTROLLER;
     private Popup POPUP;
+
     /**
-     * Upon initialisation it loads the GUI from the FXML file specified and loads the page into a popup attatched
-     * to the windInst
+     * Upon initialisation it loads the GUI from the FXML file specified and
+     * loads the page into a popup attatched to the windInst
+     *
      * @param FXML
-     * @param windInst 
+     * @param windInst
      */
     public SubWindowLoader(String FXML, Window windInst) {
         WINDOW = windInst;
         POPUP = new Popup();
-        
 
         try {
             Resource<SubControllerInterface> r = new Resource<SubControllerInterface>(FXML);
@@ -61,9 +64,12 @@ public class SubWindowLoader {
         }
 
     }
+
     /**
-     * Gains access to the controller so data can flow back and forth from the instigating class to the controller class
-     * @return  Returns the controller instance
+     * Gains access to the controller so data can flow back and forth from the
+     * instigating class to the controller class
+     *
+     * @return Returns the controller instance
      */
     public SubControllerInterface getController() {
         return this.CONTROLLER;
@@ -73,13 +79,15 @@ public class SubWindowLoader {
         POPUP.setAnchorX((WINDOW.getX() + WINDOW.getWidth() / 2) - POPUP.getWidth() / 2);
         POPUP.setAnchorY((WINDOW.getY() + WINDOW.getHeight() / 2) - POPUP.getHeight() / 2);
     }
+
     /**
-     * Sets the opacity of the main window to 50% and sets the pop up to visible to put focus on the pop up
+     * Sets the opacity of the main window to 50% and sets the pop up to visible
+     * to put focus on the pop up
      */
-    public void show(){
-         CONTROLLER.flushReturn();
-         WINDOW.setOpacity(0.5);
-         POPUP.setOnHiding(new EventHandler() {
+    public void show() {
+        CONTROLLER.flushReturn();
+        WINDOW.setOpacity(0.5);
+        POPUP.setOnHiding(new EventHandler() {
             @Override
             public void handle(Event event) {
                 POPUP.getOwnerWindow().setOpacity(1.0);
@@ -87,21 +95,23 @@ public class SubWindowLoader {
         });
         POPUP.show(WINDOW);
     }
+
     /**
-     * When the popup's task has been completed,  such as loading an image, the corresponding object will be returned
-     * to the instigating class
-     * @return 
+     * When the popup's task has been completed, such as loading an image, the
+     * corresponding object will be returned to the instigating class
+     *
+     * @return
      */
-    public Object getReturn(){
+    public Object getReturn() {
         Object ret;
-       
-        while((ret =CONTROLLER.getReturn()) == null&& POPUP.isShowing());
-        
-         
-        Platform.runLater( ()-> POPUP.hide());
-        if(ret == null) System.out.println("Something went wrong or window closed.");
+
+        while ((ret = CONTROLLER.getReturn()) == null && POPUP.isShowing());
+
+        Platform.runLater(() -> POPUP.hide());
+        if (ret == null) {
+            System.out.println("Something went wrong or window closed.");
+        }
         return ret;
     }
-    
 
 }

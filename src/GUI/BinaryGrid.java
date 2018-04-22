@@ -39,6 +39,7 @@ import javax.swing.SwingUtilities;
 
 /**
  * Deprecteated, used in testing before I switched from swing to javafx
+ *
  * @author mathew
  */
 public class BinaryGrid extends JPanel {
@@ -55,10 +56,11 @@ public class BinaryGrid extends JPanel {
     int BRUSH_RAD = 5;
 
     /**
-     * This class is not used in the main implementation since this implements Swing,
-     * for the JavaFX implementation refer to DrawingGrid
+     * This class is not used in the main implementation since this implements
+     * Swing, for the JavaFX implementation refer to DrawingGrid
+     *
      * @param width
-     * @param height 
+     * @param height
      */
     public BinaryGrid(int width, int height) {
         GRID_CONTENTS = new boolean[width][height];

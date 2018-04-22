@@ -68,7 +68,7 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
     Text SCALE_LABEL = new Text();
     @FXML
     TextField THRESH_BOX = new TextField();
-     @FXML
+    @FXML
     TextField THRESH_BOX_MAX = new TextField();
     @FXML
     Slider SCALE = new Slider();
@@ -115,18 +115,18 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
         THRESH_SLIDER.valueProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object val) {
-     
+
                 THRESH_BOX.setText((int) (double) val + "");
-                setImageView(FORM, (double) val,THRESH_SLIDER_MAX.getValue());
+                setImageView(FORM, (double) val, THRESH_SLIDER_MAX.getValue());
             }
         });
         THRESH_SLIDER_MAX.valueProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object val) {
-          
+
                 THRESH_BOX_MAX.setText((int) (double) val + "");
-                setImageView(FORM, THRESH_SLIDER.getValue(),(double) val);
-               VIEW_CONTROLLER.setThreshold((int)(double)val);
+                setImageView(FORM, THRESH_SLIDER.getValue(), (double) val);
+                VIEW_CONTROLLER.setThreshold((int) (double) val);
             }
         });
 
@@ -137,7 +137,7 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
 
             FORM = ImageTools.convertBuffered(ImageIO.read(imageR));
             VIEW_CONTROLLER = new FormView(FORM, MAIN_VIEW, this);
-            this.setImageView(FORM,0 ,255);
+            this.setImageView(FORM, 0, 255);
 
         } catch (IOException ex) {
             System.out.println("Could not find image");
@@ -152,20 +152,19 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
      * @param min That point at which each pixel in turned black or white
      */
     public void setImageView(Image img, double min, double max) {
-        BufferedImage bimg = ImageTools.toGreyScale(ImageTools.convertImgToBuf(img), true, (int) min, (int)max);
+        BufferedImage bimg = ImageTools.toGreyScale(ImageTools.convertImgToBuf(img), true, (int) min, (int) max);
         FORM_VIEW.setImage(ImageTools.convertBuffered(bimg));
     }
 
     public void importTrainingData() throws IOException {
-        try{
-        this.OUT.print("Importing Training Data...");
-        FilePicker pick = new FilePicker("Text ", Arrays.asList(".txt", ".*"));
-        File picked = pick.getFile(null, FilePicker.OPEN);
-        System.out.println(picked.getAbsoluteFile());
-        this.trainingData = FileTools.read(picked.getAbsolutePath());
-        OUT.print("Training data imported: " + this.trainingData);
-        }
-        catch(Exception e){
+        try {
+            this.OUT.print("Importing Training Data...");
+            FilePicker pick = new FilePicker("Text ", Arrays.asList(".txt", ".*"));
+            File picked = pick.getFile(null, FilePicker.OPEN);
+            System.out.println(picked.getAbsoluteFile());
+            this.trainingData = FileTools.read(picked.getAbsolutePath());
+            OUT.print("Training data imported: " + this.trainingData);
+        } catch (Exception e) {
             OUT.print("File Import Failed");
         }
 
@@ -173,30 +172,31 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
 
     public void massTrain() {
         OUT.print("Training data with: " + this.trainingData);
-        OUT.print("Threshold: "+(int) this.THRESH_SLIDER_MAX.getValue());
-       
+        OUT.print("Threshold: " + (int) this.THRESH_SLIDER_MAX.getValue());
+
         if (this.trainingData != null && CHARS != null && this.FILE != null) {
-              new Thread(() -> {
-            double learningRatio = this.FILE.NEURONS.get(0).LEARNING_RATIO;
-            while(true){
-                try{learningRatio = Double.parseDouble(JOptionPane.showInputDialog(null, "Learning Ratio: ", ""+learningRatio, JOptionPane.QUESTION_MESSAGE));
-                break;}
-                catch(Exception e){
-                JOptionPane.showMessageDialog(null, "Please enter a double", "Invalid Parameter", JOptionPane.WARNING_MESSAGE);}
-            }
-                    
-                    
-            if (trainingData.length() == CHARS.FORMATIONS.size()) {
-                int PF = 0;
-                for (char c : trainingData.toCharArray()) {
-                    OUT.print("Training " + c + " as formation number " + PF);
-                    TrainingSet.train(this.FILE, CHARS.FORMATIONS.get(PF), ImageTools.convertImgToBuf(FORM), c, (int) this.THRESH_SLIDER_MAX.getValue(),learningRatio);
-                    PF++;
+            new Thread(() -> {
+                double learningRatio = this.FILE.NEURONS.get(0).LEARNING_RATIO;
+                while (true) {
+                    try {
+                        learningRatio = Double.parseDouble(JOptionPane.showInputDialog(null, "Learning Ratio: ", "" + learningRatio, JOptionPane.QUESTION_MESSAGE));
+                        break;
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Please enter a double", "Invalid Parameter", JOptionPane.WARNING_MESSAGE);
+                    }
                 }
 
-            } else {
-                OUT.print("Length mismatch, training data: " + trainingData.length() + ", " + CHARS.FORMATIONS.size() + "\nYou see the problem?");
-            }
+                if (trainingData.length() == CHARS.FORMATIONS.size()) {
+                    int PF = 0;
+                    for (char c : trainingData.toCharArray()) {
+                        OUT.print("Training " + c + " as formation number " + PF);
+                        TrainingSet.train(this.FILE, CHARS.FORMATIONS.get(PF), ImageTools.convertImgToBuf(FORM), c, (int) this.THRESH_SLIDER_MAX.getValue(), learningRatio);
+                        PF++;
+                    }
+
+                } else {
+                    OUT.print("Length mismatch, training data: " + trainingData.length() + ", " + CHARS.FORMATIONS.size() + "\nYou see the problem?");
+                }
             }).start();
         } else {
 
@@ -244,7 +244,7 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
         Menu runM = new Menu("Run");
         MenuItem runJ = new MenuItem("Run");
         runJ.setOnAction(event -> run());
-       
+
         runM.getItems().addAll(runJ);
         return Arrays.asList(imp, runM);
     }
@@ -263,25 +263,26 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
             } else {
                 THRESH_BOX.setText((int) THRESH_SLIDER.getValue() + "");
             }
-           
+
         } catch (Exception e) {
             THRESH_BOX.setText((int) THRESH_SLIDER.getValue() + "");
-           
+
         }
     }
+
     public void recalculateThresholdMAX() {
         try {
             int val = Integer.parseInt(this.THRESH_BOX_MAX.getText());
             if (val >= 0 && val <= 255) {
                 THRESH_SLIDER_MAX.setValue(val);
-                this.setImageView(FORM,THRESH_SLIDER.getValue(), val);
+                this.setImageView(FORM, THRESH_SLIDER.getValue(), val);
             } else {
                 THRESH_BOX_MAX.setText((int) THRESH_SLIDER_MAX.getValue() + "");
             }
-           
+
         } catch (Exception e) {
             THRESH_BOX_MAX.setText((int) THRESH_SLIDER_MAX.getValue() + "");
-           
+
         }
     }
 
@@ -294,23 +295,24 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
         File picked = fp.getFile(null, FilePicker.SAVE);
         OUTPUT_DIR.setText(picked.getAbsolutePath());
     }
-/**
- * Prompts the user with a finder/ explorer window and the user chooses either a png or jpg
- * that is loaded into the GUI
- * @throws MalformedURLException
- * @throws IOException 
- */
+
+    /**
+     * Prompts the user with a finder/ explorer window and the user chooses
+     * either a png or jpg that is loaded into the GUI
+     *
+     * @throws MalformedURLException
+     * @throws IOException
+     */
     public void importScan() throws MalformedURLException, IOException {
-        try{
-        this.OUT.print("Importing Scan...");
-        FilePicker pick = new FilePicker("Image ", Arrays.asList(".jpg", ".png"));
-        File picked = pick.getFile(null, FilePicker.OPEN);
-        FORM = ImageTools.convertBuffered(ImageIO.read(picked.toURI().toURL()));
-        setImageView(FORM, DEFAULT_THRESH, 255);
-        VIEW_CONTROLLER.loadImage(FORM);
-        this.CHARS = null;
- }
-        catch(Exception e){
+        try {
+            this.OUT.print("Importing Scan...");
+            FilePicker pick = new FilePicker("Image ", Arrays.asList(".jpg", ".png"));
+            File picked = pick.getFile(null, FilePicker.OPEN);
+            FORM = ImageTools.convertBuffered(ImageIO.read(picked.toURI().toURL()));
+            setImageView(FORM, DEFAULT_THRESH, 255);
+            VIEW_CONTROLLER.loadImage(FORM);
+            this.CHARS = null;
+        } catch (Exception e) {
             OUT.print("File Import Failed");
         }
     }
@@ -376,9 +378,9 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
 
                     @Override
                     public void error() {
-                         PROCESSING_JOB = false;
+                        PROCESSING_JOB = false;
                         JOptionPane.showMessageDialog(null, "Processing Failed\nPlease check your parameters:\nEnsure the binary threshold is ajusted to reduce noise and to enhance charactar thickness\nAlso make sure you have loaded a neural network");
-                        
+
                     }
                 };
 
@@ -394,10 +396,13 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
         // this.PROBABILITY.setText((int)(out.getProbability()*100.0)+"");
         //this.VIEW_CONTROLLER.displayJobOutput(out,  (int)this.THRESH_SLIDER.getValue());
     }
-/**
- * This is used to output the results of a scan into a text file for post processing
- * @param s 
- */
+
+    /**
+     * This is used to output the results of a scan into a text file for post
+     * processing
+     *
+     * @param s
+     */
     private void writeToOut(String s) {
         try {
             FileTools.write(this.OUTPUT_DIR.getText(), s);
@@ -407,12 +412,10 @@ public class FormRecognitionController extends TabAttributes<Layer> implements I
         }
     }
 
-
-    
-
     /**
      * This method is not used in this particular context
-     * @param file 
+     *
+     * @param file
      */
     @Override
     public void setGUI(Layer file) {

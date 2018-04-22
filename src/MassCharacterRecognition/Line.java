@@ -7,13 +7,14 @@ package MassCharacterRecognition;
 
 /**
  *
- * @author mathew
- * This is used by the line sorter class to keep track of the start and end of lines
+ * @author mathew This is used by the line sorter class to keep track of the
+ * start and end of lines
  */
 public class Line {
-    public Line (int s, int e){
+
+    public Line(int s, int e) {
         start = s;
-        end =e;
+        end = e;
     }
     int start;
     int end;

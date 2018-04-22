@@ -9,6 +9,7 @@ import javafx.scene.control.TabPane;
 
 /**
  * Main container for the current session instance
+ *
  * @author mathew
  */
 public class MasterController {

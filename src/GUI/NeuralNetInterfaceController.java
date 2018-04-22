@@ -62,9 +62,10 @@ import neural.TrainingSet;
 // meaning of everything
 
 /**
- * This class is used to govern the Neural interface that allows the user to create and train a network based 
- * on manually drawn inputs or converted characters processed from actual images.
- * 
+ * This class is used to govern the Neural interface that allows the user to
+ * create and train a network based on manually drawn inputs or converted
+ * characters processed from actual images.
+ *
  *
  * @author mathew
  */
@@ -72,7 +73,7 @@ public class NeuralNetInterfaceController extends TabAttributes<Layer> implement
 
     @FXML
     BorderPane BORDER = new BorderPane();
-    
+
     private Window WINDOW;
 
     private DrawingGrid DGRID;
@@ -95,24 +96,22 @@ public class NeuralNetInterfaceController extends TabAttributes<Layer> implement
     @FXML
     public ChoiceBox CHARECTAR_SELECT = new ChoiceBox();
 
-    private SubWindowLoader CROP_WINDOW= null;
-    
-    
-    
+    private SubWindowLoader CROP_WINDOW = null;
+
     /**
-     * This adds all of the relevant menus and creates a new neural network layer which is managed by the
-     * TabAttribute class, this layer can be overridden through the MasterController instance by calling load();.
+     * This adds all of the relevant menus and creates a new neural network
+     * layer which is managed by the TabAttribute class, this layer can be
+     * overridden through the MasterController instance by calling load();.
+     *
      * @param url
-     * @param rb 
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setFileType(".nns");
         setFileDes("Neural Net Struct");
         this.setMenuItems(genMenus());
-        
-        
-        
+
         try {
             URL imageR = getClass().getResource("UpperCase.jpg");
 
@@ -125,14 +124,17 @@ public class NeuralNetInterfaceController extends TabAttributes<Layer> implement
 
         Platform.runLater(() -> WINDOW = this.INPUT_PAD.getScene().getWindow());
         FILE = new Layer();
-Layer l;
+        Layer l;
         FILE.generateRandomNeurons(26, 900);
         FILE.setCharSet("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         setGUI(this.FILE);
 
     }
+
     /**
-     * In this implementation, the GUI character selection box will be modified and the drawing pad reset.
+     * In this implementation, the GUI character selection box will be modified
+     * and the drawing pad reset.
+     *
      * @param l Layer to be loaded
      */
     @Override
@@ -146,32 +148,34 @@ Layer l;
         DGRID = new DrawingGrid(30, 30, INPUT_PAD);
 
     }
+
     /**
-     * 
+     *
      * @return Relevant menus for this tab
      */
-    public ArrayList<Menu> genMenus(){
+    public ArrayList<Menu> genMenus() {
         ArrayList<Menu> menus = new ArrayList<Menu>();
-        
+
         Menu neural = new Menu("Neural");
-          MenuItem eval = new MenuItem("Evaluate");
-          eval.setOnAction(event-> evaluate()); 
-          MenuItem cl = new MenuItem("Clear");
-          cl.setOnAction(event-> clear());
-          MenuItem peek = new MenuItem("Peek");
-          peek.setOnAction(event-> peek());
-          MenuItem lo = new MenuItem("Load Image");
-          lo.setOnAction(event-> {try {loadImage();} catch (InterruptedException ex) {}});
-          
-          
-          neural.getItems().addAll(eval,cl, peek,lo);
-         menus.add(neural);
-      
+        MenuItem eval = new MenuItem("Evaluate");
+        eval.setOnAction(event -> evaluate());
+        MenuItem cl = new MenuItem("Clear");
+        cl.setOnAction(event -> clear());
+        MenuItem peek = new MenuItem("Peek");
+        peek.setOnAction(event -> peek());
+        MenuItem lo = new MenuItem("Load Image");
+        lo.setOnAction(event -> {
+            try {
+                loadImage();
+            } catch (InterruptedException ex) {
+            }
+        });
+
+        neural.getItems().addAll(eval, cl, peek, lo);
+        menus.add(neural);
+
         return menus;
     }
-
-   
-   
 
     /**
      * This erases the drawing pad
@@ -180,14 +184,17 @@ Layer l;
         DGRID.clear();
         OUT.print("Clearing");
     }
+
     /**
-     * Runs the contents of the drawing pad through the neural network and outputs the character where
-     * that particular neuron output is the highest.
+     * Runs the contents of the drawing pad through the neural network and
+     * outputs the character where that particular neuron output is the highest.
      */
     public void evaluate() {
         this.OUT.print("Evaluating");
         List<Double> out = this.FILE.forwardProp(new TrainingSet(this.DGRID.getOutput(), 0, this.FILE.NEURONS.size()));
-        for(Neuron n : FILE.NEURONS) System.out.println(n.getOuput());
+        for (Neuron n : FILE.NEURONS) {
+            System.out.println(n.getOuput());
+        }
         double biggest = out.get(0);
         int neuronPos = 0;
         for (int i = 1; i < out.size(); i++) {
@@ -201,8 +208,9 @@ Layer l;
         this.OUT.print("Recognised as " + this.FILE.NEURONS.get(neuronPos).NAME);
 
     }
+
     /**
-     * This 
+     * This
      */
     public void train() {
         // FILE.displayContents();
@@ -219,8 +227,10 @@ Layer l;
 
     public void loadImage() throws InterruptedException {
         System.out.println("Loading Image");
-        
-        if(CROP_WINDOW == null) CROP_WINDOW = new SubWindowLoader("CropWindow.fxml", WINDOW);
+
+        if (CROP_WINDOW == null) {
+            CROP_WINDOW = new SubWindowLoader("CropWindow.fxml", WINDOW);
+        }
         CROP_WINDOW.show();
         Runnable r = new Runnable() {
             public void run() {
@@ -246,7 +256,7 @@ Layer l;
         // Platform.runLater(r);
 
     }
-    
+
     public void peek() {
         OUT.print("Peeking");
         List<Double> toSet = new ArrayList<Double>();

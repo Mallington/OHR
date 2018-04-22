@@ -11,55 +11,56 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <AnchorPane id="AnchorPane" prefHeight="618.0" prefWidth="700.0" stylesheets="@Dark.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainWindowController">
-   <children>
-      <BorderPane layoutX="135.0" layoutY="45.0" prefHeight="540.0" prefWidth="471.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <MenuBar fx:id="MENU_BAR" styleClass="frame" BorderPane.alignment="CENTER">
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                        <Menu mnemonicParsing="false" text="New">
-                          <items>
-                            <MenuItem mnemonicParsing="false" onAction="#newNeuralInterface" text="Neural Net (.nns)" />
-                              <MenuItem mnemonicParsing="false" onAction="#newFormInterface" text="Form Scan" />
-                          </items>
+    <children>
+        <BorderPane layoutX="135.0" layoutY="45.0" prefHeight="540.0" prefWidth="471.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+                <MenuBar fx:id="MENU_BAR" styleClass="frame" BorderPane.alignment="CENTER">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="File">
+                            <items>
+                                <Menu mnemonicParsing="false" text="New">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" onAction="#newNeuralInterface" text="Neural Net (.nns)" />
+                                        <MenuItem mnemonicParsing="false" onAction="#newFormInterface" text="Form Scan" />
+                                    </items>
+                                </Menu>
+                                <MenuItem mnemonicParsing="false" onAction="#open" text="Open" />
+                                <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
+                                <MenuItem mnemonicParsing="false" onAction="#saveAs" text="SaveAs" />
+                            </items>
                         </Menu>
-                        <MenuItem mnemonicParsing="false" onAction="#open" text="Open" />
-                        <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
-                        <MenuItem mnemonicParsing="false" onAction="#saveAs" text="SaveAs" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#about" text="About" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
-         </top>
-         <center>
-            <SplitPane dividerPositions="0.6950596252129472" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
-              <items>
-                <AnchorPane id="MAIN_TAB_VIEW" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                     <children>
-                        <TabPane id="general" fx:id="TAB_VIEW" layoutX="321.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0" styleClass="primBack" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                     </children>
-                  </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                     <children>
-                        <TitledPane animated="false" layoutX="213.0" layoutY="-74.0" styleClass="frame" text="Output" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <TextArea fx:id="OUTPUT_TEXT" layoutX="248.0" layoutY="-26.0" prefHeight="200.0" prefWidth="200.0" style="-fx-font-family: Georgia; -fx-font-style: bold;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                 </children>
-                              </AnchorPane>
-                          </content>
-                        </TitledPane>
-                     </children></AnchorPane>
-              </items>
-            </SplitPane>
-         </center>
-      </BorderPane>
-   </children>
+                        <Menu mnemonicParsing="false" text="Help">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#about" text="About" />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+            </top>
+            <center>
+                <SplitPane dividerPositions="0.6950596252129472" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+                    <items>
+                        <AnchorPane id="MAIN_TAB_VIEW" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                            <children>
+                                <TabPane id="general" fx:id="TAB_VIEW" layoutX="321.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0" styleClass="primBack" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                            <children>
+                                <TitledPane animated="false" layoutX="213.0" layoutY="-74.0" styleClass="frame" text="Output" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                            <children>
+                                                <TextArea fx:id="OUTPUT_TEXT" layoutX="248.0" layoutY="-26.0" prefHeight="200.0" prefWidth="200.0" style="-fx-font-family: Georgia; -fx-font-style: bold;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                            </children>
+                                        </AnchorPane>
+                                    </content>
+                                </TitledPane>
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+            </center>
+        </BorderPane>
+    </children>
 </AnchorPane>

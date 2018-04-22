@@ -15,9 +15,11 @@ import java.util.List;
 
 /**
  * This is used to load an object from a file
+ *
  * @author mathew
  */
 public class Load {
+
     /**
      * Directory of file/object to be read
      */
@@ -27,11 +29,13 @@ public class Load {
         FILE = loc;
 
     }
-/**
- * Loads an object based on the predefined directory
- * @return
- * @throws IOException 
- */
+
+    /**
+     * Loads an object based on the predefined directory
+     *
+     * @return
+     * @throws IOException
+     */
     public Object load() throws IOException {
         try {
 

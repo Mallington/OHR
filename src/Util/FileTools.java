@@ -14,25 +14,29 @@ import java.util.List;
 
 /**
  * Used for reading, writing text file
+ *
  * @author mathew
  */
 public class FileTools {
-    
+
     /**
      * Writes a new entry to a new or existing text file
+     *
      * @param dir Directory to be written to
      * @param toWrite Text to be written on a new line
-     * @throws IOException 
+     * @throws IOException
      */
-    public static void write(String dir, String toWrite) throws IOException{
+    public static void write(String dir, String toWrite) throws IOException {
         FileWriter fw = new FileWriter(dir, true);
-            fw.write(toWrite+"\n");
-            fw.close();
+        fw.write(toWrite + "\n");
+        fw.close();
     }
+
     /**
      * Separates a CSV file into an list for easy processing
+     *
      * @param contents
-     * @return 
+     * @return
      */
     public List<String> separateCommaValues(String contents) {
         String append = "";
@@ -49,17 +53,21 @@ public class FileTools {
         }
         return ret;
     }
+
     /**
      * Reads the contents of a text file
+     *
      * @param dir Directory of the text file
      * @return returns the text written
      * @throws FileNotFoundException
-     * @throws IOException 
+     * @throws IOException
      */
-    public static String read(String dir) throws FileNotFoundException, IOException{
+    public static String read(String dir) throws FileNotFoundException, IOException {
         FileInputStream inputStream = new FileInputStream(dir);
         String append = "";
-        while(inputStream.available()>0) append += (char)inputStream.read();
+        while (inputStream.available() > 0) {
+            append += (char) inputStream.read();
+        }
         inputStream.close();
         return append;
     }

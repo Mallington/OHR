@@ -27,13 +27,18 @@ import javax.swing.JOptionPane;
 import neural.Layer;
 
 /**
- * This is a polymorphic class that is implemented in all of the tabs in the main view, it is used for File management functions, selecting/deselecting tabs,
- * adding relevant menus and for containing the core fields used for most tab types to operate. The class is non-discriminatory of the file-type is contains,
- * any specialized functions particular to the operation of a certain type is overriden by the child class by default, so that this class operates purely
- * through the abstract methods provided.
+ * This is a polymorphic class that is implemented in all of the tabs in the
+ * main view, it is used for File management functions, selecting/deselecting
+ * tabs, adding relevant menus and for containing the core fields used for most
+ * tab types to operate. The class is non-discriminatory of the file-type is
+ * contains, any specialized functions particular to the operation of a certain
+ * type is overriden by the child class by default, so that this class operates
+ * purely through the abstract methods provided.
+ *
  * @author mathew
  */
 public abstract class TabAttributes<FileType> implements ControllerInterface {
+
     /**
      * Contains the file currently loaded
      */
@@ -67,7 +72,8 @@ public abstract class TabAttributes<FileType> implements ControllerInterface {
      */
     boolean FILE_EXT_SET = false;
     /**
-     * Specifies whether the document is entirely new and needs to be saved in a new directory
+     * Specifies whether the document is entirely new and needs to be saved in a
+     * new directory
      */
     public boolean NEW_DOCUMENT = true;
     /**
@@ -82,70 +88,83 @@ public abstract class TabAttributes<FileType> implements ControllerInterface {
      * Contains the instance used to access the main window Tool bar at the top
      */
     private MenuBar MENU_BAR = null;
+
     /**
      * Abstract class sets up the tab based on the particular tab type
-     * @param file 
+     *
+     * @param file
      */
     abstract public void setGUI(FileType file);
+
     /**
      * Used for prompting the adding of the relevant menus particular to the tab
      */
-    public void selectTab(){
-        this.OUT.print("Selecting "+this.NAME);
-        TAB_INSTANCE.setText(NAME+" ✓ ");
-        if(MENU_BAR != null && MENUS !=null) for(Menu men : MENUS){
-            System.out.println("Add Menu");
-            MENU_BAR.getMenus().add(men);
-           
-        }
-        else{
+    public void selectTab() {
+        this.OUT.print("Selecting " + this.NAME);
+        TAB_INSTANCE.setText(NAME + " ✓ ");
+        if (MENU_BAR != null && MENUS != null) {
+            for (Menu men : MENUS) {
+                System.out.println("Add Menu");
+                MENU_BAR.getMenus().add(men);
+
+            }
+        } else {
             System.out.println("Null!");
         }
     }
+
     /**
      * Upon call, it removes all of the menus associated with the tab
      */
-    public void deselectTab(){
-        this.OUT.print("Deselecting "+this.NAME);
+    public void deselectTab() {
+        this.OUT.print("Deselecting " + this.NAME);
         TAB_INSTANCE.setText(NAME);
-        if(MENU_BAR != null && MENUS !=null) for(Menu men : MENUS) {
-            System.out.println("Rem Menu");
-            MENU_BAR.getMenus().remove(men);
-           
-        }
-    } 
-    
-    private void reloadStage(){
-        ((Stage)(TAB_INSTANCE.getTabPane().getScene().getWindow())).hide();
-        ((Stage)(TAB_INSTANCE.getTabPane().getScene().getWindow())).hide();((Stage)(TAB_INSTANCE.getTabPane().getScene().getWindow())).show();
+        if (MENU_BAR != null && MENUS != null) {
+            for (Menu men : MENUS) {
+                System.out.println("Rem Menu");
+                MENU_BAR.getMenus().remove(men);
 
-        
-       
-        
+            }
+        }
     }
-   /**
-    * Reveals the menu bar instance to the class
-    * @param menuBar 
-    */
-    public void setMenuBar(MenuBar menuBar){
+
+    private void reloadStage() {
+        ((Stage) (TAB_INSTANCE.getTabPane().getScene().getWindow())).hide();
+        ((Stage) (TAB_INSTANCE.getTabPane().getScene().getWindow())).hide();
+        ((Stage) (TAB_INSTANCE.getTabPane().getScene().getWindow())).show();
+
+    }
+
+    /**
+     * Reveals the menu bar instance to the class
+     *
+     * @param menuBar
+     */
+    public void setMenuBar(MenuBar menuBar) {
         MENU_BAR = menuBar;
     }
-     /**
+
+    /**
      * Used by child class to set the relevant menus
+     *
      * @param menus
      */
-    public void setMenuItems(ArrayList<Menu> menus){
-        MENUS =  menus;
+    public void setMenuItems(ArrayList<Menu> menus) {
+        MENUS = menus;
     }
+
     /**
      * Sets SAVED to false
      */
     public void setModified() {
         SAVED = false;
     }
+
     /**
-     * Prompts the user, asking whether they want to save their unfinished document
-     * @return 
+     * Prompts the user, asking whether they want to save their unfinished
+     * document
+     *
+     * @return
      */
     private boolean saveMenu() {
         String[] buttons = {"Yes", "No"};
@@ -156,7 +175,7 @@ public abstract class TabAttributes<FileType> implements ControllerInterface {
             return false;
         }
     }
-    
+
     /**
      * Saves the document
      */
@@ -180,9 +199,11 @@ public abstract class TabAttributes<FileType> implements ControllerInterface {
         }
 
     }
+
     /**
      * Loads a new file, setting the GUI and all the relevant fields
-     * @param f 
+     *
+     * @param f
      */
     public void load(File f) {
         this.ORIGINAL_DIRECTORY = f;
@@ -229,9 +250,11 @@ public abstract class TabAttributes<FileType> implements ControllerInterface {
 
         return SAVED;
     }
+
     /**
      * Sets tab text
-     * @param title 
+     *
+     * @param title
      */
     public void setText(String title) {
         this.TAB_INSTANCE.setText(title);
@@ -242,10 +265,12 @@ public abstract class TabAttributes<FileType> implements ControllerInterface {
         this.NEW_DOCUMENT = true;
         this.save();
     }
-    
+
     /**
-     * Overrides the original file path and saves document in a different location
-     * @param f 
+     * Overrides the original file path and saves document in a different
+     * location
+     *
+     * @param f
      */
     @Override
     public void saveAs(File f) {
@@ -266,13 +291,16 @@ public abstract class TabAttributes<FileType> implements ControllerInterface {
             this.OUT.print("Failed to save");
         }
     }
+
     /**
      * Gets the tab instance it is contained in
-     * @return 
+     *
+     * @return
      */
     public Tab getTab() {
         return this.TAB_INSTANCE;
     }
+
     /**
      * Closes down the tab
      */
@@ -285,9 +313,11 @@ public abstract class TabAttributes<FileType> implements ControllerInterface {
         TAB_INSTANCE.getTabPane().getTabs().remove(TAB_INSTANCE);
 
     }
+
     /**
      * Sets the output controller
-     * @param out 
+     *
+     * @param out
      */
     public void setOutputController(OutputController out) {
         OUT = out;

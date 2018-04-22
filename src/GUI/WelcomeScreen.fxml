@@ -8,57 +8,57 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" prefHeight="312.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.WelcomeScreenController">
-   <children>
-      <VBox alignment="TOP_CENTER" prefHeight="309.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <ImageView fx:id="LOGO" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <VBox.margin>
-                  <Insets bottom="20.0" top="10.0" />
-               </VBox.margin>
-            </ImageView>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Optical Handwriting Recognition (OHR)  V 1.0.0">
-               <font>
-                  <Font name="Phosphate Solid" size="20.0" />
-               </font>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Author: Mathew Allington">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Contact: Mathew@Mallington.co.uk">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-            </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GitHub (Source Code): http://github.com/mallington/ohr/">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="20.0" />
-               </VBox.margin>
-            </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Step 1: To get started with this program you need to create a new neural network and then train its weightings. To do this, click on File -&gt; New -&gt; Neural Net Struct" wrappingWidth="547.3842859268188">
-               <font>
-                  <Font name="Arial Bold" size="13.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="20.0" />
-               </VBox.margin>
-            </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Step 2: In order to use your newly trained network to recognise text off a page navigate to File -&gt; New -&gt; Form Scan" wrappingWidth="547.3842859268188">
-               <font>
-                  <Font name="Arial Bold" size="13.0" />
-               </font>
-            </Text>
-         </children>
-      </VBox>
-   </children>
+    <children>
+        <VBox alignment="TOP_CENTER" prefHeight="309.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <ImageView fx:id="LOGO" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                    <VBox.margin>
+                        <Insets bottom="20.0" top="10.0" />
+                    </VBox.margin>
+                </ImageView>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Optical Handwriting Recognition (OHR)  V 1.0.0">
+                    <font>
+                        <Font name="Phosphate Solid" size="20.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Author: Mathew Allington">
+                    <font>
+                        <Font name="Arial Bold" size="14.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Contact: Mathew@Mallington.co.uk">
+                    <font>
+                        <Font name="Arial Bold" size="14.0" />
+                    </font>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GitHub (Source Code): http://github.com/mallington/ohr/">
+                    <font>
+                        <Font name="Arial Bold" size="14.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="20.0" />
+                    </VBox.margin>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Step 1: To get started with this program you need to create a new neural network and then train its weightings. To do this, click on File -&gt; New -&gt; Neural Net Struct" wrappingWidth="547.3842859268188">
+                    <font>
+                        <Font name="Arial Bold" size="13.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="20.0" />
+                    </VBox.margin>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Step 2: In order to use your newly trained network to recognise text off a page navigate to File -&gt; New -&gt; Form Scan" wrappingWidth="547.3842859268188">
+                    <font>
+                        <Font name="Arial Bold" size="13.0" />
+                    </font>
+                </Text>
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>

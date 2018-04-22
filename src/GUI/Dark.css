@@ -1,37 +1,37 @@
 .button{
-   
- /*
-    -fx-text-fill: rgb(255,255,255);
-   -fx-background-color:  transparent;
-  -font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; */
-    
+
+    /*
+       -fx-text-fill: rgb(255,255,255);
+      -fx-background-color:  transparent;
+     -font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; */
+
 }
 .button:hover{
-   /*
- 
-    -fx-text-fill: rgb(255,255,255);
-   -fx-background-color:  transparent;
-  -font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; */
-    
+    /*
+  
+     -fx-text-fill: rgb(255,255,255);
+    -fx-background-color:  transparent;
+   -font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; */
+
 }
 .primBack
 {
-    
- /*-fx-background-color:rgb(84,84,84); */
+
+    /*-fx-background-color:rgb(84,84,84); */
 
 
 }
 
 .frame > .title{
-    
-    
-   /* -fx-background-color:rgb(0,0,0); */
+
+
+    /* -fx-background-color:rgb(0,0,0); */
 }
 
 .frame{
-   /* -fx-text-fill: rgb(255,255,255);
-     -fx-background-color:rgb(0,0,0); */
-     
+    /* -fx-text-fill: rgb(255,255,255);
+      -fx-background-color:rgb(0,0,0); */
+
 }
 .menu-button
 .frame .menu-button{
@@ -44,5 +44,5 @@
           -fx-text-fill: rgb(255,255,255);
    -fx-background-color:  transparent;
   -font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; */
-     
+
 }

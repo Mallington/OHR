@@ -15,158 +15,160 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="359.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.FormRecognitionController">
-   <children>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <VBox alignment="CENTER" prefHeight="369.0" prefWidth="712.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Form OCR">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Text>
-                  <HBox alignment="CENTER" prefHeight="262.0" prefWidth="712.0" style="-fx-border-color: BLACK;">
-                     <children>
-                        <SplitPane dividerPositions="0.5632183908045977" prefHeight="200.0" prefWidth="200.0">
-                           <items>
-                              <Canvas fx:id="MAIN_VIEW" height="276.0" width="484.0" />
-                              <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="274.0" prefWidth="207.0" style="-fx-background-color: transparent;">
-                                 <children>
-                                    <VBox prefHeight="194.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <children>
-                                          <VBox prefHeight="200.0" prefWidth="100.0">
-                                             <children>
-                                                <HBox alignment="CENTER" prefHeight="35.0" prefWidth="300.0">
-                                                   <children>
-                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Statistics">
-                                                         <font>
-                                                            <Font size="19.0" />
-                                                         </font>
-                                                      </Text>
-                                                   </children>
-                                                </HBox>
-                                                <HBox alignment="CENTER" prefHeight="35.0" prefWidth="300.0">
-                                                   <children>
-                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Progress:">
-                                                         <HBox.margin>
-                                                            <Insets right="5.0" />
-                                                         </HBox.margin></Text>
-                                                      <Text fx:id="PROGRESS" strokeType="OUTSIDE" strokeWidth="0.0" text="00">
-                                                         <HBox.margin>
-                                                            <Insets />
-                                                         </HBox.margin>
-                                                      </Text>
-                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\%">
-                                                         <HBox.margin>
-                                                            <Insets right="5.0" />
-                                                         </HBox.margin>
-                                                      </Text>
-                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Probability:">
-                                                         <HBox.margin>
-                                                            <Insets right="5.0" />
-                                                         </HBox.margin>
-                                                      </Text>
-                                                      <Text fx:id="PROBABILITY" strokeType="OUTSIDE" strokeWidth="0.0" text="00">
-                                                         <HBox.margin>
-                                                            <Insets />
-                                                         </HBox.margin>
-                                                      </Text>
-                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\%" />
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                          <HBox alignment="CENTER" prefHeight="35.0" prefWidth="300.0">
-                                             <children>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Run Parameters">
-                                                   <font>
-                                                      <Font size="19.0" />
-                                                   </font>
-                                                </Text>
-                                             </children>
-                                          </HBox>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Output File: ">
-                                             <VBox.margin>
-                                                <Insets left="5.0" />
-                                             </VBox.margin>
-                                          </Text>
-                                          <HBox alignment="CENTER" prefHeight="38.0" prefWidth="300.0">
-                                             <children>
-                                                <TextField fx:id="OUTPUT_DIR" />
-                                                <Button mnemonicParsing="false" onAction="#changeOutput" text="..." />
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="CENTER" prefHeight="173.0" prefWidth="300.0" VBox.vgrow="ALWAYS">
-                                             <children>
-                                                <VBox alignment="CENTER" prefHeight="250.0" prefWidth="302.0" HBox.hgrow="ALWAYS">
-                                                   <children>
-                                                      <ImageView fx:id="FORM_VIEW" fitHeight="99.0" fitWidth="205.0" pickOnBounds="true" preserveRatio="true" />
-                                                   </children></VBox>
-                                             </children>
-                                          </HBox>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Binary Threshold">
-                                             <VBox.margin>
-                                                <Insets left="5.0" />
-                                             </VBox.margin>
-                                          </Text>
-                                          <HBox alignment="CENTER" layoutX="10.0" layoutY="257.0" prefHeight="16.0" prefWidth="300.0">
-                                             <children>
-                                                <Slider fx:id="THRESH_SLIDER" max="255.0" prefHeight="16.0" prefWidth="97.0" value="125.0">
-                                                   <HBox.margin>
-                                                      <Insets right="5.0" />
-                                                   </HBox.margin>
-                                                </Slider>
-                                                <TextField fx:id="THRESH_BOX" onAction="#recalculateThreshold" prefHeight="27.0" prefWidth="51.0" text="125">
-                                                   <HBox.margin>
-                                                      <Insets right="5.0" />
-                                                   </HBox.margin>
-                                                </TextField>
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="CENTER" prefHeight="16.0" prefWidth="300.0">
-                                             <children>
-                                                <Slider fx:id="THRESH_SLIDER_MAX" max="255.0" prefHeight="16.0" prefWidth="97.0" value="125.0">
-                                                   <HBox.margin>
-                                                      <Insets right="5.0" />
-                                                   </HBox.margin>
-                                                </Slider>
-                                                <TextField fx:id="THRESH_BOX_MAX" onAction="#recalculateThresholdMAX" prefHeight="27.0" prefWidth="51.0" text="125">
-                                                   <HBox.margin>
-                                                      <Insets right="5.0" />
-                                                   </HBox.margin>
-                                                </TextField>
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </AnchorPane>
-                           </items>
-                        </SplitPane>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="81.0" prefWidth="712.0" spacing="5.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#importNetwork" text="Import Network" />
-                        <Button mnemonicParsing="false" onAction="#importScan" text="Import Scan" />
-                        <Button mnemonicParsing="false" onAction="#importTrainingData" text="Import Training File" />
-                        <Button mnemonicParsing="false" onAction="#massTrain" text="Train" />
-                        <Button mnemonicParsing="false" onAction="#run" text="Run ▶" />
-                        <Slider fx:id="SCALE" max="300.0" min="1.0" prefHeight="16.0" prefWidth="117.0" value="100.0" />
-                        <Text fx:id="SCALE_LABEL" strokeType="OUTSIDE" strokeWidth="0.0" text="100%">
-                           <HBox.margin>
-                              <Insets right="5.0" />
-                           </HBox.margin>
+    <children>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <VBox alignment="CENTER" prefHeight="369.0" prefWidth="712.0">
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Form OCR">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
                         </Text>
-                        <ProgressIndicator fx:id="PROGRESS_IND" prefHeight="49.0" prefWidth="45.0" progress="1.0" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin>
-                  </HBox>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-   </children>
+                        <HBox alignment="CENTER" prefHeight="262.0" prefWidth="712.0" style="-fx-border-color: BLACK;">
+                            <children>
+                                <SplitPane dividerPositions="0.5632183908045977" prefHeight="200.0" prefWidth="200.0">
+                                    <items>
+                                        <Canvas fx:id="MAIN_VIEW" height="276.0" width="484.0" />
+                                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="274.0" prefWidth="207.0" style="-fx-background-color: transparent;">
+                                            <children>
+                                                <VBox prefHeight="194.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                    <children>
+                                                        <VBox prefHeight="200.0" prefWidth="100.0">
+                                                            <children>
+                                                                <HBox alignment="CENTER" prefHeight="35.0" prefWidth="300.0">
+                                                                    <children>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Statistics">
+                                                                            <font>
+                                                                                <Font size="19.0" />
+                                                                            </font>
+                                                                        </Text>
+                                                                    </children>
+                                                                </HBox>
+                                                                <HBox alignment="CENTER" prefHeight="35.0" prefWidth="300.0">
+                                                                    <children>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Progress:">
+                                                                            <HBox.margin>
+                                                                                <Insets right="5.0" />
+                                                                            </HBox.margin>
+                                                                        </Text>
+                                                                        <Text fx:id="PROGRESS" strokeType="OUTSIDE" strokeWidth="0.0" text="00">
+                                                                            <HBox.margin>
+                                                                                <Insets />
+                                                                            </HBox.margin>
+                                                                        </Text>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\%">
+                                                                            <HBox.margin>
+                                                                                <Insets right="5.0" />
+                                                                            </HBox.margin>
+                                                                        </Text>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Probability:">
+                                                                            <HBox.margin>
+                                                                                <Insets right="5.0" />
+                                                                            </HBox.margin>
+                                                                        </Text>
+                                                                        <Text fx:id="PROBABILITY" strokeType="OUTSIDE" strokeWidth="0.0" text="00">
+                                                                            <HBox.margin>
+                                                                                <Insets />
+                                                                            </HBox.margin>
+                                                                        </Text>
+                                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\%" />
+                                                                    </children>
+                                                                </HBox>
+                                                            </children>
+                                                        </VBox>
+                                                        <HBox alignment="CENTER" prefHeight="35.0" prefWidth="300.0">
+                                                            <children>
+                                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Run Parameters">
+                                                                    <font>
+                                                                        <Font size="19.0" />
+                                                                    </font>
+                                                                </Text>
+                                                            </children>
+                                                        </HBox>
+                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Output File: ">
+                                                            <VBox.margin>
+                                                                <Insets left="5.0" />
+                                                            </VBox.margin>
+                                                        </Text>
+                                                        <HBox alignment="CENTER" prefHeight="38.0" prefWidth="300.0">
+                                                            <children>
+                                                                <TextField fx:id="OUTPUT_DIR" />
+                                                                <Button mnemonicParsing="false" onAction="#changeOutput" text="..." />
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER" prefHeight="173.0" prefWidth="300.0" VBox.vgrow="ALWAYS">
+                                                            <children>
+                                                                <VBox alignment="CENTER" prefHeight="250.0" prefWidth="302.0" HBox.hgrow="ALWAYS">
+                                                                    <children>
+                                                                        <ImageView fx:id="FORM_VIEW" fitHeight="99.0" fitWidth="205.0" pickOnBounds="true" preserveRatio="true" />
+                                                                    </children>
+                                                                </VBox>
+                                                            </children>
+                                                        </HBox>
+                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Binary Threshold">
+                                                            <VBox.margin>
+                                                                <Insets left="5.0" />
+                                                            </VBox.margin>
+                                                        </Text>
+                                                        <HBox alignment="CENTER" layoutX="10.0" layoutY="257.0" prefHeight="16.0" prefWidth="300.0">
+                                                            <children>
+                                                                <Slider fx:id="THRESH_SLIDER" max="255.0" prefHeight="16.0" prefWidth="97.0" value="125.0">
+                                                                    <HBox.margin>
+                                                                        <Insets right="5.0" />
+                                                                    </HBox.margin>
+                                                                </Slider>
+                                                                <TextField fx:id="THRESH_BOX" onAction="#recalculateThreshold" prefHeight="27.0" prefWidth="51.0" text="125">
+                                                                    <HBox.margin>
+                                                                        <Insets right="5.0" />
+                                                                    </HBox.margin>
+                                                                </TextField>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER" prefHeight="16.0" prefWidth="300.0">
+                                                            <children>
+                                                                <Slider fx:id="THRESH_SLIDER_MAX" max="255.0" prefHeight="16.0" prefWidth="97.0" value="125.0">
+                                                                    <HBox.margin>
+                                                                        <Insets right="5.0" />
+                                                                    </HBox.margin>
+                                                                </Slider>
+                                                                <TextField fx:id="THRESH_BOX_MAX" onAction="#recalculateThresholdMAX" prefHeight="27.0" prefWidth="51.0" text="125">
+                                                                    <HBox.margin>
+                                                                        <Insets right="5.0" />
+                                                                    </HBox.margin>
+                                                                </TextField>
+                                                            </children>
+                                                        </HBox>
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                        </AnchorPane>
+                                    </items>
+                                </SplitPane>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="81.0" prefWidth="712.0" spacing="5.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#importNetwork" text="Import Network" />
+                                <Button mnemonicParsing="false" onAction="#importScan" text="Import Scan" />
+                                <Button mnemonicParsing="false" onAction="#importTrainingData" text="Import Training File" />
+                                <Button mnemonicParsing="false" onAction="#massTrain" text="Train" />
+                                <Button mnemonicParsing="false" onAction="#run" text="Run ▶" />
+                                <Slider fx:id="SCALE" max="300.0" min="1.0" prefHeight="16.0" prefWidth="117.0" value="100.0" />
+                                <Text fx:id="SCALE_LABEL" strokeType="OUTSIDE" strokeWidth="0.0" text="100%">
+                                    <HBox.margin>
+                                        <Insets right="5.0" />
+                                    </HBox.margin>
+                                </Text>
+                                <ProgressIndicator fx:id="PROGRESS_IND" prefHeight="49.0" prefWidth="45.0" progress="1.0" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="5.0" top="5.0" />
+                            </VBox.margin>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
 </AnchorPane>

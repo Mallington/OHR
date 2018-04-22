@@ -14,17 +14,19 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
 /**
- * This static methods are used to convert and object to a byte array and back again, this can then
- * be written to a stream
+ * This static methods are used to convert and object to a byte array and back
+ * again, this can then be written to a stream
+ *
  * @author mathew
  */
 public class ObjectConverter {
 
     /**
      * Converts object to byte array
+     *
      * @param b Object to be converted
      * @return Byte array
-     * @throws IOException 
+     * @throws IOException
      */
     public static byte[] serialize(Object b) throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -45,15 +47,15 @@ public class ObjectConverter {
         }
 
     }
-    
+
     /**
      * Converts from a byte array back to an object
+     *
      * @param bytes Array to be converted
      * @return Object
      * @throws IOException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
-
     public static Object deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
         ObjectInput in = null;

@@ -7,14 +7,17 @@ package Tools;
 
 /**
  * Contains the neural network based maths functions
+ *
  * @author mathew
  */
 public class MathFunc {
- /**
-  * Used as the activation for certain neurons
-  * @param arg
-  * @return 
-  */
+
+    /**
+     * Used as the activation for certain neurons
+     *
+     * @param arg
+     * @return
+     */
     public static double sigmoidValue(double arg) {
         return (1 / (1 + Math.exp(-arg)));
     }

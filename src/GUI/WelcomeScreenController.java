@@ -19,24 +19,25 @@ import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
 
 /**
- * FXML Controller class
- * This tab is used for greeting the user and giving information on how to start using the program
+ * FXML Controller class This tab is used for greeting the user and giving
+ * information on how to start using the program
+ *
  * @author mathew
  */
 public class WelcomeScreenController extends TabAttributes implements Initializable {
- 
-    
+
     /**
      * Allington Industries Logo, no it's not a proper company. Yet.
      */
- @FXML
- public ImageView LOGO = new ImageView();
+    @FXML
+    public ImageView LOGO = new ImageView();
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-     try {
+        try {
             URL imageR = getClass().getResource("Logo.png");
 
             Image image = ImageTools.convertBuffered(ImageIO.read(imageR));
@@ -45,11 +46,11 @@ public class WelcomeScreenController extends TabAttributes implements Initializa
         } catch (IOException ex) {
             OUT.print("Failed to load logo");
         }
-    }    
+    }
 
     @Override
     public void setGUI(Object file) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
