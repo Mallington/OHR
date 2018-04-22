@@ -6,7 +6,7 @@
 package GUI.Storage;
 
 /**
- *
+ * Used for storing x,y coordinate
  * @author mathew
  */
 public class Point {

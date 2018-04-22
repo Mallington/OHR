@@ -23,27 +23,52 @@ import neural.Layer;
 import neural.TrainingSet;
 
 /**
- *
+ * This particular extension of image view is used for displaying the output of a job that has been processed, it will display published outputs
+ * such as character location and also allows for real-time updating by the instigating class, so that job output can be published in real time,
+ * it is also possible for the user to train certain characters through the same interface.
  * @author mathew
  */
 public class FormView extends ImageView{
+    /**
+     * When a job is either processing or complete, the output is contained in this class and then used to update the UI
+     */
     RecognitionOutput OUT = null;
     int THRESHOLD = 127;
+    /**
+     * Contains the controller class it was instigated by, so that its fields can be used as parameters when retraining the network upon user request
+     */
     FormRecognitionController CON = null;
+    /**
+     * Creates a new form view instance passing the canvas to the image view it is inheriting
+     * @param i
+     * @param canv
+     * @param con 
+     */
     public FormView(Image i, Canvas canv, FormRecognitionController con) {
         super(i, canv);
         CON = con;
     }
+    /**
+     * Allows threshold to be set for training
+     * @param thresh 
+     */
     public void setThreshold(int thresh){
        THRESHOLD = thresh;
     }
-    
+    /**
+     * Updates the form view, redrawing any character boxes based on the new Recognition Output
+     * @param out
+     * @param binaryThresh 
+     */
     public void displayJobOutput(RecognitionOutput out, int binaryThresh){
         OUT = out;
         THRESHOLD = binaryThresh;
         render();
     }
-
+    /**
+     * This is executed by the inherited class ImageView and allows for graphics to be drawn on top of the existing image view
+     * @param g 
+     */
     @Override
     void tick(GraphicsContext g) {
         g.setStroke(Paint.valueOf("black"));
@@ -54,7 +79,10 @@ public class FormView extends ImageView{
            
         }
     }
-
+    /**
+     * This particular mouse event listens for a double click and allows for training the clicked character
+     * @param m 
+     */
     @Override
     void clicked(MouseEvent m) {
        if(m.getClickCount() ==2 ){

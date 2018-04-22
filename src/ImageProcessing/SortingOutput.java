@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Similar to the Recognition Output, all of the pixel formations are published to this as they are being discovered, so that the array list in this object can
+ * be called in real time and an update of what has been found can be displayed on a UI
  * @author mathew
  */
 public class SortingOutput {
@@ -17,6 +18,12 @@ public class SortingOutput {
         FORMATTING = formatting;
         FORMATIONS = formations;
     }
+    /**
+     * Additional chars such as '\n'
+     */
     public List<AdditionalChar> FORMATTING;
+    /**
+     * All the detected pixel masses
+     */
     public List<PixelFormation> FORMATIONS;
 }

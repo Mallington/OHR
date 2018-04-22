@@ -20,12 +20,15 @@ import javax.imageio.ImageIO;
 
 /**
  * FXML Controller class
- *
+ * This tab is used for greeting the user and giving information on how to start using the program
  * @author mathew
  */
 public class WelcomeScreenController extends TabAttributes implements Initializable {
  
     
+    /**
+     * Allington Industries Logo, no it's not a proper company. Yet.
+     */
  @FXML
  public ImageView LOGO = new ImageView();
     /**

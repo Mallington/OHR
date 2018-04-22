@@ -59,7 +59,7 @@ public class ImageTools {
 
     }
     /**
-     * For converting back
+     * For converting back from a BufferedImage to a normal Image
      * @param bi
      * @return 
      */
@@ -229,6 +229,17 @@ public class ImageTools {
  public static List<PixelFormation> findEnclosedPixels(BufferedImage img){
      return findEnclosedPixels(img, null, 0);
  }
+ 
+    
+    /**
+     * This algorithm recursively checks through all of the pixels in a image, if the methods comes across a black pixel, it will
+     * continuously explore all of the neighboring pixels and so on, while all of these pixels are being added as points to a Pixel Formation
+     * where they can be later analyzed for characters
+     * @param img
+     * @param update
+     * @param totalInc
+     * @return 
+     */
     
     public static List<PixelFormation> findEnclosedPixels(BufferedImage img, RecognitionOutput update, double totalInc) {
         List<PixelFormation> form = new ArrayList<PixelFormation>();
@@ -260,7 +271,13 @@ public class ImageTools {
 
         return form;
     }
-
+    /**
+     * Used by find enclosed pixels method to see whether the pixel has already been explored
+     * @param x
+     * @param y
+     * @param taken
+     * @return 
+     */
     private static boolean pointTaken(int x, int y, List<Point> taken) {
         for (Point p : taken) {
             if (p.equals(new Point(x, y))) {
@@ -270,27 +287,35 @@ public class ImageTools {
 
         return false;
     }
-
+    /**
+     * Used by the find enclosed pixels method to recursively check a pixels neighbors 
+     * @param img
+     * @param x
+     * @param y
+     * @param taken
+     * @param pF
+     * @return 
+     */
     private static PixelFormation explorePixel(BufferedImage img, int x, int y, List<Point> taken, PixelFormation pF)  { // NEED TO FIX PIXEL BOUND PROBLEM!
         // System.out.println(recur++);
 
-        if (x < 0 || y < 0 || y >= img.getHeight() || x >= img.getWidth()) {
+        if (x < 0 || y < 0 || y >= img.getHeight() || x >= img.getWidth()) { // Checks the pixel being explored is in range
             return pF;
         }
         // System.out.println((getPixelAvg(img,x,y)<127) +" "+!(pointTaken(x, y, taken)));
-        if (getPixelAvg(img, x, y) < 127 && !(pointTaken(x, y, taken))) {
+        if (getPixelAvg(img, x, y) < 127 && !(pointTaken(x, y, taken))) { // Checks to see if the pixel is black or white
             // System.out.println("FOUND");
             //System.out.println("Checking: "+x+", "+y);
 
-            pF.addPoint(x, y);
-            taken.add(new Point(x, y));
+            pF.addPoint(x, y); // Adds pixel to the current formation
+            taken.add(new Point(x, y)); // Adds point and marks it as already visited
 try{
-            pF = explorePixel(img, x + 1, y, taken, pF);
-            pF = explorePixel(img, x - 1, y, taken, pF);
-            pF = explorePixel(img, x, y + 1, taken, pF);
-            pF = explorePixel(img, x, y - 1, taken, pF);
+            pF = explorePixel(img, x + 1, y, taken, pF); // Horizontal right
+            pF = explorePixel(img, x - 1, y, taken, pF); // Horizontal left
+            pF = explorePixel(img, x, y + 1, taken, pF); // Vertical down
+            pF = explorePixel(img, x, y - 1, taken, pF); // Vertical up
 } catch(StackOverflowError e){
-    System.out.println("Stack overflow?");
+    System.out.println("Stack overflow?");// problem occurs when the image being processed is too big and the JVM stack limit is exceeded
     return null;
 }
             /*

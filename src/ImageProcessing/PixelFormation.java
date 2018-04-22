@@ -13,7 +13,7 @@ import java.util.List;
 import javafx.scene.shape.Rectangle;
 
 /**
- *
+ * This class is used for keeping track of all of the pixels in a formation, it can be used to mark the bound for characters 
  * @author mathew
  */
 public class PixelFormation {
@@ -23,7 +23,10 @@ public class PixelFormation {
     public PixelFormation(){
         POINTS = new ArrayList<Point>();
     }
-    
+    /**
+     * Gets the bounds of all of the pixel formations
+     * @return 
+     */
     public Rectangle getBounds(){ // need to implement
         
         if(modified){
@@ -42,16 +45,25 @@ public class PixelFormation {
         }
        return lastBounds;
     }
-    
+    /**
+     * Gets all of the points collected
+     * @return 
+     */
     public List<Point> getPoints(){
         return  POINTS;
     }
-    
+    /**
+     * Adds a new point to the formations
+     * @param x
+     * @param y      */
     public void addPoint(int x, int y){
         modified = true;
         POINTS.add(new Point(x,y));
     }
-    
+    /**
+     * Returns whether no pixels have been added to the formation
+     * @return 
+     */
     public boolean isEmpty(){
         return (POINTS.size() == 0) ;
     }
