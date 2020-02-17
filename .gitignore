@@ -5,3 +5,4 @@ nbproject/*
 *.mf
 *.log
 *.xml
+*.DS_Store
