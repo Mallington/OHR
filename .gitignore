@@ -6,3 +6,4 @@ nbproject/*
 *.log
 *.xml
 *.DS_Store
+out/*
