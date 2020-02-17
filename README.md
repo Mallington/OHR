@@ -1,5 +1,9 @@
 # OHR
 Optical Handwriting Recognition. Written entirely from scratch, this program uses a series of image manipulation techniques and Neural networks to recognise handwritten letters.
+<p align="center">
+  <img height="500" src="https://raw.githubusercontent.com/Mallington/OHR/master/ScreenShots/FormScanAnimation.gif">
+</p>
+
 ## About this project
 My most enjoyable project to date is my optical character recognition project. When I embarked on this project I knew very little about the fundamentals of computer vision and machine learning. In a bid to learn more about these fields I set out to implement the entire project from scratch, without the aid of external libraries.
 
